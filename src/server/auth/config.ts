@@ -29,7 +29,10 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    GoogleProvider,
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
+    }),
     /**
      * ...add more providers here.
      *
