@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className='ds'>
+    <div>
       <h1 className='text-xl font-bold text-red-500'>Hi this is main page</h1>
       <ul className='mt-4 flex flex-col gap-4'>
         <li>
