@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-
+import { SessionProvider } from "next-auth/react";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
