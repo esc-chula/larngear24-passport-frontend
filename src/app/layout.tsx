@@ -1,7 +1,11 @@
 import "@/styles/globals.css";
-import { SessionProvider } from "next-auth/react";
+
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
+
+import QueryProvider from "@/components/queryProvider";
+import AuthProvider from "@/components/authProvider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -15,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <SessionProvider>{children}</SessionProvider>
+        <QueryProvider>
+          <SessionProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </SessionProvider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { axiosClient } from "@/libs/axios";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -29,7 +30,10 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    GoogleProvider,
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
+    }),
     /**
      * ...add more providers here.
      *
@@ -48,5 +52,10 @@ export const authConfig = {
         id: token.sub,
       },
     }),
+    signIn: async ({ user }) => {
+      // await axiosClient.post("/auth/sign-in", user); //will open later
+
+      return true;
+    },
   },
 } satisfies NextAuthConfig;
