@@ -53,9 +53,9 @@ export const authConfig = {
       },
     }),
     signIn: async ({ user }) => {
-      await axiosClient.post("/auth/sign-in", user);
+      // await axiosClient.post("/auth/sign-in", user); //will open later
 
       return true;
-    }
+    },
   },
 } satisfies NextAuthConfig;
