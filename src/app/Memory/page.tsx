@@ -1,3 +1,4 @@
+import Banner from "@/components/memory/Banner";
 
 export default function Memory() {
   return (
@@ -17,8 +18,18 @@ export default function Memory() {
     <div>
       <p className="flex justify-center">Photo</p>
       <p className="flex justify-center">ส่วนบ้าน</p>
-      <div>
-        {/* ธง */}
+      <div className="flex justify-center space-x-[5%]">
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+      </div>
+      <br></br>
+      <div className="flex justify-center space-x-[5%]">
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
+        <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300"/>
       </div>
     </div>
     <div>
