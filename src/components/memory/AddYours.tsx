@@ -1,12 +1,19 @@
 import { useState,useEffect } from "react";
+import { rudeWords } from "../../constants/rudeWords";
 const AddYours = ({ open, close, name, house }: { open: boolean; close: () => void,name:string,house:string }) => {
     const [comment,setComment] = useState('')
     const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setComment(e.target.value);
+        const unFiltered = e.target.value;
+        const filteredComment = rudeWords.reduce((accumulatedWords, word) => {
+            const badWord = new RegExp(`\\b${word}\\b`, 'gi');
+            return accumulatedWords.replace(badWord, '***');
+        }, unFiltered);
+
+        setComment(filteredComment);
     };
     function submit() {
         // submit comment
-
+        console.log(comment)
         setComment('')
         close();
     }
