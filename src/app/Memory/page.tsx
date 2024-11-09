@@ -1,7 +1,10 @@
+"use client"
+import AddYours from "@/components/memory/AddYours";
 import Banner from "@/components/memory/Banner"
 import CommentBox from "@/components/memory/CommentBox"
-
+import { useState } from "react";
 export default function Memory() {
+  const [showAddYours,setShowAddYours] = useState(false)
   return (
     <>
       <div className="flex h-full flex-col items-center justify-center space-y-[5%] p-4">
@@ -24,11 +27,12 @@ export default function Memory() {
             </div>
           </div>
           <div className="flex justify-end">
-              <button className="bg-gray-200">
+              <button className="bg-gray-200" onClick={()=>setShowAddYours(true)}>
                 Add yours
               </button>
             </div>
         </div>
+        <AddYours open={showAddYours} close={()=>{setShowAddYours(false)}} name={"name"} house={"house"}/>
 
         <div>
           <p className="text-center">Photo</p>
