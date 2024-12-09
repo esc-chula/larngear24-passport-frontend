@@ -1,10 +1,9 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage(): React.JSX.Element {
+function Login(): React.JSX.Element {
   const { data: session } = useSession();
   const [alreadyLogin, setAlreadyLogin] = useState(false);
   const router = useRouter();
@@ -45,5 +44,13 @@ export default function LoginPage(): React.JSX.Element {
         </button>
       )}
     </div>
+  );
+}
+
+export default function Page(): React.JSX.Element {
+  return (
+    <Suspense fallback={<p>loading...</p>}>
+      <Login />
+    </Suspense>
   );
 }
