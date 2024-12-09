@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function HomePage({ children }: React.PropsWithChildren) {
+export default function LoginPage(): React.JSX.Element {
   const { data: session } = useSession();
   const [alreadyLogin, setAlreadyLogin] = useState(false);
   const router = useRouter();
