@@ -10,8 +10,8 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (session === null && pathname !== "/") {
-      router.push("/");
+    if (session === null && pathname !== "/Login") {
+      router.push(`/Login?next=${pathname}`);
     }
   }, [session, router, pathname]);
 
