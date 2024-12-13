@@ -2,65 +2,91 @@
 import AddYours from "@/components/memory/AddYours";
 import Banner from "@/components/memory/Banner"
 import CommentBox from "@/components/memory/CommentBox"
+import { LeftArrow } from "@/components/memory/icon/LeftArrow";
+import { Pencil } from "@/components/memory/icon/Pencil";
+import Link from "next/link";
 import { useState } from "react";
 export default function Memory() {
   const [showAddYours,setShowAddYours] = useState(false)
   return (
     <>
-      <div className="flex h-full flex-col items-center justify-center space-y-[5%] p-4">
-        <div className="text-center">
-          <h1>Memory</h1>
+    <div className="bg-gradient-to-b from-[#33a1be] via-[#436797] to-[#9b446f] text-[#ECF0F6]">
+    <div className="flex item-center justify-center p-10">
+      <div className="absolute left-[2rem] w-[1.75rem] h-[1.75rem]">
+      <Link href="/"><LeftArrow></LeftArrow></Link>
+      </div>
+      <div className="text-4xl font-normal ">Memory</div>
+    </div>
+          <div className="flex item-center justify-center">
           <img src="https://placehold.co/600x400"/>
-        </div>
-
-        <div className="w-full max-w-[600px]">
-        <p className="text-center">อยากฝากอะไรถึง LG24 ?</p>
-          <div className="bg-sky-500/50 p-[2%]">
-            <div className="flex overflow-x-auto pb-4">
-              <div className="flex flex-nowrap space-x-[2%]">
-                <CommentBox name="name" house="house" comment="comment" />
-                <CommentBox name="name" house="house" comment="comment" />
-                <CommentBox name="name" house="house" comment="comment" />
-                <CommentBox name="name" house="house" comment="comment" />
-                <CommentBox name="name" house="house" comment="comment" />
-              </div>
-            </div>
           </div>
-          <div className="flex justify-end">
-              <button className="bg-gray-200" onClick={()=>setShowAddYours(true)}>
-                Add yours
+
+
+        <div className="flex justify-center item-center mt-8 mb-3 text-xl font-bold">อยากฝากอะไรถึง LG24 ?</div>
+          <div className="flex item-center overflow-x-scroll bg-[#ECF0F6] border-y-4 border-[#36465F] h-[17.875rem] pl-1.5">
+              <div className="gird grid-row-2">
+              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" />
+              </div>
+              <div className="gird grid-row-2">
+              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" />
+              </div>
+              <div className="gird grid-row-2">
+              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" />
+              </div>
+              <div className="gird grid-row-2">
+              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" />
+              </div>
+              <div className="gird grid-row-2">
+              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" />
+              </div>     
+          </div>
+
+          <div className="grid justify-items-end">
+            
+              <button className="flex space-x-[1rem] bg-gradient-to-b from-[#092B44] from-0% to-[#D2CAFF] to-90% text-white rounded-lg w-[7.4rem] h-[1.7rem] m-2 p-1" onClick={()=>setShowAddYours(true)}>
+              <Pencil></Pencil> Add yours
               </button>
-            </div>
-        </div>
+          </div>
+
         <AddYours open={showAddYours} close={()=>{setShowAddYours(false)}} name={"name"} house={"house"}/>
 
-        <div>
-          <p className="text-center">Photo</p>
-          <p className="text-center">ส่วนบ้าน</p>
-          <div className="flex justify-center space-x-[2%]">
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+          <div className="text-center text-3xl font-normal m-2">Photo</div>
+          <div className="text-center text-base font-bold m-2">ส่วนบ้าน</div>
+          <div className="m-4">
+
+            <div className="flex justify-center space-x-[1rem] mb-4">
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+            </div>
+            <div className="flex justify-center space-x-[1rem]">
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+              <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
+            </div>
           </div>
-          <br></br>
-          <div className="flex justify-center space-x-[2%]">
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-            <Banner imgUrl="https://placehold.co/100x300" googleDriveUrl="https://placehold.co/100x300" />
-          </div>
+
+        <div className="text-center text-base font-bold m-4">ส่วนกลาง</div>
+          <div className="flex justify-center item-center m-4">
+            <div className="grid grid-cols-2 gap-4">
+              <img src="https://placehold.co/300x200"/>
+              <img src="https://placehold.co/300x200"/>
+              <img src="https://placehold.co/300x200"/>
+              <img src="https://placehold.co/300x200"/>
+            </div>
         </div>
 
         <div>
-          <p className="text-center">ส่วนกลาง</p>
-          <img src="https://placehold.co/300x200"/>
+          <div className="text-center text-3xl font-normal mt-4">Video</div>
         </div>
-
-        <div>
-          <p className="text-center">Video</p>
         </div>
-      </div>
     </>
   );
 }
