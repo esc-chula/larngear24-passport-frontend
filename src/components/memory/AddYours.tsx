@@ -17,6 +17,10 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
         setComment('')
         close();
     }
+    function closeWindow(){
+        setComment('')
+        close();
+    }
     useEffect(() => {
         {open? document.body.style.overflow = 'hidden':document.body.style.overflow = ''}
         return () => {document.body.style.overflow = ''}
@@ -29,7 +33,7 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="relative bg-[#262D37] border-2 border-[#ECF0F6] rounded-lg w-[20.4rem] h-[25.44rem] text-[#ECF0F6]">
                     <button
-                        onClick={close}
+                        onClick={closeWindow}
                         className="absolute top-1 right-2 text-5xl"
                     >
                         &times;
