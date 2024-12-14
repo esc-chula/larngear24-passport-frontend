@@ -25,24 +25,24 @@ export default function Memory() {
         <div className="flex justify-center item-center mt-8 mb-3 text-xl font-bold">อยากฝากอะไรถึง LG24 ?</div>
           <div className="flex item-center overflow-x-scroll bg-[#ECF0F6] border-y-4 border-[#36465F] h-[17.875rem] pl-1.5">
               <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" />
-              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
               </div>
               <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" />
-              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
               </div>
               <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" />
-              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
               </div>
               <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" />
-              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
               </div>
               <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" />
-              <CommentBox name="name" house="house" comment="comment" />
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
+              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
               </div>     
           </div>
 

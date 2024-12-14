@@ -38,8 +38,9 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
                     >
                         &times;
                     </button>
-                    <div className="relative top-[4.75rem] left-[2.25rem]">
-                    {name} #{house}
+                    <div className=" flex relative top-[4.75rem] left-[2.25rem] mb-2">
+                    <img src="https://placehold.co/25x25" className="rounded-full h-[1.6rem] w-[1.6rem] object-cover"></img>
+                    <div className="ml-2">{name} #{house}</div>
                     </div>
                     
                     <div className=" relative top-[4.75rem] left-[2.25rem] p-3 bg-[#ECF0F6] opacity-80 w-[16.1rem] h-[10.75rem] text-black">
