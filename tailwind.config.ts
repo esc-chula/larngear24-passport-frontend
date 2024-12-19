@@ -7,8 +7,11 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Anonymous Pro", ...fontFamily.sans],
+        vimamsa: 'vimamsa',
+        ibm: ["IBM Plex Sans Thai", ...fontFamily.sans]
       },
     },
   },
   plugins: [],
+  
 } satisfies Config;
