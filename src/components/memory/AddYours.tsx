@@ -22,11 +22,19 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
         close();
     }
     useEffect(() => {
-        {open? document.body.style.overflow = 'hidden':document.body.style.overflow = ''}
-        return () => {document.body.style.overflow = ''}
+        if (open) {
+            document.body.style.overflow = 'hidden';
+        } 
+        else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, [open]);
-
-    if (!open) return null
+    
+    if (!open) return null;
+    
 
     return (
         <>
