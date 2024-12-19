@@ -86,7 +86,23 @@ export default function Memory() {
 
         <div>
   <div className="text-center text-3xl font-normal m-4 font-vimamsa">Video</div>
-
+  <div className="flex justify-center items-center pb-10">
+    <div className="grid grid-cols-2 gap-10">
+      <div className="aspect-w-21 aspect-h-9 ml-4">
+        <iframe 
+          src="https://www.youtube.com/embed/19g66ezsKAg" 
+          allowFullScreen 
+          className="w-full h-full"
+        />
+      </div>
+      <div className="text-black">
+      <div className="flex justify-center mb-2 font-semibold text-base">Credit</div>
+      <div className="flex justify-center">Credit</div>
+      <div className="flex justify-center">Credit</div>
+      <div className="flex justify-center">Credit</div>
+      </div>
+    </div>
+  </div>
 </div>
 
         </div>
