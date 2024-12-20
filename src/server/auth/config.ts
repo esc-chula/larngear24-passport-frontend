@@ -45,6 +45,20 @@ export const authConfig = {
      */
   ],
   callbacks: {
+    signIn: async ({ user }) => {
+      // send user's information to backend
+      const res = await axiosClient.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,{
+        id : user.id,
+        name : user.name,
+        email : user.email,
+        image : user.image
+      });
+      
+      console.log(res.data);
+      
+      
+      return true;
+    },
     session: ({ session, token }) => ({
       ...session,
       user: {
@@ -52,10 +66,5 @@ export const authConfig = {
         id: token.sub,
       },
     }),
-    signIn: async ({ user }) => {
-      // await axiosClient.post("/auth/sign-in", user); //will open later
-
-      return true;
-    },
   },
 } satisfies NextAuthConfig;
