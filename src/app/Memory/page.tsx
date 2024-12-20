@@ -5,7 +5,7 @@ import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
 import { useState } from "react";
-import CommentBox from "@/components/memory/CommentBox";
+import CommentSection from "@/components/memory/CommentSection";
 export default function Memory() {
   const [showAddYours,setShowAddYours] = useState(false)
   return (
@@ -23,28 +23,7 @@ export default function Memory() {
 
 
         <div className="flex justify-center item-center mt-8 mb-3 text-xl font-bold font-ibm">อยากฝากอะไรถึง LG24 ?</div>
-          <div className="flex item-center overflow-x-scroll bg-[#ECF0F6] border-y-4 border-[#36465F] h-71.5 pl-1.5">
-              <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              </div>
-              <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              </div>
-              <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              </div>
-              <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              </div>
-              <div className="gird grid-row-2">
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              <CommentBox name="name" house="house" comment="comment" image="https://placehold.co/25x25"/>
-              </div>     
-          </div>
+          <CommentSection />
 
           <div className="grid justify-items-end">
             
