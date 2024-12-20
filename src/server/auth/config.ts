@@ -33,6 +33,16 @@ export const authConfig = {
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
+      profile(profile) {               
+        return {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+          id : profile.sub,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+          image : profile.picture,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+          email : profile.email,
+        }
+      },
     }),
     /**
      * ...add more providers here.
@@ -45,18 +55,15 @@ export const authConfig = {
      */
   ],
   callbacks: {
-    signIn: async ({ user }) => {
-      // send user's information to backend
-      const res = await axiosClient.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,{
-        id : user.id,
-        name : user.name,
-        email : user.email,
-        image : user.image
+    signIn: async ({ profile }) => {
+      //console.log(profile); // for dev : remove this to see your google_sub
+      
+      await axiosClient.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,{
+        id : profile?.sub ?? "",
+        email : profile?.email ?? "",
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        image : profile?.picture?? ""
       });
-      
-      console.log(res.data);
-      
-      
       return true;
     },
     session: ({ session, token }) => ({
@@ -65,6 +72,6 @@ export const authConfig = {
         ...session.user,
         id: token.sub,
       },
-    }),
+    })
   },
 } satisfies NextAuthConfig;
