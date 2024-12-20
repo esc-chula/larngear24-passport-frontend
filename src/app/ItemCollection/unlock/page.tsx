@@ -2,8 +2,9 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { Suspense } from "react";
 
-export default function UnlockItemPage() {
+function UnlockItem() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const itemName = searchParams.get("name");
@@ -31,5 +32,13 @@ export default function UnlockItemPage() {
         Tap To Continue
       </button>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense>
+      <UnlockItem />
+    </Suspense>
   );
 }

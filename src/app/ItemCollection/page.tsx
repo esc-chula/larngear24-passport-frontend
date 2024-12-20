@@ -37,16 +37,18 @@ export default function ItemCollection() {
         </div>
 
         {/* Collection Title */}
-        <div className="mt-4 flex items-center justify-center space-x-2">
-          <Link href="/" passHref>
-            <Image
-              src="/images/fi-rr-arrow-left.svg"
-              alt="Back Arrow"
-              width={24}
-              height={24}
-              className="cursor-pointer"
-            />
-          </Link>
+        <div className="relative mt-4 flex items-center justify-center space-x-2">
+          <div className="absolute left-4 top-0 flex h-full items-center">
+            <Link href="/" passHref>
+              <Image
+                src="/images/fi-rr-arrow-left.svg"
+                alt="Back Arrow"
+                width={24}
+                height={24}
+                className="cursor-pointer"
+              />
+            </Link>
+          </div>
           <h2 className="text-2xl font-bold text-white">Collection</h2>
         </div>
 
@@ -59,14 +61,16 @@ export default function ItemCollection() {
                 index === itemGroups.length - 1
                   ? "bg-[url('/images/itembg2.png')]"
                   : "bg-[url('/images/itembg.png')]"
-              } bg-center bg-no-repeat p-4`}
+              } bg-center bg-no-repeat p-4 pt-6`}
               style={{ backgroundSize: `100% 100%` }}
             >
-              <div className="flex items-center justify-center gap-x-4">
+              <div
+                className={`items-center justify-center ${index === itemGroups.length - 1 ? "flex gap-x-4" : "grid grid-cols-3"}`}
+              >
                 {group.map((item: Item) => (
                   <div
                     key={item.id}
-                    className="flex cursor-pointer flex-col items-center"
+                    className="flex h-full cursor-pointer flex-col items-center justify-between"
                     onClick={() => {
                       if (item.unlocked) {
                         router.push(`/ItemCollection/${item.id}`);
@@ -81,8 +85,8 @@ export default function ItemCollection() {
                   >
                     <Image
                       src={
-                        item.unlocked ? item.image : "/images/LockedItem.svg"
-                      }
+                        item.unlocked ? item.image : "/images/lockedItem.png"
+                      } // Conditional image rendering
                       alt={item.name}
                       width={60}
                       height={60}
@@ -90,7 +94,7 @@ export default function ItemCollection() {
                         !item.unlocked ? "opacity-50" : ""
                       } rounded-md`}
                     />
-                    <p className="mt-2 truncate text-center text-sm text-gray-800">
+                    <p className="mt-2 justify-self-end truncate text-center text-sm text-gray-800">
                       {item.name}
                     </p>
                   </div>

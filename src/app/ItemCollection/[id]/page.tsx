@@ -2,12 +2,12 @@ import { items } from "../../../data/items";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-interface PageProps {
-  params: { id: string };
-}
-
-export default function ItemInfoPage({ params }: PageProps) {
-  const { id } = params;
+export default async function ItemInfoPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   const item = items.find((item) => item.id.toString() === id);
 
   if (!item?.unlocked) {
