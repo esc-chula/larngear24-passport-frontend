@@ -39,10 +39,12 @@ export default function ItemCollection() {
         {/* Collection Title */}
         <div className="mt-4 flex items-center justify-center space-x-2">
           <Link href="/" passHref>
-            <img
+            <Image
               src="/images/fi-rr-arrow-left.svg"
               alt="Back Arrow"
-              className="h-6 w-6 cursor-pointer"
+              width={24}
+              height={24}
+              className="cursor-pointer"
             />
           </Link>
           <h2 className="text-2xl font-bold text-white">Collection</h2>
@@ -53,10 +55,14 @@ export default function ItemCollection() {
           {itemGroups.map((group, index) => (
             <div
               key={index}
-              className="bg-[url('/images/itembg.png')] bg-center bg-no-repeat p-4"
+              className={`${
+                index === itemGroups.length - 1
+                  ? "bg-[url('/images/itembg2.png')]"
+                  : "bg-[url('/images/itembg.png')]"
+              } bg-center bg-no-repeat p-4`}
               style={{ backgroundSize: `100% 100%` }}
             >
-              <div className="flex items-center justify-around">
+              <div className="flex items-center justify-center gap-x-4">
                 {group.map((item: Item) => (
                   <div
                     key={item.id}
@@ -74,7 +80,9 @@ export default function ItemCollection() {
                     }}
                   >
                     <Image
-                      src={item.image}
+                      src={
+                        item.unlocked ? item.image : "/images/LockedItem.svg"
+                      }
                       alt={item.name}
                       width={60}
                       height={60}
@@ -82,19 +90,14 @@ export default function ItemCollection() {
                         !item.unlocked ? "opacity-50" : ""
                       } rounded-md`}
                     />
-                    <p className="mt-2 text-sm text-gray-800">{item.name}</p>
+                    <p className="mt-2 truncate text-center text-sm text-gray-800">
+                      {item.name}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-gray-300 p-4 text-center">
-          <button className="w-full rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-            Confirm
-          </button>
         </div>
       </div>
     </div>

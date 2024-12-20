@@ -2,20 +2,21 @@ import { items } from "../../../data/items";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export default async function ItemInfoPage({
-  params,
-}: {
+interface PageProps {
   params: { id: string };
-}) {
-  const item = items.find((item) => item.id.toString() === params.id);
+}
+
+export default function ItemInfoPage({ params }: PageProps) {
+  const { id } = params;
+  const item = items.find((item) => item.id.toString() === id);
 
   if (!item?.unlocked) {
     notFound();
   }
 
   return (
-    <div>
-      <h1>{item.name}</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center space-y-4">
+      <h1 className="text-2xl font-bold">{item.name}</h1>
 
       <Image
         src={item.image}
@@ -23,9 +24,10 @@ export default async function ItemInfoPage({
         width={200}
         height={200}
         priority
+        className="rounded-lg"
       />
 
-      <p>{item.description}</p>
+      <p className="text-gray-600">{item.description}</p>
     </div>
   );
 }

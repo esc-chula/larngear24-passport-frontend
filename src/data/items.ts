@@ -1,10 +1,9 @@
-// src/data/items.ts
 export type Item = {
   id: number;
   name: string;
   unlocked: boolean;
   description: string;
-  image: string; // Path to the item's image
+  image: string; 
 };
 
 export const items: Item[] = [
