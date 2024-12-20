@@ -1,5 +1,7 @@
 import { useState,useEffect } from "react";
 import { rudeWords } from "../../constants/rudeWords";
+import { toast } from "@/hooks/use-toast";
+
 const AddYours = ({ open, close, name, house }: { open: boolean, close: () => void,name:string,house:string }) => {
     const [comment,setComment] = useState('')
     const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -11,12 +13,46 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
 
         setComment(filteredComment);
     };
-    function submit() {
-        // submit comment
-        console.log(comment)
-        setComment('')
-        close();
+    async function submit() {
+        if(comment == ''){
+            toast({
+                title: "Message Required",
+                description: "Please fill in your message before submitting.",
+                className: "bg-yellow-500 text-white",
+            });
+            return;
+        }
+        try {
+            const response = await fetch('/api/messages', {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    messages: comment,
+                }),
+            });
+            if (!response.ok) {
+                const errorData = await response.json() as { error: string };
+                throw new Error(errorData.error || 'Failed to send message');
+            }
+            toast({
+                title: "Success",
+                description: "Your message has been sent successfully.",
+                className: "bg-green-500 text-white",
+            });
+            setComment('');
+            close();
+        } catch (error) {
+            console.error("Error:", error);
+            toast({
+                title: "Error",
+                description: "Failed to submit your message. Please try again.",
+                className: "bg-red-500 text-white",
+            });
+        }
     }
+
     function closeWindow(){
         setComment('')
         close();

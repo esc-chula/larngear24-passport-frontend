@@ -11,7 +11,7 @@ const CommentBox = ({
 }) => {
     return(
         <>
-        <div className="bg-[#36465F] min-w-[10.6rem] h-[7.6rem] p-2 m-1.5 mt-3 text-[#ECF0F6]">
+        <div className="bg-[#36465F] min-w-[10.6rem] h-[7.6rem] p-2 m-1.5 mt-1 text-[#ECF0F6]">
             <div className="flex gap-2">
             <img src={image} className="rounded-full h-[1.6rem] w-[1.6rem] object-cover"></img>
             <div className="font-bold text-sm resize-none">{name} <span className="text-xl">#</span>{house}</div>

@@ -1,12 +1,11 @@
 "use client"
 import AddYours from "@/components/memory/AddYours";
 import Banner from "@/components/memory/Banner"
-import CommentBox from "@/components/memory/CommentBox"
 import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
 import { useState } from "react";
-import Image from 'next/image';
+import CommentBox from "@/components/memory/CommentBox";
 export default function Memory() {
   const [showAddYours,setShowAddYours] = useState(false)
   return (

@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 
 import QueryProvider from "@/components/queryProvider";
 import AuthProvider from "@/components/authProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -24,6 +25,7 @@ export default function RootLayout({
             <AuthProvider>{children}</AuthProvider>
           </SessionProvider>
         </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );
