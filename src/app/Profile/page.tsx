@@ -11,23 +11,23 @@ type ModalProps = {
   onClose: () => void;
 };
 
-export const Modal = ({ isOpen, onClose }: ModalProps) => {
+function Modal ({ isOpen, onClose }: ModalProps) {
   if (!isOpen) return null;
 
   // test item
   const items = [
-    { id: "1", name: "Item 1", isLocked: false },
+    { id: "1", name: "Item 1", isLocked: true },
     { id: "2", name: "Item 2", isLocked: true },
     { id: "3", name: "Item 3", isLocked: false },
     { id: "4", name: "Item 4", isLocked: true },
-    { id: "5", name: "Item 5", isLocked: false },
+    { id: "5", name: "Item 5", isLocked: true },
     { id: "6", name: "Item 6", isLocked: false },
-    { id: "7", name: "Item 7", isLocked: true },
+    { id: "7", name: "Item 7", isLocked: false },
     { id: "8", name: "Item 8", isLocked: false },
-    { id: "9", name: "Item 9", isLocked: false },
+    { id: "9", name: "Item 9", isLocked: true },
     { id: "10", name: "Item 10", isLocked: true },
-    { id: "11", name: "Item 11", isLocked: false },
-    { id: "12", name: "Item 12", isLocked: false }
+    { id: "11", name: "Item 11", isLocked: true },
+    { id: "12", name: "Item 12", isLocked: true }
   ];
 
   return (
@@ -74,13 +74,14 @@ function ItemsGrid({ items }: { items: Item[] }) {
       {items.map((item) => (
         <div
           key={item.id}
-          className={`flex flex-col items-center justify-center bg-[#7D7D7D] w-24 h-10 my-2.5 mx-2`}
+          className={`flex flex-col items-center justify-center bg-[#7D7D7D] w-24 h-28 my-2.5 mx-2`}
           style={{ minHeight: "100px" }}
         >
-          <p className="text-black text-sm">{item.name}</p>
-          {item.isLocked && (
-            <p className="text-black text-xs mt-2 italic">Locked</p>
-          )}
+          {item.isLocked && <img
+            src="/profile/locked.webp"
+            alt="Locked"
+            className="w-[30%] h-[30%] object-contain"
+          />}
         </div>
       ))}
     </div>
