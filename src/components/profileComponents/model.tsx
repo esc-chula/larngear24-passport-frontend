@@ -46,9 +46,9 @@ export default function Model({ selectedParts }: ModelProps) {
           height: 100%;
         }
         .part-img {
-          width: 90%;
-          height: 9 0%;
-          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
       `}</style>
     </div>

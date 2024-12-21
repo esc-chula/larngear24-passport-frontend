@@ -278,7 +278,9 @@ export default function Dress() {
 
         <div className="flex justify-center items-center h-[40%]">
           <div className="bg-white/50 rounded-2xl w-11/12 h-64 flex justify-center items-center relative">
-            <Model selectedParts={selectedParts} />
+            <div className="w-[60%] h-[60%] flex justify-center items-center">
+              <Model selectedParts={selectedParts} />
+            </div>
           </div>
         </div>
         <div className="flex flex-col w-11/12 mx-4">
