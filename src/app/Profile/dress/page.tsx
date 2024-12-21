@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Header from "@/components/globalComponents/Header";
+import Model from "@/components/profileComponents/model";
 import Link from "next/link";
 
 function Tabs({ activeTab, handleChangeTab }: { activeTab: string; handleChangeTab: (tab: string) => void }) {
@@ -82,8 +83,8 @@ type element = {
 type item = element[]
 
 
-function ItemsGrid({ items, activeTab, activeItemId, setActiveItemId }: { items: Record<string, item>, activeTab: string,
-  activeItemId: string|null, setActiveItemId: (tab:string|null) => void}) {
+function ItemsGrid({ items, activeTab, activeItemId, setActiveItemId, handlePartSelection }: { items: Record<string, item>, activeTab: string,
+  activeItemId: string|null, setActiveItemId: (tab:string|null) => void, handlePartSelection: (part:string, id:string) => void }) {
 
   const displayedItems = (() => {
     if (!activeItemId) {
@@ -103,6 +104,11 @@ function ItemsGrid({ items, activeTab, activeItemId, setActiveItemId }: { items:
     return items[activeTab];
   })();
 
+  const handleClickItem = (id: string, imgSrc: string) => {
+    setActiveItemId(id);
+    handlePartSelection(activeTab, imgSrc);
+  }
+
   return (
     <div className="grid grid-cols-3 w-full justify-center justify-items-center bg-[#ECF0F6]/80 h-60 rounded-b-lg"
         style={{
@@ -117,7 +123,7 @@ function ItemsGrid({ items, activeTab, activeItemId, setActiveItemId }: { items:
           key={item.id}
           className={`flex flex-col items-center justify-center bg-[#36465F]/30 w-24 h-14 my-2.5 mx-2 cursor-pointer rounded-lg`}
           style={{ minHeight: "100px" }}
-          onClick={() => setActiveItemId(item.id)}
+          onClick={() => handleClickItem(item.id, item.imageSrc)}
           >
           {/* Render image */}
           <img src={item.imageSrc} alt={`Item ${item.id}`} className="w-full h-full object-contain" />
@@ -132,8 +138,42 @@ export default function Dress() {
 
   const [activeItemId, setActiveItemId] = useState<string|null>(null)
 
+  const [selectedParts, setSelectedParts] = useState<{
+    skin: string | null;
+    hair: string | null;
+    eyebrow: string | null;
+    eye: string | null;
+    nose: string | null;
+    mouth: string | null;
+    shirt: string | null;
+    clothes: string | null;
+    pant: string | null;
+    shoes: string | null;
+  }>(() => {
+    const savedAvatar = localStorage.getItem("selectedParts");
+    return savedAvatar ? JSON.parse(savedAvatar) : {
+      skin: "/model/skin/skin1.webp",
+      hair: "/model/hair/hair1.webp",
+      eyebrow: "/model/eyebrow/eyebrow1.webp",
+      eye: "/model/eye/eye1.webp",
+      nose: "/model/nose/nose1.webp",
+      mouth: "/model/mouth/mouth1.webp",
+      shirt: "/model/shirt/shirt1.webp",
+      clothes: "/model/clothes/clothes1.webp",
+      pant: "/model/pant/pant1.webp",
+      shoes: "/model/shoes/shoes1.webp",
+    };
+  });
+
+  const handlePartSelection = (part: string, imgSrc: string | null) => {
+    setSelectedParts(prevState => {
+      const updatedParts = { ...prevState, [part]: imgSrc };
+      return updatedParts;
+    });
+  };
+
   const handleConfirm = () => {
-    console.log('confirm');
+    localStorage.setItem("selectedParts", JSON.stringify(selectedParts));
   };
 
   const handleChangeTab = (tab:string) => {
@@ -236,15 +276,14 @@ export default function Dress() {
           </Link>
         </div>
 
-        <div className="flex justify-center h-[40%]">
-          <div className="bg-white/50 rounded-2xl w-11/12 h-60 flex justify-center items-center">
-            {/* dressing */}
-            
+        <div className="flex justify-center items-center h-[40%]">
+          <div className="bg-white/50 rounded-2xl w-11/12 h-64 flex justify-center items-center relative">
+            <Model selectedParts={selectedParts} />
           </div>
         </div>
         <div className="flex flex-col w-11/12 mx-4">
           <Tabs activeTab={activeTab} handleChangeTab={handleChangeTab}/>
-          <ItemsGrid items={items} activeTab={activeTab} activeItemId={activeItemId} setActiveItemId={setActiveItemId}/>
+          <ItemsGrid items={items} activeTab={activeTab} activeItemId={activeItemId} setActiveItemId={setActiveItemId} handlePartSelection={handlePartSelection}/>
         </div>
 
         <div className="flex flex-col h-full justify-center items-center">
