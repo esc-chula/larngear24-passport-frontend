@@ -94,39 +94,64 @@ export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArtifact, setSelectedArtifact] = useState<number | null>(null);
 
-  const [selectedParts, setSelectedParts] = useState<{
-      skin: string | null;
-      hair: string | null;
-      eyebrow: string | null;
-      eye: string | null;
-      nose: string | null;
-      mouth: string | null;
-      shirt: string | null;
-      clothes: string | null;
-      pant: string | null;
-      shoes: string | null;
-    }>(() => {
-      const savedAvatar = localStorage.getItem("selectedParts");
-      return savedAvatar ? JSON.parse(savedAvatar) : {
-        skin: "/model/skin/skin1.webp",
-        hair: "/model/hair/hair1.webp",
-        eyebrow: "/model/eyebrow/eyebrow1.webp",
-        eye: "/model/eye/eye1.webp",
-        nose: "/model/nose/nose1.webp",
-        mouth: "/model/mouth/mouth1.webp",
-        shirt: "/model/shirt/shirt1.webp",
-        clothes: "/model/clothes/clothes1.webp",
-        pant: "/model/pant/pant1.webp",
-        shoes: "/model/shoes/shoes1.webp",
-      };
-    });
+  
+  type AvatarParts = {
+    skin: string | null;
+    hair: string | null;
+    eyebrow: string | null;
+    eye: string | null;
+    nose: string | null;
+    mouth: string | null;
+    shirt: string | null;
+    clothes: string | null;
+    pant: string | null;
+    shoes: string | null;
+  };
+  
+  const [selectedParts, setSelectedParts] = useState<AvatarParts>(() => {
+
+    const defaultAvatar: AvatarParts = {
+      skin: "/model/skin/skin1.webp",
+      hair: "/model/hair/hair1.webp",
+      eyebrow: "/model/eyebrow/eyebrow1.webp",
+      eye: "/model/eye/eye1.webp",
+      nose: "/model/nose/nose1.webp",
+      mouth: "/model/mouth/mouth1.webp",
+      shirt: "/model/shirt/shirt1.webp",
+      clothes: "/model/clothes/clothes1.webp",
+      pant: "/model/pant/pant1.webp",
+      shoes: "/model/shoes/shoes1.webp",
+    };
+
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage && window;
+
+    if(!isLocalStorageAvailable) return defaultAvatar;
+    
+    const savedAvatarString = localStorage.getItem("selectedParts"); 
+
+    let savedAvatar: AvatarParts | null = null; 
+
+    if (savedAvatarString) {
+      try {
+        savedAvatar = JSON.parse(savedAvatarString) as AvatarParts; 
+      } catch (error) {
+        return defaultAvatar;
+      }
+    }
+  
+    return savedAvatar ?? defaultAvatar;
+  });
 
   useEffect(() => {
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage && window;
+    if(!isLocalStorageAvailable) return;
     const savedName = localStorage.getItem("name")
     if(savedName) setName(savedName)
   }, [])
 
   const handleSaveName = () => {
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage && window;
+    if(!isLocalStorageAvailable) return;
     localStorage.setItem("name", name.trim());
   };
 

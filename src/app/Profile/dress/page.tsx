@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "@/components/globalComponents/Header";
 import Model from "@/components/profileComponents/model";
 import Link from "next/link";
@@ -31,8 +31,8 @@ function Tabs({ activeTab, handleChangeTab }: { activeTab: string; handleChangeT
     onMouseDown={(e) => {
       const container = e.currentTarget;
       let isDown = true;
-      let startX = e.pageX - container.offsetLeft;
-      let scrollLeft = container.scrollLeft;
+      const startX = e.pageX - container.offsetLeft;
+      const scrollLeft = container.scrollLeft;
 
       container.style.cursor = "grabbing";
 
@@ -118,7 +118,7 @@ function ItemsGrid({ items, activeTab, activeItemId, setActiveItemId, handlePart
         WebkitOverflowScrolling: "touch", 
         overflowY: "scroll"
       }}>
-      {displayedItems && displayedItems.map((item: element) => ( 
+      {displayedItems?.map((item: element) => ( 
         <div 
           key={item.id}
           className={`flex flex-col items-center justify-center bg-[#36465F]/30 w-24 h-14 my-2.5 mx-2 cursor-pointer rounded-lg`}
@@ -138,7 +138,7 @@ export default function Dress() {
 
   const [activeItemId, setActiveItemId] = useState<string|null>(null)
 
-  const [selectedParts, setSelectedParts] = useState<{
+  type AvatarParts = {
     skin: string | null;
     hair: string | null;
     eyebrow: string | null;
@@ -149,9 +149,10 @@ export default function Dress() {
     clothes: string | null;
     pant: string | null;
     shoes: string | null;
-  }>(() => {
-    const savedAvatar = localStorage.getItem("selectedParts");
-    return savedAvatar ? JSON.parse(savedAvatar) : {
+  };
+  
+  const [selectedParts, setSelectedParts] = useState<AvatarParts>(() => {
+    const defaultAvatar: AvatarParts = {
       skin: "/model/skin/skin1.webp",
       hair: "/model/hair/hair1.webp",
       eyebrow: "/model/eyebrow/eyebrow1.webp",
@@ -163,6 +164,24 @@ export default function Dress() {
       pant: "/model/pant/pant1.webp",
       shoes: "/model/shoes/shoes1.webp",
     };
+
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage && window;
+
+    if(!isLocalStorageAvailable) return defaultAvatar;
+
+    const savedAvatarString = localStorage.getItem("selectedParts"); 
+
+    let savedAvatar: AvatarParts | null = null; 
+
+    if (savedAvatarString) {
+      try {
+        savedAvatar = JSON.parse(savedAvatarString) as AvatarParts; 
+      } catch (error) {
+        return defaultAvatar;
+      }
+    }
+  
+    return savedAvatar ?? defaultAvatar;
   });
 
   const handlePartSelection = (part: string, imgSrc: string | null) => {
@@ -173,6 +192,8 @@ export default function Dress() {
   };
 
   const handleConfirm = () => {
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage && window;
+    if(!isLocalStorageAvailable) return;
     localStorage.setItem("selectedParts", JSON.stringify(selectedParts));
   };
 
