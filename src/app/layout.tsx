@@ -22,7 +22,11 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <SessionProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <div className="relative h-full min-h-screen w-full md:mx-auto md:max-w-[25rem]">
+                {children}
+              </div>
+            </AuthProvider>
           </SessionProvider>
         </QueryProvider>
         <Toaster />
