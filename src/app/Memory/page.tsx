@@ -1,16 +1,58 @@
 "use client";
 import AddYours from "@/components/memory/AddYours";
-import Banner from "@/components/memory/Banner";
 import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentSection from "@/components/memory/CommentSection";
+// import Phase2Photo from "@/components/memory/Phase2Photo";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+import getShortedBaanName from "@/libs/getShortedBaanName";
+import Image from "next/image";
+
+interface UserData {
+  user_id: string;
+  username: string;
+  baan: string;
+  image: string;
+  email: string;
+  dresses: number;
+  items: number;
+}
+
 export default function Memory() {
   const [showAddYours, setShowAddYours] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserData>();
+  const { data: session, status } = useSession();
+  // const router = useRouter();
+  // if (!session?.user.id) {
+  //   void router.push("/Login");
+  // }
+  useEffect(() => {
+    async function fetchUserProfile() {
+      if (!session) return;
+      if (!session.user) return;
+
+      try {
+        const response = await axiosClient.get<UserData>(
+          `${process.env.NEXT_PUBLIC_API_URL}/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${session?.user.id}`,
+            },
+          },
+        );
+        setUserInfo(response.data);
+      } catch (error) {
+        console.error("Error fetching:", error);
+      }
+    }
+    void fetchUserProfile();
+  }, [session, status]);
   return (
     <>
-      <div className="bg-gradient-to-b from-[#33a1be] via-[#436797] to-[#9b446f] text-[#ECF0F6]">
+      <div className="min-h-screen bg-gradient-to-b from-[#33a1be] via-[#436797] to-[#9b446f] pb-4 text-[#ECF0F6]">
         <div className="item-center flex justify-center p-10">
           <div className="absolute left-8 size-7">
             <Link href="/">
@@ -20,7 +62,7 @@ export default function Memory() {
           <div className="font-vimamsa text-4xl font-normal">Memory</div>
         </div>
         <div className="item-center mx-4 flex justify-center">
-          <img src="https://placehold.co/600x400" />
+          <Image src="/memory/larngear_placeholder.webp" alt="larngear_placholder"/>
         </div>
 
         <div className="item-center mb-3 mt-8 flex justify-center font-ibm text-xl font-bold">
@@ -42,91 +84,13 @@ export default function Memory() {
           close={() => {
             setShowAddYours(false);
           }}
-          name={"name"}
-          house={"house"}
+          name={userInfo?.username ?? ""}
+          house={getShortedBaanName(parseInt(userInfo?.baan ?? "0"))}
+          imgUrl={userInfo?.image ?? ""}
         />
 
-        <div className="m-2 text-center font-vimamsa text-3xl font-normal">
-          Photo
-        </div>
-        <div className="m-2 text-center font-ibm text-base font-bold">
-          ส่วนบ้าน
-        </div>
-        <div className="m-4">
-          <div className="mb-4 flex justify-center space-x-4">
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-          </div>
-          <div className="flex justify-center space-x-4">
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-            <Banner
-              imgUrl="https://placehold.co/100x300"
-              googleDriveUrl="https://placehold.co/100x300"
-            />
-          </div>
-        </div>
-
-        <div className="m-4 text-center font-ibm text-base font-bold">
-          ส่วนกลาง
-        </div>
-        <div className="item-center m-4 flex justify-center">
-          <div className="grid grid-cols-2 gap-4">
-            <img src="https://placehold.co/300x200"></img>
-            <img src="https://placehold.co/300x200"></img>
-            <img src="https://placehold.co/300x200"></img>
-            <img src="https://placehold.co/300x200"></img>
-          </div>
-        </div>
-
-        <div>
-          <div className="m-4 text-center font-vimamsa text-3xl font-normal">
-            Video
-          </div>
-          <div className="flex items-center justify-center pb-10">
-            <div className="grid grid-cols-2 gap-10">
-              <div className="aspect-w-21 aspect-h-9 ml-4">
-                <iframe
-                  src="https://www.youtube.com/embed/19g66ezsKAg"
-                  allowFullScreen
-                  className="h-full w-full"
-                />
-              </div>
-              <div className="text-black">
-                <div className="mb-2 flex justify-center text-base font-semibold">
-                  Credit
-                </div>
-                <div className="flex justify-center">Credit</div>
-                <div className="flex justify-center">Credit</div>
-                <div className="flex justify-center">Credit</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Photo after finish camp */}
+        {/* <Phase2Photo /> */}
       </div>
     </>
   );
