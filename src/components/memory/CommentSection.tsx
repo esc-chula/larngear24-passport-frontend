@@ -31,8 +31,6 @@ const CommentSection = () => {
   useEffect(() => {
     async function fetchMessages() {
       try {
-        console.log(session);
-
         const response = await axiosClient.get<RawMessage[]>(
           `${process.env.NEXT_PUBLIC_API_URL}/message`,
           {
@@ -42,7 +40,6 @@ const CommentSection = () => {
           },
         );
 
-        // const rawData = (await response.json()) as RawMessage[];
         const rawData = response.data;
         const data: Message[] = rawData.map((item: RawMessage) => ({
           message_id: item.message_id,
@@ -65,7 +62,7 @@ const CommentSection = () => {
   }
   return (
     <>
-      <div className="item-center h-71.5 flex overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1">
+      <div className="item-center h-71.5 flex overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1">
         {pairedMessages.map((pair, ind) => (
           <div className="grid grid-rows-2" key={ind}>
             {pair.map((comment) => (
