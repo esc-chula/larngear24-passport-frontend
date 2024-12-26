@@ -22,7 +22,7 @@ export default function Memory() {
           <div className="font-vimamsa text-4xl font-normal">Memory</div>
         </div>
         <div className="item-center mx-4 flex justify-center">
-          <img src="https://placehold.co/600x400" />
+          <img src="/memory/larngear_placeholder.webp" />
         </div>
 
         <div className="item-center mb-3 mt-8 flex justify-center font-ibm text-xl font-bold">
