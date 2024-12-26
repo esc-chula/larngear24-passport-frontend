@@ -3,6 +3,9 @@ import { rudeWords } from "../../constants/rudeWords";
 import { toast } from "@/hooks/use-toast";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
+function timeout(delay: number) {
+  return new Promise((res) => setTimeout(res, delay));
+}
 
 const AddYours = ({
   open,
@@ -59,6 +62,8 @@ const AddYours = ({
       });
       setComment("");
       close();
+      await timeout(1000);
+      window.location.reload();
     } catch (error) {
       console.error("Error:", error);
       console.log(`${process.env.NEXT_PUBLIC_API_URL}/message`);
