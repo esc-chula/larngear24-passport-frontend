@@ -29,12 +29,7 @@ export default function HomePage() {
             alt="file icon"
           />
           <li className="flex h-16 w-44 items-center self-start rounded-3xl bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-            <Link
-              className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
-              href="/Profile"
-            >
-              Profile
-            </Link>
+            <LinkButton href="/Profile">Profile</LinkButton>
           </li>
         </div>
         <div className="relative flex w-full justify-start">
@@ -53,12 +48,7 @@ export default function HomePage() {
             alt="stash trophy icon"
           />
           <li className="flex h-16 w-44 items-center self-end rounded-3xl bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-            <Link
-              className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
-              href="/ItemCollection"
-            >
-              Collection
-            </Link>
+            <LinkButton href="/ItemCollection">Collection</LinkButton>
           </li>
         </div>
         <div className="relative flex w-full justify-end">
@@ -77,15 +67,27 @@ export default function HomePage() {
             alt="letter icon"
           />
           <li className="flex h-16 w-44 items-center self-end rounded-3xl bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-            <Link
-              className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
-              href="/Memory"
-            >
-              Memory
-            </Link>
+            <LinkButton href="/Memory">Memory</LinkButton>
           </li>
         </div>
       </ul>
     </div>
   );
 }
+
+const LinkButton = ({
+  children,
+  href,
+}: {
+  children: JSX.Element | string;
+  href: string;
+}): React.JSX.Element => {
+  return (
+    <Link
+      className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
+      href={href}
+    >
+      {children}
+    </Link>
+  );
+};
