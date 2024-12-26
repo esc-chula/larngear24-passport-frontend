@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import { rudeWords } from "../../constants/rudeWords";
 import { toast } from "@/hooks/use-toast";
+import { log } from "console";
 
 const AddYours = ({ open, close, name, house }: { open: boolean, close: () => void,name:string,house:string }) => {
     const [comment,setComment] = useState('')
@@ -23,13 +24,10 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
             return;
         }
         try {
-            const response = await fetch('/api/message', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/message`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    message: comment,
+                    message: "aaa",
                 }),
             });
             if (!response.ok) {
@@ -45,6 +43,8 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
             close();
         } catch (error) {
             console.error("Error:", error);
+            console.log(`${process.env.NEXT_PUBLIC_API_URL}/message`);
+            
             toast({
                 title: "Error",
                 description: "Failed to submit your message. Please try again.",
