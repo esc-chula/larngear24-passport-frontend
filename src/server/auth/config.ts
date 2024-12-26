@@ -12,8 +12,6 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
 
@@ -56,7 +54,7 @@ export const authConfig = {
   ],
   callbacks: {
     signIn: async ({ profile }) => {
-      console.log(profile); // for dev : remove this to see your google_sub
+      // console.log(profile); // for dev : remove this to see your google_sub
       
       await axiosClient.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,{
         id : profile?.sub ?? "",
@@ -66,7 +64,14 @@ export const authConfig = {
       });
       return true;
     },
-    session: ({ session, token }) => ({
+    jwt: async ({ token, profile }) => {
+      // Attach the profile ID (sub) to the JWT token if available
+      if (profile) {
+        token.sub = profile.sub ?? "";
+      }
+      return token;
+    },
+    session: ({ session, token  }) => ({
       ...session,
       user: {
         ...session.user,
