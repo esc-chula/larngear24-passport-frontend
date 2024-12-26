@@ -27,7 +27,6 @@ function Modal({ isOpen, onClose }: ModalProps) {
     { id: "9", name: "Item 9", isLocked: true },
     { id: "10", name: "Item 10", isLocked: true },
     { id: "11", name: "Item 11", isLocked: true },
-    { id: "12", name: "Item 12", isLocked: true },
   ];
 
   return (
@@ -74,13 +73,15 @@ function ItemsGrid({ items }: { items: Item[] }) {
           className={`mx-2 my-2.5 flex h-28 w-24 flex-col items-center justify-center bg-[#7D7D7D]`}
           style={{ minHeight: "100px" }}
         >
-          {item.isLocked && (
+          {/* {item.isLocked && (
             <img
               src="/profile/locked.webp"
               alt="Locked"
               className="h-[30%] w-[30%] object-contain"
             />
-          )}
+          )} */}
+
+          <img src={`/images/item${item.id}.png`} alt={`${item.id}`} />
         </div>
       ))}
     </div>
@@ -91,6 +92,12 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArtifact, setSelectedArtifact] = useState<number | null>(null);
+  const [baanNumber, setBaanNumber] = useState(1);
+
+  const baanName = {
+    '1': 'ติดตลก', '2': 'ติดเตียง', '3': 'ติดบั๊ก', '4': 'ติดลิฟต์', 
+    '5': 'ติดจุฬา', '6': 'ติดแกลม', '7': 'ติดใจ', '8': 'ติดฝน' 
+  }
 
   type AvatarParts = {
     skin: string | null;
@@ -198,19 +205,17 @@ export default function Profile() {
               </div>
               <div className="flex w-[100%] flex-col items-center justify-center space-y-4">
                 <div className="h-5 w-24 rounded-md bg-[#ECF0F6] text-center text-sm font-semibold">
-                  บ้าน XXX
+                  บ้าน{baanName[baanNumber]}
                 </div>
-                <div className="flex h-64 w-[80%] flex-col items-center justify-center bg-[#ECF0F6]">
-                  <div>flag</div>
+                <div className="flex h-72 flex-col items-center justify-center">
+                  <img src={`/flags/${baanNumber}.webp`} className="overflow-hidden"></img>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex basis-1/3 flex-col items-center justify-center space-y-4">
-            <div className="flex h-28 w-28 flex-col items-center justify-center rounded-full bg-[#ECF0F6]">
-              stamp
-            </div>
-            <div className="relative z-50 flex h-6 w-16 items-center justify-center rounded-md bg-[#ECF0F6] text-sm font-semibold">
+            <img src="/profile/stamp.webp" alt="stamp" />
+            <div className="relative z-50 flex h-6 w-20 items-center justify-center rounded-lg bg-[#ECF0F6] text-sm font-semibold">
               <Link href="/Profile/dress" className="pointer-events-auto">
                 fashion
               </Link>
