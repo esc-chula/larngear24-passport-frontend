@@ -14,12 +14,14 @@ interface Item {
 }
 
 export default function ItemCollection() {
-  const router = useRouter();
+  const router = useRouter(); // Ensure useRouter is called only once at the top.
 
-  const itemGroups = [];
-  for (let i = 0; i < items.length; i += 3) {
-    itemGroups.push(items.slice(i, i + 3));
-  }
+  // Group items into chunks of 3
+  const itemGroups = items.reduce<Item[][]>((groups, item, index) => {
+    if (index % 3 === 0) groups.push([]);
+    groups[groups.length - 1]?.push(item);
+    return groups;
+  }, []);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
@@ -65,22 +67,23 @@ export default function ItemCollection() {
               style={{ backgroundSize: `100% 100%` }}
             >
               <div
-                className={`items-center justify-center ${index === itemGroups.length - 1 ? "flex gap-x-4" : "grid grid-cols-3"}`}
+                className={`items-center justify-center ${
+                  index === itemGroups.length - 1
+                    ? "flex gap-x-4"
+                    : "grid grid-cols-3"
+                }`}
               >
-                {group.map((item: Item) => (
+                {group.map((item) => (
                   <div
                     key={item.id}
                     className="flex h-full cursor-pointer flex-col items-center justify-between"
                     onClick={() => {
-                      if (item.unlocked) {
-                        router.push(`/ItemCollection/${item.id}`);
-                      } else {
-                        router.push(
-                          `/ItemCollection/unlock?name=${encodeURIComponent(
+                      const path = item.unlocked
+                        ? `/ItemCollection/${item.id}`
+                        : `/ItemCollection/unlock?name=${encodeURIComponent(
                             item.name,
-                          )}&image=${encodeURIComponent(item.image)}`,
-                        );
-                      }
+                          )}&image=${encodeURIComponent(item.image)}`;
+                      router.push(path);
                     }}
                   >
                     <Image
