@@ -64,7 +64,7 @@ function Tabs({
         <button
           key={tab.id}
           onClick={() => handleChangeTab(tab.id)}
-          className={`flex h-7 w-24 flex-shrink-0 items-center justify-center rounded-lg font-medium ${
+          className={`flex h-7 w-24 flex-shrink-0 items-center justify-center rounded-lg font-medium font-ibm ${
             activeTab === tab.id
               ? "bg-gradient-to-b from-[#ECEFF6] to-[#3B83A9] text-[#262D37]" // Style for active tab
               : "bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF] text-white" // Style for inactive tab
@@ -146,7 +146,7 @@ function ItemsGrid({
           <img
             src={item.imageSrc.replace('/model', '/model/full-scale')}
             alt={`Item ${item.id}`}
-            className="h-full w-full object-contain"
+            className="h-[80%] w-[80%] object-contain"
           />
         </div>
       ))}

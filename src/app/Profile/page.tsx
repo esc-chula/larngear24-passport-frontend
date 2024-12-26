@@ -194,7 +194,7 @@ export default function Profile() {
                   value={name}
                   onChange={handleInputChange}
                   placeholder="โปรดใส่ชื่อของคุณ"
-                  className="mt-1 h-[10%] w-[70%] rounded-md bg-[#ECF0F6] p-2 text-center text-sm font-semibold focus:outline-none"
+                  className="mt-1 h-[10%] w-[70%] rounded-md bg-[#ECF0F6] p-2 text-center text-sm font-semibold focus:outline-none font-ibm"
                 />
                 <div
                   className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-md bg-[#ECF0F6] text-sm"
@@ -204,7 +204,7 @@ export default function Profile() {
                 </div>
               </div>
               <div className="flex w-[100%] flex-col items-center justify-center space-y-4">
-                <div className="h-5 w-24 rounded-md bg-[#ECF0F6] text-center text-sm font-semibold">
+                <div className="h-5 w-24 rounded-md bg-[#ECF0F6] text-center text-sm font-semibold font-ibm">
                   บ้าน{baanName[baanNumber]}
                 </div>
                 <div className="flex h-72 flex-col items-center justify-center">
@@ -215,7 +215,7 @@ export default function Profile() {
           </div>
           <div className="flex basis-1/3 flex-col items-center justify-center space-y-4">
             <img src="/profile/stamp.webp" alt="stamp" />
-            <div className="relative z-50 flex h-6 w-20 items-center justify-center rounded-lg bg-[#ECF0F6] text-sm font-semibold">
+            <div className="relative z-50 flex h-6 w-20 items-center justify-center rounded-lg bg-[#ECF0F6] text-sm font-semibold font-sans">
               <Link href="/Profile/dress" className="pointer-events-auto">
                 fashion
               </Link>
@@ -227,7 +227,7 @@ export default function Profile() {
         </div>
 
         <div className="flex flex-col items-center justify-center">
-          <div className="mb-2 text-xl font-bold text-white">Artifacts</div>
+          <div className="mb-2 text-xl font-bold text-white font-sans">Artifacts</div>
           <div
             className="flex h-28 w-[90%] max-w-sm flex-row items-center justify-center space-x-11 bg-[url('/profile/artifact-bg.webp')] bg-contain bg-center py-3"
             style={{ backgroundSize: "100% 100%" }}
