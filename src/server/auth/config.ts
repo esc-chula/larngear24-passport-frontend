@@ -58,15 +58,15 @@ export const authConfig = {
     signIn: async ({ profile }) => {
       //console.log(profile); // for dev : remove this to see your google_sub
 
-      await axiosClient.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
-        {
-          id: profile?.sub ?? "",
-          email: profile?.email ?? "",
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          image: profile?.picture ?? "",
-        },
-      );
+      // await axiosClient.post(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
+      //   {
+      //     id: profile?.sub ?? "",
+      //     email: profile?.email ?? "",
+      //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      //     image: profile?.picture ?? "",
+      //   },
+      // );
       return true;
     },
     session: ({ session, token }) => ({

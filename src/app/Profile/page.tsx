@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/globalComponents/Button";
 import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
-import Model from "@/components/profileComponents/model";
+import Model from "@/components/profileComponents/Model";
 
 type ModalProps = {
   isOpen: boolean;

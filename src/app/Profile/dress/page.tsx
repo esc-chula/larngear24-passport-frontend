@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Header from "@/components/globalComponents/Header";
-import Model from "@/components/profileComponents/model";
+import Model from "@/components/profileComponents/Model";
 import Link from "next/link";
 
 function Tabs({
@@ -99,9 +99,9 @@ function ItemsGrid({
   setActiveItemId: (tab: string | null) => void;
   handlePartSelection: (part: string, id: string) => void;
 }) {
-  const displayedItems = (() => {
-    if (!activeItemId) {
-      return items[activeTab];
+    const displayedItems = (() => {
+      if (!activeItemId) {
+        return items[activeTab];
     }
 
     const activeItem = items[activeTab]?.find(
@@ -144,7 +144,7 @@ function ItemsGrid({
         >
           {/* Render image */}
           <img
-            src={item.imageSrc}
+            src={item.imageSrc.replace('/model', '/model/full-scale')}
             alt={`Item ${item.id}`}
             className="h-full w-full object-contain"
           />
@@ -268,7 +268,7 @@ export default function Dress() {
       id: "shirt5",
       imageSrc: "/model/shirt/shirt5.webp",
       isLocked: false,
-      colors: 3,
+      colors: 4,
     },
     {
       id: "shirt6",
@@ -365,7 +365,7 @@ export default function Dress() {
     id: `hair${i + 1}`,
     imageSrc: `/model/hair/hair${i + 1}.webp`,
     isLocked: false,
-    colors: 11,
+    colors: (i==5)? 12:11,
   }));
 
   const eyebrow = [
