@@ -3,7 +3,7 @@ export type Item = {
   name: string;
   unlocked: boolean;
   description: string;
-  image: string; 
+  image: string;
 };
 
 export const items: Item[] = [

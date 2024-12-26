@@ -1,15 +1,17 @@
 const Banner = ({
-    imgUrl,
-    googleDriveUrl
+  imgUrl,
+  googleDriveUrl,
 }: {
-    imgUrl? : string,
-    googleDriveUrl? : string
+  imgUrl?: string;
+  googleDriveUrl?: string;
 }) => {
-    return(
-        <>
-        <a href={googleDriveUrl}><img src={imgUrl}></img></a>
-        </>
-    )
-}
+  return (
+    <>
+      <a href={googleDriveUrl}>
+        <img src={imgUrl}></img>
+      </a>
+    </>
+  );
+};
 
-export default Banner
+export default Banner;

@@ -1,4 +1,16 @@
-type SelectedParts = Record<"skin" | "hair" | "eyebrow" | "eye" | "nose" | "mouth" | "shirt" | "clothes" | "pant" | "shoes", string | null>;
+type SelectedParts = Record<
+  | "skin"
+  | "hair"
+  | "eyebrow"
+  | "eye"
+  | "nose"
+  | "mouth"
+  | "shirt"
+  | "clothes"
+  | "pant"
+  | "shoes",
+  string | null
+>;
 
 interface ModelProps {
   selectedParts: SelectedParts;
@@ -6,8 +18,8 @@ interface ModelProps {
 
 export default function Model({ selectedParts }: ModelProps) {
   const zIndexMap: Record<string, number> = {
-    skin: 1, 
-    pant: 2, 
+    skin: 1,
+    pant: 2,
     shirt: 3,
     clothes: 4,
     shoes: 5,
@@ -19,7 +31,7 @@ export default function Model({ selectedParts }: ModelProps) {
   };
 
   return (
-    <div className="relative w-60 h-80">
+    <div className="relative h-80 w-60">
       {Object.keys(selectedParts).map((partKey) => {
         const imageSrc = selectedParts[partKey as keyof SelectedParts];
 
