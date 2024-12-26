@@ -1,21 +1,48 @@
-import { Message } from "@/types/Message";
 import CommentBox from "./CommentBox"
 import { useEffect, useState } from "react";
+import getShortedBaanName from "@/libs/getShortedBaanName";
 
+interface User{
+    username: string;
+    baan: number;
+    imageUrl: string;
+}
+
+interface RawMessage{
+    message_id: string;
+    user_id: string;
+    message: string;
+    createdAt: string;
+    user: User;
+}
+interface Message{
+    message_id: string;
+    username: string;
+    baan: string | null;
+    message: string;
+    imageUrl: string;
+}
 
 const CommentSection = ()=>{
     const [messages, setMessages] = useState<Message[]>([])
     useEffect(() => {
         async function fetchMessages() {
             try {
-                const response = await fetch('/api/messages',{
+                const response = await fetch('/api/message',{
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     method: 'GET'
                 });
-                const data = await response.json() as { messages: Message[] };
-                setMessages(data.messages);
+                const rawData = (await response.json()) as RawMessage[];
+                const data:Message[] = rawData.map((item:RawMessage)=>({
+                    message_id: item.message_id,
+                    username: item.user.username,
+                    baan: getShortedBaanName(item.user.baan),
+                    message: item.message,
+                    imageUrl: item.user.imageUrl,
+                }))
+                setMessages(data)
             } catch (error) {
                 console.error('Error fetching:', error);
             }
@@ -36,9 +63,9 @@ const CommentSection = ()=>{
                         <CommentBox
                         key={comment.message_id}
                         name={comment.username}
-                        house={comment.baan}
+                        house={comment.baan ?? ''}
                         comment={comment.message}
-                        image="https://placehold.co/300x200"
+                        image={comment.imageUrl}
                         />
                     ))
 

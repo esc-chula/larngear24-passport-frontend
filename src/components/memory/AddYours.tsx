@@ -23,13 +23,13 @@ const AddYours = ({ open, close, name, house }: { open: boolean, close: () => vo
             return;
         }
         try {
-            const response = await fetch('/api/messages', {
+            const response = await fetch('/api/message', {
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 method: 'POST',
                 body: JSON.stringify({
-                    messages: comment,
+                    message: comment,
                 }),
             });
             if (!response.ok) {
