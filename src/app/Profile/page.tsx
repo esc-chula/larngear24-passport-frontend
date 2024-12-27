@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/globalComponents/Button";
 import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
 import Model from "@/components/profileComponents/Model";
-
-
+import { toPng } from 'html-to-image';
 
 type ModalProps = {
   isOpen: boolean;
@@ -229,8 +228,25 @@ export default function Profile() {
     setActiveArtifact(num);
   }
 
+  // capture
+  const contentRef = useRef<HTMLDivElement | null>(null);
+
+  const handleSaveAsImage = async () => {
+    if (contentRef.current) {
+      try {
+        const dataUrl = await toPng(contentRef.current);
+        const link = document.createElement('a');
+        link.download = 'screenshot.png';
+        link.href = dataUrl;
+        link.click();
+      } catch (error) {
+        console.error('Failed to capture screenshot', error);
+      }
+    }
+  };
+
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
+    <div ref={contentRef} className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       <Header />
       <div className="z-0 mx-7 flex items-start">
         <Link href="/">
@@ -301,7 +317,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="w-30 flex justify-center">
+        <div className="w-30 flex justify-center" onClick={handleSaveAsImage}>
           <Button text="Save Image" imgSrc="./profile/download.webp" />
         </div>
       </div>
