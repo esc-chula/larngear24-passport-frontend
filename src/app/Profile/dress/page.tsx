@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Header from "@/components/globalComponents/Header";
-import Model from "@/components/profileComponents/Model";
+import Model from "@/components/profileComponents/model";
 import Link from "next/link";
 
 function Tabs({
@@ -64,7 +64,7 @@ function Tabs({
         <button
           key={tab.id}
           onClick={() => handleChangeTab(tab.id)}
-          className={`flex h-7 w-24 flex-shrink-0 items-center justify-center rounded-lg font-medium font-ibm ${
+          className={`flex h-7 w-24 flex-shrink-0 items-center justify-center rounded-lg font-ibm font-medium ${
             activeTab === tab.id
               ? "bg-gradient-to-b from-[#ECEFF6] to-[#3B83A9] text-[#262D37]" // Style for active tab
               : "bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF] text-white" // Style for inactive tab
@@ -99,9 +99,9 @@ function ItemsGrid({
   setActiveItemId: (tab: string | null) => void;
   handlePartSelection: (part: string, id: string) => void;
 }) {
-    const displayedItems = (() => {
-      if (!activeItemId) {
-        return items[activeTab];
+  const displayedItems = (() => {
+    if (!activeItemId) {
+      return items[activeTab];
     }
 
     const activeItem = items[activeTab]?.find(
@@ -144,7 +144,7 @@ function ItemsGrid({
         >
           {/* Render image */}
           <img
-            src={item.imageSrc.replace('/model', '/model/full-scale')}
+            src={item.imageSrc.replace("/model", "/model/full-scale")}
             alt={`Item ${item.id}`}
             className="h-[80%] w-[80%] object-contain"
           />
@@ -205,10 +205,13 @@ export default function Dress() {
         const parsedParts = JSON.parse(selectedPart);
         setSelectedParts(parsedParts);
       } catch (error) {
-        console.error("Failed to parse 'selectedParts' from localStorage:", error);
+        console.error(
+          "Failed to parse 'selectedParts' from localStorage:",
+          error,
+        );
       }
     }
-    }, []);
+  }, []);
 
   const handleConfirm = () => {
     const isLocalStorageAvailable =
@@ -362,7 +365,7 @@ export default function Dress() {
     id: `hair${i + 1}`,
     imageSrc: `/model/hair/hair${i + 1}.webp`,
     isLocked: false,
-    colors: (i==5)? 12:11,
+    colors: i == 5 ? 12 : 11,
   }));
 
   const eyebrow = [
