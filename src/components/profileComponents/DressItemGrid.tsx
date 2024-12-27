@@ -33,7 +33,8 @@ export default function ItemsGrid({
     return items[activeTab];
   })();
 
-  const handleClickItem = (id: string, imgSrc: string) => {
+  const handleClickItem = (id: string, imgSrc: string, isLocked: boolean) => {
+    if(isLocked) return;
     setActiveItemId(id);
     handlePartSelection(activeTab, imgSrc);
   };
@@ -54,14 +55,22 @@ export default function ItemsGrid({
           key={item.id}
           className={`mx-2 my-2.5 flex h-14 w-24 cursor-pointer flex-col items-center justify-center rounded-lg bg-[#36465F]/30`}
           style={{ minHeight: "100px" }}
-          onClick={() => handleClickItem(item.id, item.imageSrc)}
+          onClick={() => handleClickItem(item.id, item.imageSrc, item.isLocked)}
         >
           {/* Render image */}
-          <img
-            src={item.imageSrc.replace("/model", "/model/full-scale")}
-            alt={`Item ${item.id}`}
-            className="h-[80%] w-[80%] object-contain"
-          />
+          {item.isLocked ? (
+            <img
+              src="/profile/locked.webp"
+              alt="Locked"
+              className="h-[30%] w-[30%] object-contain"
+            />
+          ) : (
+            <img
+              src={item.imageSrc.replace("/model", "/model/full-scale")}
+              alt={`Item ${item.id}`}
+              className="h-[80%] w-[80%] object-contain"
+            />
+          )}
         </div>
       ))}
     </div>

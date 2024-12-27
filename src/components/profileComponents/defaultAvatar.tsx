@@ -11,6 +11,7 @@ export const defaultAvatar: AvatarParts = {
   clothes: "/model/clothes/clothes1.webp",
   pant: "/model/pant/pant1.webp",
   shoes: "/model/shoes/shoes1.webp",
+  dress: null
 };
 
 export type element = {

@@ -199,7 +199,7 @@ const clothes = Array.from({ length: 12 }, (_, i) => ({
 const dress = Array.from({ length: 11 }, (_, i) => ({
   id: `dress${i + 1}`,
   imageSrc: `/model/dress/dress${i + 1}.webp`,
-  isLocked: false,
+  isLocked: (i===3)?true:false,
   colors: 1,
 }));
 
