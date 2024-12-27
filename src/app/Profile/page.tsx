@@ -230,14 +230,14 @@ export default function Profile() {
   }
 
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] md:mx-auto md:max-w-[25rem]">
+    <div className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       <Header />
       <div className="z-0 mx-7 flex items-start">
         <Link href="/">
           <img src="/arrow-left.webp" alt="Back" className="w-5" />
         </Link>
       </div>
-      <div className="flex flex-col space-y-2.5">
+      <div className="flex flex-col space-y-2.5 flex-1 justify-center">
         <div className="flex flex-row">
           <div className="flex basis-2/3 flex-col items-center justify-center space-y-6">
             <div className="flex flex-col items-start justify-center">

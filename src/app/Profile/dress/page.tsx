@@ -432,7 +432,7 @@ export default function Dress() {
   };
 
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col gap-4 bg-[url('/profile/bg.webp')] md:mx-auto md:max-w-[25rem]">
+    <div className="relative flex h-full min-h-screen w-full flex-col gap-4 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       <Header />
       <div className="mx-7 flex items-start">
         <Link href="/Profile">
@@ -440,31 +440,33 @@ export default function Dress() {
         </Link>
       </div>
 
-      <div className="flex h-[40%] items-center justify-center">
-        <div className="relative flex h-64 w-11/12 items-center justify-center rounded-2xl bg-white/50">
-          <div className="flex h-[60%] w-[60%] items-center justify-center">
-            <Model selectedParts={selectedParts} />
+      <div className="flex flex-1 flex-col justify-center space-y-4">
+        <div className="flex justify-center">
+          <div className="relative flex h-64 w-11/12 items-center justify-center rounded-2xl bg-white/50">
+            <div className="flex h-[60%] w-[60%] items-center justify-center">
+              <Model selectedParts={selectedParts} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mx-4 flex w-11/12 flex-col">
-        <Tabs activeTab={activeTab} handleChangeTab={handleChangeTab} />
-        <ItemsGrid
-          items={items}
-          activeTab={activeTab}
-          activeItemId={activeItemId}
-          setActiveItemId={setActiveItemId}
-          handlePartSelection={handlePartSelection}
-        />
-      </div>
+        <div className="mx-4 flex w-11/12 flex-col">
+          <Tabs activeTab={activeTab} handleChangeTab={handleChangeTab} />
+          <ItemsGrid
+            items={items}
+            activeTab={activeTab}
+            activeItemId={activeItemId}
+            setActiveItemId={setActiveItemId}
+            handlePartSelection={handlePartSelection}
+          />
+        </div>
 
-      <div className="flex h-full flex-col items-center justify-center">
-        <button
-          onClick={handleConfirm}
-          className="w-24 rounded-lg bg-[#ECF0F6]/80 font-bold text-black"
-        >
-          Confirm
-        </button>
+        <div className="flex h-full flex-col items-center justify-center">
+          <button
+            onClick={handleConfirm}
+            className="w-24 rounded-lg bg-[#ECF0F6]/80 font-bold text-black"
+          >
+            Confirm
+          </button>
+        </div>
       </div>
     </div>
   );
