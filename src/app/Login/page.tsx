@@ -2,12 +2,19 @@
 import { Suspense } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 function Login(): React.JSX.Element {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get("next");
+
+  useEffect(() => {
+    if (status == "authenticated") {
+      router.push(search ? search : "/");
+    }
+  }, [status]);
 
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col items-center justify-center gap-4 bg-[url('/login/bg.webp')] md:mx-auto md:max-w-[25rem]">
@@ -18,14 +25,6 @@ function Login(): React.JSX.Element {
             onClick={() => signOut()}
           >
             Google logout
-          </button>
-          <button
-            className="rounded-[20px] bg-[#ECF0F6] p-4 text-2xl font-bold text-black transition-transform duration-300 hover:scale-105"
-            onClick={() => {
-              router.push(search ? search : "/");
-            }}
-          >
-            Back to page
           </button>
         </div>
       ) : (
