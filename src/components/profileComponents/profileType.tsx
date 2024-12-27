@@ -29,3 +29,5 @@ export type AvatarParts = {
   shoes: string | null;
   dress: string | null;
 };
+
+export type Artifacts = (string | null)[];

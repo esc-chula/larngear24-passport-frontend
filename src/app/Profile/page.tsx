@@ -6,15 +6,13 @@ import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
 import { toPng } from "html-to-image";
 import Modal from "@/components/profileComponents/modal";
-import type { AvatarParts } from "@/components/profileComponents/profileType";
+import type { Artifacts, AvatarParts } from "@/components/profileComponents/profileType";
 import { defaultAvatar } from "@/components/profileComponents/defaultAvatar";
 import { MainProfile } from "@/components/profileComponents/mainProfile";
 
 export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedArtifacts, setSelectedArtifacts] = useState<(string | null)[]>(
-    [null, null, null],
-  );
+  const [selectedArtifacts, setSelectedArtifacts] = useState<Artifacts>([null, null, null]);
 
   const handleArtifactChange = (artifact: string) => {
     if (
@@ -25,6 +23,9 @@ export default function Profile() {
       if (activeArtifact !== null) tmpSelectedArtifacts[activeArtifact] = null;
       setSelectedArtifacts(tmpSelectedArtifacts);
       setIsModalOpen(false);
+
+      // update localstorage
+      localStorage.setItem('selectedArtifacts', JSON.stringify(tmpSelectedArtifacts));
       return;
     }
     for (const selected of selectedArtifacts) {
@@ -35,6 +36,8 @@ export default function Profile() {
       tmpSelectedArtifacts[activeArtifact] = artifact;
     setSelectedArtifacts(tmpSelectedArtifacts);
     setIsModalOpen(false);
+    // update localstorage
+    localStorage.setItem('selectedArtifacts', JSON.stringify(tmpSelectedArtifacts));
   };
 
   const isSelectedArtifact = (artifact: string) => {
@@ -79,6 +82,8 @@ export default function Profile() {
     const isLocalStorageAvailable =
       typeof window !== "undefined" && window.localStorage && window;
     if (!isLocalStorageAvailable) return;
+
+    // get model
     const selectedPart = localStorage.getItem("selectedParts");
     if (selectedPart) {
       try {
@@ -90,6 +95,23 @@ export default function Profile() {
           "Failed to parse 'selectedParts' from localStorage:",
           error,
         );
+      }
+
+      // get artifacts
+      const tmpArtifacts = localStorage.getItem('selectedArtifacts')
+      if(tmpArtifacts) {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          
+          const parsedArtifacts: Artifacts = JSON.parse(tmpArtifacts);
+          console.log(tmpArtifacts);
+          setSelectedArtifacts(parsedArtifacts);
+        } catch (error) {
+          console.error(
+            "Failed to parse 'selectedArtifacts' from localStorage:",
+            error,
+          );
+        }
       }
     }
   }, []);

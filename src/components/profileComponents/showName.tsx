@@ -28,7 +28,7 @@ export const ShowName = ({ username }: { username: string }) => {
             className="mt-1 w-[60%] rounded-md bg-[#ECF0F6] p-1 text-center font-ibm text-sm font-semibold focus:outline-none"
           />
           <button
-            className="flex h-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-teal-300 px-2 text-sm font-bold"
+            className="exclude-from-screenshot2 flex h-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-teal-300 px-2 text-sm font-bold"
             onClick={handleSaveName}
           >
             save
