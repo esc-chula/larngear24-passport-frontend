@@ -40,7 +40,7 @@ export const ShowName = ({ username }: { username: string }) => {
             {name}
           </p>
           <div
-            className="flex h-6 w-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-[#ECF0F6] text-sm"
+            className="exclude-from-screenshot2 flex h-6 w-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-[#ECF0F6] text-sm"
             onClick={() => {
               setChange(true);
             }}
