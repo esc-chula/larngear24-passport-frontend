@@ -117,10 +117,8 @@ export default function ItemCollection() {
                       className="flex h-full cursor-pointer flex-col items-center justify-between"
                       onClick={() => {
                         const path = isUnlocked
-                          ? `/ItemCollection/${item.id}`
-                          : `/ItemCollection/unlock?name=${encodeURIComponent(
-                              item.name,
-                            )}&image=${encodeURIComponent(item.image)}`;
+                          ? `/ItemCollection/${item.id}` // Correct dynamic route path
+                          : `/ItemCollection/unlock?name=${encodeURIComponent(item.name)}&image=${encodeURIComponent(item.image)}`;
                         router.push(path);
                       }}
                     >

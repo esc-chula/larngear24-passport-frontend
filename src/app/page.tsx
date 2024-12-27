@@ -84,7 +84,7 @@ const LinkButton = ({
 }): React.JSX.Element => {
   return (
     <Link
-      className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
+      className="font-vimamsa w-full text-center text-4xl font-semibold text-[#ECF0F6]"
       href={href}
     >
       {children}
