@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col items-center gap-4 bg-[url('/main/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       <Header />
-      <h1 className="font-vimamsa text-3xl font-bold text-[#ECF0F6]">
+      <h1 className="font-vimamsa text-3xl text-[#ECF0F6]">
         ยินดีต้อนรับสู่ ค่ายลานเกียร์ 24
       </h1>
       <div className="h-40 w-80 bg-gray-600"></div>
@@ -84,7 +84,7 @@ const LinkButton = ({
 }): React.JSX.Element => {
   return (
     <Link
-      className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
+      className="w-full text-center font-vimamsa text-4xl text-[#ECF0F6]"
       href={href}
     >
       {children}
