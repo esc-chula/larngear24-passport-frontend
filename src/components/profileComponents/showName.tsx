@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
-export const ShowName = () => {
-  const [name, setName] = useState("temp");
+export const ShowName = ({ username }: { username: string }) => {
+  const [name, setName] = useState(username);
   const [change, setChange] = useState(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const handleSaveName = () => {
+    // NEEN : fetch /changename here
     const isLocalStorageAvailable =
       typeof window !== "undefined" && window.localStorage && window;
     if (!isLocalStorageAvailable) return;

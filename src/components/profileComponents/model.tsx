@@ -1,4 +1,4 @@
-type SelectedParts = Record<
+export type SelectedParts = Record<
   | "skin"
   | "hair"
   | "eyebrow"
@@ -12,7 +12,7 @@ type SelectedParts = Record<
   string | null
 >;
 
-interface ModelProps {
+export interface ModelProps {
   selectedParts: SelectedParts;
 }
 

@@ -4,117 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/globalComponents/Button";
 import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
-// import Model from "@/components/profileComponents/Model";
-import Model from "@/components/profileComponents/model";
 import { toPng } from "html-to-image";
-import { ShowName } from "@/components/profileComponents/showName";
-
-type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  items: {
-    id: string;
-    name: string;
-    isLocked: boolean;
-  }[];
-  handleArtifactChange: (artifact: string) => void;
-  isSelectedArtifact: (artifact: string) => number;
-};
-
-function Modal({
-  isOpen,
-  onClose,
-  items,
-  handleArtifactChange,
-  isSelectedArtifact,
-}: ModalProps) {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-white bg-opacity-60">
-      <div className="fixed bottom-0 left-0 right-0 mx-auto h-[50%] w-full max-w-sm overflow-hidden rounded-t-3xl bg-white bg-opacity-80 shadow-md">
-        <div className="relative flex h-16 items-center justify-center bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-          <p className="text-2xl font-semibold text-[#ECF0F6]">
-            Choose your artifacts
-          </p>
-          <button onClick={onClose} className="absolute right-5">
-            <img src="./profile/cross.webp" alt="X" className="h-full w-full" />
-          </button>
-        </div>
-
-        <div className="p-4 text-center">
-          <ItemsGrid
-            items={items}
-            handleArtifactChange={handleArtifactChange}
-            isSelectedArtifact={isSelectedArtifact}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-type Item = {
-  id: string;
-  name: string;
-  isLocked: boolean;
-};
-
-function ItemsGrid({
-  items,
-  handleArtifactChange,
-  isSelectedArtifact,
-}: {
-  items: Item[];
-  handleArtifactChange: (artifact: string) => void;
-  isSelectedArtifact: (artifact: string) => number;
-}) {
-  const handleClick = (item: Item) => {
-    if (item.isLocked) return;
-    handleArtifactChange(item.id);
-  };
-  return (
-    <div
-      className="grid h-72 w-full grid-cols-3 justify-center justify-items-center bg-[#ECF0F6]/80"
-      style={{
-        overflow: "auto",
-        scrollbarWidth: "none",
-        msOverflowStyle: "none",
-        WebkitOverflowScrolling: "touch",
-        overflowY: "scroll",
-      }}
-    >
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className={`relative mx-2 my-2.5 flex h-28 w-24 cursor-pointer flex-col items-center justify-center bg-[#36465F] ${isSelectedArtifact(item.id) !== -1 ? "border-4 border-pink-500" : "border border-transparent"}`}
-          style={{ minHeight: "100px" }}
-          onClick={() => handleClick(item)}
-        >
-          {isSelectedArtifact(item.id) !== -1 && (
-            <div className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full font-sans text-lg font-bold text-[#ECF0F6]">
-              {isSelectedArtifact(item.id) + 1}
-            </div>
-          )}
-
-          {item.isLocked ? (
-            <img
-              src="/profile/locked.webp"
-              alt="Locked"
-              className="h-[30%] w-[30%] object-contain"
-            />
-          ) : (
-            <img
-              src={`/images/item${item.id}.png`}
-              alt={`Item ${item.id}`}
-              className="object-contain"
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
+import Modal from "@/components/profileComponents/modal";
+import type { AvatarParts } from "@/components/profileComponents/profileType";
+import { defaultAvatar } from "@/components/profileComponents/defaultAvatar";
+import { MainProfile } from "@/components/profileComponents/mainProfile";
 
 export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -130,6 +24,7 @@ export default function Profile() {
       const tmpSelectedArtifacts = selectedArtifacts;
       if (activeArtifact !== null) tmpSelectedArtifacts[activeArtifact] = null;
       setSelectedArtifacts(tmpSelectedArtifacts);
+      setIsModalOpen(false);
       return;
     }
     for (const selected of selectedArtifacts) {
@@ -139,6 +34,7 @@ export default function Profile() {
     if (activeArtifact !== null)
       tmpSelectedArtifacts[activeArtifact] = artifact;
     setSelectedArtifacts(tmpSelectedArtifacts);
+    setIsModalOpen(false);
   };
 
   const isSelectedArtifact = (artifact: string) => {
@@ -155,17 +51,10 @@ export default function Profile() {
     return null;
   };
 
-  const [baanNumber, setBaanNumber] = useState("1");
-
-  const baanName = {
-    "1": "ติดตลก",
-    "2": "ติดเตียง",
-    "3": "ติดบั๊ก",
-    "4": "ติดลิฟต์",
-    "5": "ติดจุฬา",
-    "6": "ติดแกลม",
-    "7": "ติดใจ",
-    "8": "ติดฝน",
+  // NEEN : fetch get/user  here
+  const user = {
+    baan: 1,
+    username: "test",
   };
 
   // test item
@@ -183,46 +72,18 @@ export default function Profile() {
     { id: "11", name: "Item 11", isLocked: true },
   ];
 
-  type AvatarParts = {
-    skin: string | null;
-    hair: string | null;
-    eyebrow: string | null;
-    eye: string | null;
-    nose: string | null;
-    mouth: string | null;
-    shirt: string | null;
-    clothes: string | null;
-    pant: string | null;
-    shoes: string | null;
-  };
-
-  const [selectedParts, setSelectedParts] = useState<AvatarParts>(() => {
-    const defaultAvatar: AvatarParts = {
-      skin: "/model/skin/skin1.webp",
-      hair: "/model/hair/hair1.webp",
-      eyebrow: "/model/eyebrow/eyebrow1.webp",
-      eye: "/model/eye/eye1.webp",
-      nose: "/model/nose/nose1.webp",
-      mouth: "/model/mouth/mouth1.webp",
-      shirt: "/model/shirt/shirt1.webp",
-      clothes: "/model/clothes/clothes1.webp",
-      pant: "/model/pant/pant1.webp",
-      shoes: "/model/shoes/shoes1.webp",
-    };
-
-    return defaultAvatar;
-  });
+  const [selectedParts, setSelectedParts] =
+    useState<AvatarParts>(defaultAvatar);
 
   useEffect(() => {
     const isLocalStorageAvailable =
       typeof window !== "undefined" && window.localStorage && window;
     if (!isLocalStorageAvailable) return;
-    // const savedName = localStorage.getItem("name");
-    // if (savedName) setName(savedName);
     const selectedPart = localStorage.getItem("selectedParts");
     if (selectedPart) {
       try {
-        const parsedParts = JSON.parse(selectedPart);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const parsedParts: AvatarParts = JSON.parse(selectedPart);
         setSelectedParts(parsedParts);
       } catch (error) {
         console.error(
@@ -232,10 +93,6 @@ export default function Profile() {
       }
     }
   }, []);
-
-  const openArtifactModal = () => {
-    setIsModalOpen(true);
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -250,7 +107,6 @@ export default function Profile() {
 
   // capture
   const contentRef = useRef<HTMLDivElement | null>(null);
-
   const handleSaveAsImage = async () => {
     if (contentRef.current) {
       try {
@@ -277,35 +133,11 @@ export default function Profile() {
         </Link>
       </div>
       <div className="flex flex-1 flex-col justify-center space-y-2.5">
-        <div className="flex flex-row">
-          <div className="flex basis-2/3 flex-col items-center justify-center space-y-6">
-            <div className="flex flex-col items-start justify-center">
-              <ShowName />
-              <div className="flex w-[100%] flex-col items-center justify-center space-y-4">
-                <div className="h-5 w-24 rounded-md bg-[#ECF0F6] text-center font-ibm text-sm font-semibold">
-                  บ้าน{baanName[baanNumber as keyof typeof baanName]}
-                </div>
-                <div className="flex h-72 flex-col items-center justify-center">
-                  <img
-                    src={`/flags/${baanNumber}.webp`}
-                    className="overflow-hidden"
-                  ></img>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex basis-1/3 flex-col items-center justify-center space-y-4">
-            <img src="/profile/stamp.webp" alt="stamp" />
-            <div className="relative z-50 flex h-6 w-20 items-center justify-center rounded-lg bg-[#ECF0F6] font-sans text-sm font-semibold">
-              <Link href="/Profile/dress" className="pointer-events-auto">
-                fashion
-              </Link>
-            </div>
-            <div className="flex h-52 w-48 items-center justify-center object-contain">
-              <Model selectedParts={selectedParts} />
-            </div>
-          </div>
-        </div>
+        <MainProfile
+          baanNumber={user.baan}
+          username={user.username}
+          selectedParts={selectedParts}
+        />
 
         <div className="flex flex-col items-center justify-center">
           <div className="mb-2 font-sans text-xl font-bold text-white">
