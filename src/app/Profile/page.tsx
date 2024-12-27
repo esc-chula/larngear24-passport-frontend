@@ -59,17 +59,17 @@ export default function Profile() {
 
   // test item
   const items = [
-    { id: "1", name: "Item 1", isLocked: true },
-    { id: "2", name: "Item 2", isLocked: true },
+    { id: "1", name: "Item 1", isLocked: false },
+    { id: "2", name: "Item 2", isLocked: false },
     { id: "3", name: "Item 3", isLocked: false },
     { id: "4", name: "Item 4", isLocked: true },
-    { id: "5", name: "Item 5", isLocked: true },
+    { id: "5", name: "Item 5", isLocked: false },
     { id: "6", name: "Item 6", isLocked: false },
-    { id: "7", name: "Item 7", isLocked: false },
+    { id: "7", name: "Item 7", isLocked: true },
     { id: "8", name: "Item 8", isLocked: false },
-    { id: "9", name: "Item 9", isLocked: true },
-    { id: "10", name: "Item 10", isLocked: true },
-    { id: "11", name: "Item 11", isLocked: true },
+    { id: "9", name: "Item 9", isLocked: false },
+    { id: "10", name: "Item 10", isLocked: false },
+    { id: "11", name: "Item 11", isLocked: false },
   ];
 
   const [selectedParts, setSelectedParts] =
@@ -115,21 +115,17 @@ export default function Profile() {
           (el as HTMLElement).style.display = 'none';
         });
 
-        // Select elements to hide with opacity
         const elementsToExcludeOpacity = contentRef.current.querySelectorAll('.exclude-from-screenshot2');
         elementsToExcludeOpacity.forEach((el) => {
           (el as HTMLElement).style.opacity = '0';
         });
 
-        // Take the screenshot
         const dataUrl = await toPng(contentRef.current);
 
-        // Restore display for the excluded elements
         elementsToExcludeDisplay.forEach((el) => {
           (el as HTMLElement).style.display = '';
         });
 
-        // Restore opacity for elements
         elementsToExcludeOpacity.forEach((el) => {
           (el as HTMLElement).style.opacity = '';
         });

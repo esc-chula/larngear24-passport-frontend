@@ -196,6 +196,13 @@ const clothes = Array.from({ length: 12 }, (_, i) => ({
   colors: 1,
 }));
 
+const dress = Array.from({ length: 11 }, (_, i) => ({
+  id: `dress${i + 1}`,
+  imageSrc: `/model/dress/dress${i + 1}.webp`,
+  isLocked: false,
+  colors: 1,
+}));
+
 export const items: Record<string, item> = {
   skin: skin,
   shoes: shoes,
@@ -207,4 +214,5 @@ export const items: Record<string, item> = {
   eyebrow: eyebrow,
   eye: eye,
   clothes: clothes,
+  dress: dress
 };

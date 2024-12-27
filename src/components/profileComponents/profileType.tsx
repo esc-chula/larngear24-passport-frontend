@@ -27,4 +27,5 @@ export type AvatarParts = {
   clothes: string | null;
   pant: string | null;
   shoes: string | null;
+  dress: string | null;
 };

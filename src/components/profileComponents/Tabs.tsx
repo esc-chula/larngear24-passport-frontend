@@ -7,6 +7,7 @@ export default function Tabs({
 }) {
   const tabs = [
     { id: "skin", label: "ร่างกาย" },
+    { id: "dress", label: "หัว"},
     { id: "hair", label: "ผม" },
     { id: "eyebrow", label: "คิ้ว" },
     { id: "eye", label: "ตา" },
@@ -15,7 +16,7 @@ export default function Tabs({
     { id: "shirt", label: "เสื้อ" },
     { id: "clothes", label: "เสื้อคลุม" },
     { id: "pant", label: "กางเกง" },
-    { id: "shoes", label: "รองเท้า" },
+    { id: "shoes", label: "รองเท้า" }
   ];
 
   return (

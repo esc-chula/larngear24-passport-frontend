@@ -28,6 +28,7 @@ export default function Model({ selectedParts }: ModelProps) {
     eye: 8,
     eyebrow: 9,
     hair: 10,
+    dress: 11
   };
 
   return (
