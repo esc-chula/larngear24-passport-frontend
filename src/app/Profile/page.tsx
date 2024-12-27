@@ -14,6 +14,7 @@ import { defaultAvatar } from "@/components/profileComponents/defaultAvatar";
 import { MainProfile } from "@/components/profileComponents/mainProfile";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
+import { mockItems } from "@/components/profileComponents/mockData";
 
 export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,19 +23,11 @@ export default function Profile() {
     null,
     null,
   ]);
-  const mockItems = [
-    { id: "1", name: "พิมพ์เขียวทะลุมิติ", isLocked: true },
-    { id: "2", name: "มิเตอร์สารพัดประโยชน์", isLocked: true },
-    { id: "3", name: "เครื่องวิเคราะห์ขนาดพกพา", isLocked: true },
-    { id: "4", name: "แผ่นพับสอดส่องเครื่องจักร", isLocked: true },
-    { id: "5", name: "ล็อกเก็ตสแกนองค์ประกอบ", isLocked: true },
-    { id: "6", name: "MagicBot", isLocked: true },
-    { id: "7", name: "อินเทอร์เน็ตไร้ขอบเขต", isLocked: true },
-    { id: "8", name: "เครื่องพิมพ์โลหะ 3D", isLocked: true },
-    { id: "9", name: "คีย์บอร์ดกระแสจิต", isLocked: true },
-    { id: "10", name: "ครัวซองวิเศษ", isLocked: true },
-    { id: "11", name: "กล่องวิเคราะห์แร่", isLocked: true },
-  ];
+
+  const [user, SetUser] = useState<{ username: string; baan: number }>({
+    username: "น้องค่าย",
+    baan: 0,
+  });
   const [items, setItems] =
     useState<{ id: string; name: string; isLocked: boolean }[]>(mockItems);
 
@@ -103,14 +96,17 @@ export default function Profile() {
         itemData.includes(item.id) ? { ...item, isLocked: false } : item,
       );
       setItems(updatedItems);
+      console.log(response.data);
+
+      SetUser({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        username: response.data.username ?? "น้องค่าย",
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+        baan: parseInt(response.data.baan ?? "1"),
+      });
     };
     void handleGet();
   }, [session]);
-
-  const user = {
-    baan: 1,
-    username: "test",
-  };
 
   const [selectedParts, setSelectedParts] =
     useState<AvatarParts>(defaultAvatar);
@@ -207,9 +203,9 @@ export default function Profile() {
       className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]"
     >
       <div className="exclude-from-screenshot">
-        {" "}
-        <Header />{" "}
+        <Header />
       </div>
+
       <div className="exclude-from-screenshot z-0 mx-7 flex items-start">
         <Link href="/">
           <img src="/arrow-left.webp" alt="Back" className="w-5" />

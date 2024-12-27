@@ -1,19 +1,42 @@
 "use client";
-import { useState } from "react";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { toast } from "@/hooks/use-toast";
+
 export const ShowName = ({ username }: { username: string }) => {
   const [name, setName] = useState(username);
   const [change, setChange] = useState(false);
+  const { data: session } = useSession();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  const handleSaveName = () => {
-    // NEEN : fetch /changename here
-    const isLocalStorageAvailable =
-      typeof window !== "undefined" && window.localStorage && window;
-    if (!isLocalStorageAvailable) return;
-    localStorage.setItem("name", name.trim());
+
+  const handleSaveName = async () => {
+    const response = await axiosClient.patch(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/changename`,
+      {
+        newname: name.trim(),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.id}`,
+        },
+      },
+    );
+    if (response.status == 200) {
+      toast({
+        title: "Success",
+        description: "Successfully change name",
+        className: "bg-green-500 text-white",
+      });
+    }
+
     setChange(false);
   };
+  useEffect(() => {
+    setName(username);
+  }, [username]);
 
   return (
     <div className="mb-3 flex w-[100%] grow flex-row items-center justify-end space-x-2">
