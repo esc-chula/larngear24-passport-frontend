@@ -3,7 +3,10 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { items } from "src/data/items";
+import { items as initialItems } from "src/data/items";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 interface Item {
   id: number;
@@ -14,10 +17,42 @@ interface Item {
 }
 
 export default function ItemCollection() {
-  const router = useRouter(); // Ensure useRouter is called only once at the top.
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [unlockedItems, setUnlockedItems] = useState<string[]>([]);
 
-  // Group items into chunks of 3
-  const itemGroups = items.reduce<Item[][]>((groups, item, index) => {
+  useEffect(() => {
+    const fetchUnlockedItems = async () => {
+      try {
+        const response = await axiosClient.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${session?.user?.id}`,
+            },
+          },
+        );
+
+        // Log the API response for debugging
+        console.log("API Response:", response.data);
+
+        // Safeguard against undefined or missing unlockedItems
+        const unlockedItemIds = response.data.items?.map(String) || [];
+        console.log("Unlocked Item IDs:", unlockedItemIds);
+
+        setUnlockedItems(unlockedItemIds);
+      } catch (error) {
+        console.error("Failed to fetch unlocked items:", error);
+      }
+    };
+
+    if (session?.user?.id) {
+      fetchUnlockedItems();
+    }
+  }, [session]);
+
+  // Group items into chunks of 3 for display
+  const itemGroups = initialItems.reduce<Item[][]>((groups, item, index) => {
     if (index % 3 === 0) groups.push([]);
     groups[groups.length - 1]?.push(item);
     return groups;
@@ -73,35 +108,37 @@ export default function ItemCollection() {
                     : "grid grid-cols-3"
                 }`}
               >
-                {group.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex h-full cursor-pointer flex-col items-center justify-between"
-                    onClick={() => {
-                      const path = item.unlocked
-                        ? `/ItemCollection/${item.id}`
-                        : `/ItemCollection/unlock?name=${encodeURIComponent(
-                            item.name,
-                          )}&image=${encodeURIComponent(item.image)}`;
-                      router.push(path);
-                    }}
-                  >
-                    <Image
-                      src={
-                        item.unlocked ? item.image : "/images/lockedItem.png"
-                      } // Conditional image rendering
-                      alt={item.name}
-                      width={60}
-                      height={60}
-                      className={`${
-                        !item.unlocked ? "opacity-50" : ""
-                      } rounded-md`}
-                    />
-                    <p className="mt-2 justify-self-end truncate text-center text-sm text-gray-800">
-                      {item.name}
-                    </p>
-                  </div>
-                ))}
+                {group.map((item) => {
+                  const isUnlocked = unlockedItems.includes(String(item.id));
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex h-full cursor-pointer flex-col items-center justify-between"
+                      onClick={() => {
+                        const path = isUnlocked
+                          ? `/ItemCollection/${item.id}`
+                          : `/ItemCollection/unlock?name=${encodeURIComponent(
+                              item.name,
+                            )}&image=${encodeURIComponent(item.image)}`;
+                        router.push(path);
+                      }}
+                    >
+                      <Image
+                        src={isUnlocked ? item.image : "/images/lockedItem.png"}
+                        alt={item.name}
+                        width={60}
+                        height={60}
+                        className={`${
+                          !isUnlocked ? "opacity-50" : ""
+                        } rounded-md`}
+                      />
+                      <p className="mt-2 justify-self-end truncate text-center text-sm text-gray-800">
+                        {item.name}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}

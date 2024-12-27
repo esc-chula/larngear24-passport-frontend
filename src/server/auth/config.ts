@@ -69,6 +69,13 @@ export const authConfig = {
       );
       return true;
     },
+    jwt: async ({ token, profile }) => {
+      // Attach the profile ID (sub) to the JWT token if available
+      if (profile) {
+        token.sub = profile.sub ?? "";
+      }
+      return token;
+    },
     session: ({ session, token }) => ({
       ...session,
       user: {
