@@ -3,13 +3,19 @@ import React, { useState, useEffect } from "react";
 import Header from "@/components/globalComponents/Header";
 import Model from "@/components/profileComponents/model";
 import Link from "next/link";
-import { defaultAvatar } from "@/components/profileComponents/defaultAvatar";
+import {
+  defaultAvatar,
+  type item,
+} from "@/components/profileComponents/defaultAvatar";
 import type { AvatarParts } from "@/components/profileComponents/profileType";
-import { items } from "@/components/profileComponents/dressItems";
+import { mockDress } from "@/components/profileComponents/dressItems";
 import ItemsGrid from "@/components/profileComponents/DressItemGrid";
 import Tabs from "@/components/profileComponents/Tabs";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
 
 export default function Dress() {
+  const [items, setItems] = useState<Record<string, item>>(mockDress);
   const [activeTab, setActiveTab] = useState("skin");
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [selectedParts, setSelectedParts] =
@@ -41,6 +47,35 @@ export default function Dress() {
       }
     }
   }, []);
+
+  // fetch get/user  here
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (!session) return;
+    const handleGet = async () => {
+      const response = await axiosClient.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.id}`,
+          },
+        },
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const dresses: string[] = response.data?.dresses;
+
+      setItems((prevItems) => {
+        const dressItems = prevItems.dress ?? [];
+        const updatedDress = dressItems.map((item) =>
+          dresses.includes(item.id.replace("dress", ""))
+            ? { ...item, isLocked: false }
+            : item,
+        );
+        return { ...prevItems, dress: updatedDress };
+      });
+    };
+    void handleGet();
+  }, [session]);
 
   const handleConfirm = () => {
     const isLocalStorageAvailable =

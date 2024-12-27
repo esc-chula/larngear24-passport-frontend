@@ -77,7 +77,7 @@ export default function Profile() {
     return null;
   };
 
-  // NEEN : fetch get/user  here
+  // fetch get/user  here
   const { data: session } = useSession();
   useEffect(() => {
     if (!session) return;
@@ -96,7 +96,6 @@ export default function Profile() {
         itemData.includes(item.id) ? { ...item, isLocked: false } : item,
       );
       setItems(updatedItems);
-      console.log(response.data);
 
       SetUser({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
@@ -136,7 +135,6 @@ export default function Profile() {
         try {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           const parsedArtifacts: Artifacts = JSON.parse(tmpArtifacts);
-          console.log(tmpArtifacts);
           setSelectedArtifacts(parsedArtifacts);
         } catch (error) {
           console.error(
