@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useState, useEffect } from "react";
 import { rudeWords } from "../../constants/rudeWords";
 import { toast } from "@/hooks/use-toast";
 import { axiosClient } from "@/libs/axios";
@@ -56,6 +55,8 @@ const AddYours = ({
     }
 
     try {
+      if (!session) return;
+      if (!session.user) return;
       const response = await axiosClient.post<RawMessage[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/message`,
         {
@@ -63,7 +64,7 @@ const AddYours = ({
         },
         {
           headers: {
-            Authorization: `Bearer ${session.user.id}`, // Add Authorization header
+            Authorization: `Bearer ${session?.user.id}`, // Add Authorization header
           },
         },
       );
@@ -92,10 +93,6 @@ const AddYours = ({
     }
   }
 
-  function closeWindow() {
-    setComment("");
-    close();
-  }
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -107,21 +104,10 @@ const AddYours = ({
     };
   }, [open]);
 
-  if (!open) return null;
   function closeWindow() {
     setComment("");
     close();
   }
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
 
   if (!open) return null;
 
@@ -135,16 +121,16 @@ const AddYours = ({
           >
             &times;
           </button>
+
           <div className="relative left-[2.25rem] top-[4.75rem] mb-2 flex">
             <img
-              src="https://placehold.co/25x25"
+              src={imgUrl}
               className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
             ></img>
             <div className="ml-2">
               {name} #{house}
             </div>
           </div>
-
           <div className="relative left-[2.25rem] top-[4.75rem] h-[10.75rem] w-[16.1rem] bg-[#ECF0F6] p-3 text-black opacity-80">
             <div className="text-base font-bold">Share something</div>
             <textarea
@@ -154,48 +140,6 @@ const AddYours = ({
               onChange={handleCommentChange}
             />
           </div>
-  return (
-    <>
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="relative h-[25.44rem] w-[20.4rem] rounded-lg border-2 border-[#ECF0F6] bg-[#262D37] text-[#ECF0F6]">
-          <button
-            onClick={closeWindow}
-            className="absolute right-2 top-1 text-5xl"
-          >
-            &times;
-          </button>
-          <div className="relative left-[2.25rem] top-[4.75rem] mb-2 flex">
-            <img
-              src="https://placehold.co/25x25"
-              className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
-            ></img>
-            <div className="ml-2">
-              {name} #{house}
-            </div>
-          </div>
-
-          <div className="relative left-[2.25rem] top-[4.75rem] h-[10.75rem] w-[16.1rem] bg-[#ECF0F6] p-3 text-black opacity-80">
-            <div className="text-base font-bold">Share something</div>
-            <textarea
-              rows={5}
-              className="w-[14rem] resize-none bg-transparent focus:outline-none"
-              value={comment}
-              onChange={handleCommentChange}
-            />
-          </div>
-
-          <div className="flex items-center justify-center">
-            <button
-              onClick={submit}
-              className="relative top-24 rounded-lg bg-[#ECF0F6] px-4 py-2 text-2xl font-bold text-[#262D37]"
-            >
-              Confirm
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
           <div className="flex items-center justify-center">
             <button
               onClick={submit}

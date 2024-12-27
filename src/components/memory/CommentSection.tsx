@@ -30,6 +30,8 @@ const CommentSection = () => {
   const { data: session, status } = useSession();
   useEffect(() => {
     async function fetchMessages() {
+      if (!session) return;
+      if (!session.user) return;
       try {
         const response = await axiosClient.get<RawMessage[]>(
           `${process.env.NEXT_PUBLIC_API_URL}/message`,
