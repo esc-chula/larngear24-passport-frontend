@@ -9,25 +9,15 @@ import Model from "@/components/profileComponents/Model";
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  items: {
+    id: string;
+    name: string;
+    isLocked: boolean;
+  }[];
 };
 
-function Modal({ isOpen, onClose }: ModalProps) {
+function Modal({ isOpen, onClose, items }: ModalProps) {
   if (!isOpen) return null;
-
-  // test item
-  const items = [
-    { id: "1", name: "Item 1", isLocked: true },
-    { id: "2", name: "Item 2", isLocked: true },
-    { id: "3", name: "Item 3", isLocked: false },
-    { id: "4", name: "Item 4", isLocked: true },
-    { id: "5", name: "Item 5", isLocked: true },
-    { id: "6", name: "Item 6", isLocked: false },
-    { id: "7", name: "Item 7", isLocked: false },
-    { id: "8", name: "Item 8", isLocked: false },
-    { id: "9", name: "Item 9", isLocked: true },
-    { id: "10", name: "Item 10", isLocked: true },
-    { id: "11", name: "Item 11", isLocked: true },
-  ];
 
   return (
     <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-white bg-opacity-60">
@@ -70,18 +60,18 @@ function ItemsGrid({ items }: { items: Item[] }) {
       {items.map((item) => (
         <div
           key={item.id}
-          className={`mx-2 my-2.5 flex h-28 w-24 flex-col items-center justify-center bg-[#7D7D7D]`}
+          className={`mx-2 my-2.5 flex h-28 w-24 flex-col items-center justify-center bg-[#36465F]`}
           style={{ minHeight: "100px" }}
         >
-          {/* {item.isLocked && (
+          {item.isLocked && (
             <img
               src="/profile/locked.webp"
               alt="Locked"
               className="h-[30%] w-[30%] object-contain"
             />
-          )} */}
+          )}
 
-          <img src={`/images/item${item.id}.png`} alt={`${item.id}`} />
+          {!item.isLocked &&  <img src={`/images/item${item.id}.png`} alt={`${item.id}`} />}
         </div>
       ))}
     </div>
@@ -91,13 +81,50 @@ function ItemsGrid({ items }: { items: Item[] }) {
 export default function Profile() {
   const [name, setName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedArtifact, setSelectedArtifact] = useState<number | null>(null);
+  const [selectedArtifacts, setSelectedArtifacts] = useState<string[]>(['8','1','2']);
+
+  const addArtifact = (artifact: string) => {
+    setSelectedArtifacts((prev) => {
+      const updated = [...prev, artifact];
+      return updated.slice(-3);
+    });
+  };
+
+  const isSelectedArtifact = (artifact: string) => {
+    for(let i=0;i<selectedArtifacts.length;i++) {
+      if(selectedArtifacts[i]===artifact) return i;
+    }
+    return null;
+  }
+
+  const findSelectedArtifact = (index: number) => {
+    for(const item of items) {
+      if(isSelectedArtifact(item.id)===index) return item.id
+    }
+    return null;
+  }
+
   const [baanNumber, setBaanNumber] = useState(1);
 
   const baanName = {
     '1': 'ติดตลก', '2': 'ติดเตียง', '3': 'ติดบั๊ก', '4': 'ติดลิฟต์', 
     '5': 'ติดจุฬา', '6': 'ติดแกลม', '7': 'ติดใจ', '8': 'ติดฝน' 
   }
+
+  // test item
+  const items = [
+    { id: "1", name: "Item 1", isLocked: true },
+    { id: "2", name: "Item 2", isLocked: true },
+    { id: "3", name: "Item 3", isLocked: false },
+    { id: "4", name: "Item 4", isLocked: true },
+    { id: "5", name: "Item 5", isLocked: true },
+    { id: "6", name: "Item 6", isLocked: false },
+    { id: "7", name: "Item 7", isLocked: false },
+    { id: "8", name: "Item 8", isLocked: false },
+    { id: "9", name: "Item 9", isLocked: true },
+    { id: "10", name: "Item 10", isLocked: true },
+    { id: "11", name: "Item 11", isLocked: true },
+  ];
 
   type AvatarParts = {
     skin: string | null;
@@ -165,14 +192,12 @@ export default function Profile() {
     setName(e.target.value);
   };
 
-  const openArtifactModal = (artifactNumber: number) => {
-    setSelectedArtifact(artifactNumber);
+  const openArtifactModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedArtifact(null);
   };
 
   return (
@@ -232,13 +257,16 @@ export default function Profile() {
             className="flex h-28 w-[90%] max-w-sm flex-row items-center justify-center space-x-11 bg-[url('/profile/artifact-bg.webp')] bg-contain bg-center py-3"
             style={{ backgroundSize: "100% 100%" }}
           >
-            {[1, 2, 3].map((num) => (
+            {[0, 1, 2].map((num) => (
               <div
                 key={num}
-                className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-black text-white"
-                onClick={() => openArtifactModal(num)}
+                className={`flex h-16 w-16 cursor-pointer items-center justify-center rounded-full text-white ${
+                  findSelectedArtifact(num) ? 'bg-[#ECF0F6]/50' : 'bg-black' // Replace colors as needed
+                }`}
+                onClick={() => openArtifactModal()}
               >
-                {num}
+                {findSelectedArtifact(num) && <img src={`/images/item${findSelectedArtifact(num)}.png`} className="w-[80%] h-[80%]"/>}
+                {!findSelectedArtifact(num) && <img src="/profile/question.webp"  className="w-[60%] h-[60%]"/>}
               </div>
             ))}
           </div>
@@ -249,7 +277,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Modal isOpen={isModalOpen} onClose={closeModal} items={items} />
     </div>
   );
 }
