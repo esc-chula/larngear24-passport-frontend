@@ -2,7 +2,7 @@ import CommentBox from "./CommentBox";
 import { useEffect, useState } from "react";
 import getShortedBaanName from "@/libs/getShortedBaanName";
 import { axiosClient } from "@/libs/axios";
-import { useSession, status } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 interface User {
   username: string;

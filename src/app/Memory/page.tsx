@@ -4,12 +4,46 @@ import Banner from "@/components/memory/Banner";
 import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentSection from "@/components/memory/CommentSection";
 import Phase2Photo from "@/components/memory/Phase2Photo";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+
+interface UserData{
+      user_id: string,
+      username: string,
+      baan: string,
+      image: string,
+      email: string,
+      dresses: number,
+      items: number,
+} 
 
 export default function Memory() {
   const [showAddYours, setShowAddYours] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserData>();
+  const { data: session, status } = useSession();
+  useEffect(()=>{
+    async function fetchUserProfile(){
+      try {
+        const response = await axiosClient.get<UserData>(
+          `${process.env.NEXT_PUBLIC_API_URL}/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.user.id}`,
+            },
+          },
+        )
+        setUserInfo(response.data)
+
+      } catch (error) {
+        console.error("Error fetching:", error);
+      }
+    }
+    fetchUserProfile()
+    
+  },[session,status])
   return (
     <>
       <div className="bg-gradient-to-b from-[#33a1be] via-[#436797] to-[#9b446f] pb-4 text-[#ECF0F6]">
@@ -44,8 +78,9 @@ export default function Memory() {
           close={() => {
             setShowAddYours(false);
           }}
-          name={"name"}
-          house={"house"}
+          name={userInfo?.username ?? ""}
+          house={userInfo?.baan ?? ""}
+          imgUrl={userInfo?.image ?? ""}
         />
 
         {/* Photo after finish camp */}

@@ -6,17 +6,32 @@ import { useSession } from "next-auth/react";
 function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
+interface User {
+  username: string;
+  baan: number;
+  imageUrl: string;
+}
+
+interface RawMessage {
+  message_id: string;
+  user_id: string;
+  message: string;
+  createdAt: string;
+  user: User;
+}
 
 const AddYours = ({
   open,
   close,
   name,
   house,
+  imgUrl,
 }: {
   open: boolean;
   close: () => void;
   name: string;
   house: string;
+  imgUrl: string;
 }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
