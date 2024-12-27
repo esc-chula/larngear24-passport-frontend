@@ -6,6 +6,8 @@ import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
 import Model from "@/components/profileComponents/Model";
 
+
+
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -14,10 +16,11 @@ type ModalProps = {
     name: string;
     isLocked: boolean;
   }[];
-  addArtifact: (item:string) => void;
+  handleArtifactChange: (artifact: string) => void;
+  isSelectedArtifact: (artifact: string) => number;
 };
 
-function Modal({ isOpen, onClose, items, addArtifact }: ModalProps) {
+function Modal({ isOpen, onClose, items, handleArtifactChange, isSelectedArtifact}: ModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -33,7 +36,7 @@ function Modal({ isOpen, onClose, items, addArtifact }: ModalProps) {
         </div>
 
         <div className="p-4 text-center">
-          <ItemsGrid items={items} addArtifact={addArtifact} />
+          <ItemsGrid items={items} handleArtifactChange={handleArtifactChange} isSelectedArtifact={isSelectedArtifact}/>
         </div>
       </div>
     </div>
@@ -46,7 +49,12 @@ type Item = {
   isLocked: boolean;
 };
 
-function ItemsGrid({ items, addArtifact }: { items: Item[]; addArtifact: (item: string) => void }) {
+function ItemsGrid({ items, handleArtifactChange, isSelectedArtifact }: { items: Item[], handleArtifactChange: (artifact: string) => void, isSelectedArtifact: (artifact: string) => number; }) {
+
+  const handleClick = (item: Item) => {
+    if(item.isLocked) return;
+    handleArtifactChange(item.id);
+  }
   return (
     <div
       className="grid h-72 w-full grid-cols-3 justify-center justify-items-center bg-[#ECF0F6]/80"
@@ -61,19 +69,31 @@ function ItemsGrid({ items, addArtifact }: { items: Item[]; addArtifact: (item: 
       {items.map((item) => (
         <div
           key={item.id}
-          className={`mx-2 my-2.5 flex h-28 w-24 flex-col items-center justify-center bg-[#36465F]`}
+          className={`mx-2 my-2.5 relative flex h-28 w-24 flex-col items-center justify-center bg-[#36465F] cursor-pointer
+            ${isSelectedArtifact(item.id) !== -1 ? "border-pink-500 border-4" : "border-transparent border"}`}
           style={{ minHeight: "100px" }}
-          onClick={() => addArtifact(item.id)}
+          onClick={() => handleClick(item)}
         >
-          {item.isLocked && (
-            <img
-              src="/profile/locked.webp"
-              alt="Locked"
-              className="h-[30%] w-[30%] object-contain"
-            />
+          {isSelectedArtifact(item.id) !== -1 && (
+            <div className="absolute top-1 right-1 text-lg text-[#ECF0F6] font-sans font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              {isSelectedArtifact(item.id) + 1}
+            </div>
           )}
 
-          {!item.isLocked &&  <img src={`/images/item${item.id}.png`} alt={`${item.id}`} />}
+
+          {item.isLocked ? (
+          <img
+            src="/profile/locked.webp"
+            alt="Locked"
+            className="h-[30%] w-[30%] object-contain"
+          />
+          ) : (
+          <img
+            src={`/images/item${item.id}.png`}
+            alt={`Item ${item.id}`}
+            className="object-contain"
+          />
+      )}
         </div>
       ))}
     </div>
@@ -83,20 +103,28 @@ function ItemsGrid({ items, addArtifact }: { items: Item[]; addArtifact: (item: 
 export default function Profile() {
   const [name, setName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedArtifacts, setSelectedArtifacts] = useState<string[]>(['8','1','2']);
+  const [selectedArtifacts, setSelectedArtifacts] = useState<(string|null)[]>([null, null, null]);
 
-  function addArtifact (artifact: string) {
-    setSelectedArtifacts((prev) => {
-      const updated = [...prev, artifact];
-      return updated.slice(-3);
-    });
-  };
+  const handleArtifactChange = (artifact: string) => {
+    if(activeArtifact!==null && selectedArtifacts[activeArtifact]===artifact) {
+      let tmpSelectedArtifacts = selectedArtifacts;
+      if(activeArtifact!==null) tmpSelectedArtifacts[activeArtifact] = null;
+      setSelectedArtifacts(tmpSelectedArtifacts);
+      return;
+    }
+    for(const selected of selectedArtifacts) {
+      if(selected===artifact) return;
+    }
+    let tmpSelectedArtifacts = selectedArtifacts;
+    if(activeArtifact!==null) tmpSelectedArtifacts[activeArtifact] = artifact;
+    setSelectedArtifacts(tmpSelectedArtifacts);
+  }
 
   const isSelectedArtifact = (artifact: string) => {
     for(let i=0;i<selectedArtifacts.length;i++) {
       if(selectedArtifacts[i]===artifact) return i;
     }
-    return null;
+    return -1;
   }
 
   const findSelectedArtifact = (index: number) => {
@@ -194,6 +222,13 @@ export default function Profile() {
     setIsModalOpen(false);
   };
 
+  const [activeArtifact, setActiveArtifact] = useState<number|null>(null);
+
+  const handleClickArtifact = (num: number) => {
+    setIsModalOpen(true);
+    setActiveArtifact(num);
+  }
+
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] md:mx-auto md:max-w-[25rem]">
       <Header />
@@ -257,7 +292,7 @@ export default function Profile() {
                 className={`flex h-16 w-16 cursor-pointer items-center justify-center rounded-full text-white ${
                   findSelectedArtifact(num) ? 'bg-[#ECF0F6]/50' : 'bg-black' // Replace colors as needed
                 }`}
-                onClick={() => openArtifactModal()}
+                onClick={() => handleClickArtifact(num)}
               >
                 {findSelectedArtifact(num) && <img src={`/images/item${findSelectedArtifact(num)}.png`} className="w-[80%] h-[80%]"/>}
                 {!findSelectedArtifact(num) && <img src="/profile/question.webp"  className="w-[60%] h-[60%]"/>}
@@ -271,7 +306,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} items={items} addArtifact={addArtifact} />
+      <Modal isOpen={isModalOpen} onClose={closeModal} items={items} handleArtifactChange={handleArtifactChange} isSelectedArtifact={isSelectedArtifact}/>
     </div>
   );
 }
