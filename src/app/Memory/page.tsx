@@ -1,5 +1,7 @@
 "use client";
+"use client";
 import AddYours from "@/components/memory/AddYours";
+import Banner from "@/components/memory/Banner";
 import Banner from "@/components/memory/Banner";
 import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
@@ -63,7 +65,19 @@ export default function Memory() {
           อยากฝากอะไรถึง LG24 ?
         </div>
         <CommentSection />
+        <div className="item-center mb-3 mt-8 flex justify-center font-ibm text-xl font-bold">
+          อยากฝากอะไรถึง LG24 ?
+        </div>
+        <CommentSection />
 
+        <div className="grid justify-items-end">
+          <button
+            className="w-29.6 h-6.8 m-2 flex space-x-4 rounded-lg bg-gradient-to-b from-[#092B44] from-0% to-[#D2CAFF] to-90% p-1 text-white"
+            onClick={() => setShowAddYours(true)}
+          >
+            <Pencil></Pencil> &nbsp;Add yours
+          </button>
+        </div>
         <div className="grid justify-items-end">
           <button
             className="w-29.6 h-6.8 m-2 flex space-x-4 rounded-lg bg-gradient-to-b from-[#092B44] from-0% to-[#D2CAFF] to-90% p-1 text-white"

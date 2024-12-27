@@ -31,15 +31,15 @@ export const authConfig = {
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
-      profile(profile) {               
+      profile(profile) {
         return {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-          id : profile.sub,
+          id: profile.sub,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-          image : profile.picture,
+          image: profile.picture,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-          email : profile.email,
-        }
+          email: profile.email,
+        };
       },
     }),
     /**
@@ -77,6 +77,6 @@ export const authConfig = {
         ...session.user,
         id: token.sub,
       },
-    })
+    }),
   },
 } satisfies NextAuthConfig;
