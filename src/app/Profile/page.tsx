@@ -22,6 +22,21 @@ export default function Profile() {
     null,
     null,
   ]);
+  const mockItems = [
+    { id: "1", name: "พิมพ์เขียวทะลุมิติ", isLocked: true },
+    { id: "2", name: "มิเตอร์สารพัดประโยชน์", isLocked: true },
+    { id: "3", name: "เครื่องวิเคราะห์ขนาดพกพา", isLocked: true },
+    { id: "4", name: "แผ่นพับสอดส่องเครื่องจักร", isLocked: true },
+    { id: "5", name: "ล็อกเก็ตสแกนองค์ประกอบ", isLocked: true },
+    { id: "6", name: "MagicBot", isLocked: true },
+    { id: "7", name: "อินเทอร์เน็ตไร้ขอบเขต", isLocked: true },
+    { id: "8", name: "เครื่องพิมพ์โลหะ 3D", isLocked: true },
+    { id: "9", name: "คีย์บอร์ดกระแสจิต", isLocked: true },
+    { id: "10", name: "ครัวซองวิเศษ", isLocked: true },
+    { id: "11", name: "กล่องวิเคราะห์แร่", isLocked: true },
+  ];
+  const [items, setItems] =
+    useState<{ id: string; name: string; isLocked: boolean }[]>(mockItems);
 
   const handleArtifactChange = (artifact: string) => {
     if (
@@ -72,39 +87,30 @@ export default function Profile() {
   // NEEN : fetch get/user  here
   const { data: session } = useSession();
   useEffect(() => {
+    if (!session) return;
     const handleGet = async () => {
       const response = await axiosClient.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/item`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user`,
         {
           headers: {
             Authorization: `Bearer ${session?.user.id}`,
           },
         },
       );
-      console.log(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const itemData: string[] = response.data.items;
+      const updatedItems = items.map((item) =>
+        itemData.includes(item.id) ? { ...item, isLocked: false } : item,
+      );
+      setItems(updatedItems);
     };
     void handleGet();
-  });
+  }, [session]);
 
   const user = {
     baan: 1,
     username: "test",
   };
-
-  // test item
-  const items = [
-    { id: "1", name: "Item 1", isLocked: false },
-    { id: "2", name: "Item 2", isLocked: false },
-    { id: "3", name: "Item 3", isLocked: false },
-    { id: "4", name: "Item 4", isLocked: true },
-    { id: "5", name: "Item 5", isLocked: false },
-    { id: "6", name: "Item 6", isLocked: false },
-    { id: "7", name: "Item 7", isLocked: true },
-    { id: "8", name: "Item 8", isLocked: false },
-    { id: "9", name: "Item 9", isLocked: false },
-    { id: "10", name: "Item 10", isLocked: false },
-    { id: "11", name: "Item 11", isLocked: false },
-  ];
 
   const [selectedParts, setSelectedParts] =
     useState<AvatarParts>(defaultAvatar);
