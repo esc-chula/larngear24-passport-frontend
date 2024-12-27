@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/globalComponents/Header";
 import Model from "@/components/profileComponents/Model";
 import Link from "next/link";
@@ -185,25 +185,7 @@ export default function Dress() {
       pant: "/model/pant/pant1.webp",
       shoes: "/model/shoes/shoes1.webp",
     };
-
-    const isLocalStorageAvailable =
-      typeof window !== "undefined" && window.localStorage && window;
-
-    if (!isLocalStorageAvailable) return defaultAvatar;
-
-    const savedAvatarString = localStorage.getItem("selectedParts");
-
-    let savedAvatar: AvatarParts | null = null;
-
-    if (savedAvatarString) {
-      try {
-        savedAvatar = JSON.parse(savedAvatarString) as AvatarParts;
-      } catch (error) {
-        return defaultAvatar;
-      }
-    }
-
-    return savedAvatar ?? defaultAvatar;
+    return defaultAvatar;
   });
 
   const handlePartSelection = (part: string, imgSrc: string | null) => {
@@ -212,6 +194,21 @@ export default function Dress() {
       return updatedParts;
     });
   };
+
+  useEffect(() => {
+    const isLocalStorageAvailable =
+      typeof window !== "undefined" && window.localStorage && window;
+    if (!isLocalStorageAvailable) return;
+    const selectedPart = localStorage.getItem("selectedParts");
+    if (selectedPart) {
+      try {
+        const parsedParts = JSON.parse(selectedPart);
+        setSelectedParts(parsedParts);
+      } catch (error) {
+        console.error("Failed to parse 'selectedParts' from localStorage:", error);
+      }
+    }
+    }, []);
 
   const handleConfirm = () => {
     const isLocalStorageAvailable =

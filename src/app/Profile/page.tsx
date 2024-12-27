@@ -14,9 +14,10 @@ type ModalProps = {
     name: string;
     isLocked: boolean;
   }[];
+  addArtifact: (item:string) => void;
 };
 
-function Modal({ isOpen, onClose, items }: ModalProps) {
+function Modal({ isOpen, onClose, items, addArtifact }: ModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -32,7 +33,7 @@ function Modal({ isOpen, onClose, items }: ModalProps) {
         </div>
 
         <div className="p-4 text-center">
-          <ItemsGrid items={items} />
+          <ItemsGrid items={items} addArtifact={addArtifact} />
         </div>
       </div>
     </div>
@@ -45,7 +46,7 @@ type Item = {
   isLocked: boolean;
 };
 
-function ItemsGrid({ items }: { items: Item[] }) {
+function ItemsGrid({ items, addArtifact }: { items: Item[]; addArtifact: (item: string) => void }) {
   return (
     <div
       className="grid h-72 w-full grid-cols-3 justify-center justify-items-center bg-[#ECF0F6]/80"
@@ -62,6 +63,7 @@ function ItemsGrid({ items }: { items: Item[] }) {
           key={item.id}
           className={`mx-2 my-2.5 flex h-28 w-24 flex-col items-center justify-center bg-[#36465F]`}
           style={{ minHeight: "100px" }}
+          onClick={() => addArtifact(item.id)}
         >
           {item.isLocked && (
             <img
@@ -83,7 +85,7 @@ export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArtifacts, setSelectedArtifacts] = useState<string[]>(['8','1','2']);
 
-  const addArtifact = (artifact: string) => {
+  function addArtifact (artifact: string) {
     setSelectedArtifacts((prev) => {
       const updated = [...prev, artifact];
       return updated.slice(-3);
@@ -104,7 +106,7 @@ export default function Profile() {
     return null;
   }
 
-  const [baanNumber, setBaanNumber] = useState(1);
+  const [baanNumber, setBaanNumber] = useState('1');
 
   const baanName = {
     '1': 'ติดตลก', '2': 'ติดเตียง', '3': 'ติดบั๊ก', '4': 'ติดลิฟต์', 
@@ -153,24 +155,7 @@ export default function Profile() {
       shoes: "/model/shoes/shoes1.webp",
     };
 
-    const isLocalStorageAvailable =
-      typeof window !== "undefined" && window.localStorage && window;
-
-    if (!isLocalStorageAvailable) return defaultAvatar;
-
-    const savedAvatarString = localStorage.getItem("selectedParts");
-
-    let savedAvatar: AvatarParts | null = null;
-
-    if (savedAvatarString) {
-      try {
-        savedAvatar = JSON.parse(savedAvatarString) as AvatarParts;
-      } catch (error) {
-        return defaultAvatar;
-      }
-    }
-
-    return savedAvatar ?? defaultAvatar;
+    return defaultAvatar;
   });
 
   useEffect(() => {
@@ -179,6 +164,15 @@ export default function Profile() {
     if (!isLocalStorageAvailable) return;
     const savedName = localStorage.getItem("name");
     if (savedName) setName(savedName);
+    const selectedPart = localStorage.getItem("selectedParts");
+  if (selectedPart) {
+    try {
+      const parsedParts = JSON.parse(selectedPart);
+      setSelectedParts(parsedParts);
+    } catch (error) {
+      console.error("Failed to parse 'selectedParts' from localStorage:", error);
+    }
+  }
   }, []);
 
   const handleSaveName = () => {
@@ -230,7 +224,7 @@ export default function Profile() {
               </div>
               <div className="flex w-[100%] flex-col items-center justify-center space-y-4">
                 <div className="h-5 w-24 rounded-md bg-[#ECF0F6] text-center text-sm font-semibold font-ibm">
-                  บ้าน{baanName[baanNumber]}
+                  บ้าน{baanName[baanNumber as keyof typeof baanName]}
                 </div>
                 <div className="flex h-72 flex-col items-center justify-center">
                   <img src={`/flags/${baanNumber}.webp`} className="overflow-hidden"></img>
@@ -277,7 +271,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} items={items} />
+      <Modal isOpen={isModalOpen} onClose={closeModal} items={items} addArtifact={addArtifact} />
     </div>
   );
 }
