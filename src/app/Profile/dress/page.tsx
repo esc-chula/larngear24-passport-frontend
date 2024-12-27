@@ -16,7 +16,7 @@ export default function Dress() {
     useState<AvatarParts>(defaultAvatar);
 
   const handlePartSelection = (part: string, imgSrc: string | null) => {
-    if(part === 'dress' && selectedParts['dress'] === imgSrc) imgSrc = null; 
+    if (part === "dress" && selectedParts.dress === imgSrc) imgSrc = null;
     setSelectedParts((prevState) => {
       const updatedParts = { ...prevState, [part]: imgSrc };
       return updatedParts;

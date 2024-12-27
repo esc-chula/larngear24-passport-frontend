@@ -6,13 +6,22 @@ import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
 import { toPng } from "html-to-image";
 import Modal from "@/components/profileComponents/modal";
-import type { Artifacts, AvatarParts } from "@/components/profileComponents/profileType";
+import type {
+  Artifacts,
+  AvatarParts,
+} from "@/components/profileComponents/profileType";
 import { defaultAvatar } from "@/components/profileComponents/defaultAvatar";
 import { MainProfile } from "@/components/profileComponents/mainProfile";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
 
 export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedArtifacts, setSelectedArtifacts] = useState<Artifacts>([null, null, null]);
+  const [selectedArtifacts, setSelectedArtifacts] = useState<Artifacts>([
+    null,
+    null,
+    null,
+  ]);
 
   const handleArtifactChange = (artifact: string) => {
     if (
@@ -25,7 +34,10 @@ export default function Profile() {
       setIsModalOpen(false);
 
       // update localstorage
-      localStorage.setItem('selectedArtifacts', JSON.stringify(tmpSelectedArtifacts));
+      localStorage.setItem(
+        "selectedArtifacts",
+        JSON.stringify(tmpSelectedArtifacts),
+      );
       return;
     }
     for (const selected of selectedArtifacts) {
@@ -37,7 +49,10 @@ export default function Profile() {
     setSelectedArtifacts(tmpSelectedArtifacts);
     setIsModalOpen(false);
     // update localstorage
-    localStorage.setItem('selectedArtifacts', JSON.stringify(tmpSelectedArtifacts));
+    localStorage.setItem(
+      "selectedArtifacts",
+      JSON.stringify(tmpSelectedArtifacts),
+    );
   };
 
   const isSelectedArtifact = (artifact: string) => {
@@ -55,6 +70,22 @@ export default function Profile() {
   };
 
   // NEEN : fetch get/user  here
+  const { data: session } = useSession();
+  useEffect(() => {
+    const handleGet = async () => {
+      const response = await axiosClient.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/item`,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.id}`,
+          },
+        },
+      );
+      console.log(response.data);
+    };
+    void handleGet();
+  });
+
   const user = {
     baan: 1,
     username: "test",
@@ -98,11 +129,10 @@ export default function Profile() {
       }
 
       // get artifacts
-      const tmpArtifacts = localStorage.getItem('selectedArtifacts')
-      if(tmpArtifacts) {
+      const tmpArtifacts = localStorage.getItem("selectedArtifacts");
+      if (tmpArtifacts) {
         try {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          
           const parsedArtifacts: Artifacts = JSON.parse(tmpArtifacts);
           console.log(tmpArtifacts);
           setSelectedArtifacts(parsedArtifacts);
@@ -132,24 +162,28 @@ export default function Profile() {
   const handleSaveAsImage = async () => {
     if (contentRef.current) {
       try {
-        const elementsToExcludeDisplay = contentRef.current.querySelectorAll('.exclude-from-screenshot');
+        const elementsToExcludeDisplay = contentRef.current.querySelectorAll(
+          ".exclude-from-screenshot",
+        );
         elementsToExcludeDisplay.forEach((el) => {
-          (el as HTMLElement).style.display = 'none';
+          (el as HTMLElement).style.display = "none";
         });
 
-        const elementsToExcludeOpacity = contentRef.current.querySelectorAll('.exclude-from-screenshot2');
+        const elementsToExcludeOpacity = contentRef.current.querySelectorAll(
+          ".exclude-from-screenshot2",
+        );
         elementsToExcludeOpacity.forEach((el) => {
-          (el as HTMLElement).style.opacity = '0';
+          (el as HTMLElement).style.opacity = "0";
         });
 
         const dataUrl = await toPng(contentRef.current);
 
         elementsToExcludeDisplay.forEach((el) => {
-          (el as HTMLElement).style.display = '';
+          (el as HTMLElement).style.display = "";
         });
 
         elementsToExcludeOpacity.forEach((el) => {
-          (el as HTMLElement).style.opacity = '';
+          (el as HTMLElement).style.opacity = "";
         });
         const link = document.createElement("a");
         link.download = "screenshot.png";
@@ -166,7 +200,10 @@ export default function Profile() {
       ref={contentRef}
       className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]"
     >
-      <div className="exclude-from-screenshot"> <Header /> </div>
+      <div className="exclude-from-screenshot">
+        {" "}
+        <Header />{" "}
+      </div>
       <div className="exclude-from-screenshot z-0 mx-7 flex items-start">
         <Link href="/">
           <img src="/arrow-left.webp" alt="Back" className="w-5" />
@@ -212,7 +249,10 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="exclude-from-screenshot w-30 flex justify-center" onClick={handleSaveAsImage}>
+        <div
+          className="exclude-from-screenshot w-30 flex justify-center"
+          onClick={handleSaveAsImage}
+        >
           <Button text="Save Image" imgSrc="./profile/download.webp" />
         </div>
       </div>
