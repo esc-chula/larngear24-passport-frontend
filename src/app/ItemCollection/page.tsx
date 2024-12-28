@@ -36,8 +36,10 @@ export default function ItemCollection() {
         // Log the API response for debugging
         console.log("API Response:", response.data);
 
-        // Safeguard against undefined or missing unlockedItems
-        const unlockedItemIds = response.data.items?.map(String) || [];
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const unlockedItemIds: string[] =
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+          response.data.items?.map(String) || [];
         console.log("Unlocked Item IDs:", unlockedItemIds);
 
         setUnlockedItems(unlockedItemIds);
@@ -47,7 +49,7 @@ export default function ItemCollection() {
     };
 
     if (session?.user?.id) {
-      fetchUnlockedItems();
+      void fetchUnlockedItems();
     }
   }, [session]);
 
@@ -102,7 +104,7 @@ export default function ItemCollection() {
               style={{ backgroundSize: `100% 100%` }}
             >
               <div
-                className={`items-center justify-center ${
+                className={`flex items-center justify-center ${
                   index === itemGroups.length - 1
                     ? "flex gap-x-4"
                     : "grid grid-cols-3"
@@ -114,12 +116,9 @@ export default function ItemCollection() {
                   return (
                     <div
                       key={item.id}
-                      className="flex h-full cursor-pointer flex-col items-center justify-between"
+                      className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-white bg-opacity-30 backdrop-blur-sm"
                       onClick={() => {
-                        const path = isUnlocked
-                          ? `/ItemCollection/${item.id}` // Correct dynamic route path
-                          : `/ItemCollection/unlock?name=${encodeURIComponent(item.name)}&image=${encodeURIComponent(item.image)}`;
-                        router.push(path);
+                        router.push(`/ItemCollection/${item.id}`);
                       }}
                     >
                       <Image
@@ -127,15 +126,10 @@ export default function ItemCollection() {
                           isUnlocked ? item.image : "/images/lockedItem.webp"
                         }
                         alt={item.name}
-                        width={60}
-                        height={60}
-                        className={`${
-                          !isUnlocked ? "opacity-50" : ""
-                        } rounded-md`}
+                        width={80}
+                        height={80}
+                        className={`${!isUnlocked ? "ml-1 mt-1 opacity-90" : "h-[85%] w-[85%]"}`}
                       />
-                      <p className="mt-2 justify-self-end truncate text-center text-sm text-gray-800">
-                        {item.name}
-                      </p>
                     </div>
                   );
                 })}
