@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import { getItemName, getDressName } from "@/libs/getItemName";
 
 const paramsMapping: Record<string, { itemId: number; image: string }> = {
   rMnWMTAfBTzfTK9: { itemId: 1, image: "/images/item1.png" },
@@ -115,8 +116,8 @@ export default function UnlockPage() {
             </div>
 
             {/* Item Name */}
-            <p className="text-lg text-gray-200">
-              {itemDetails ? `Unlocked: Item ${itemDetails.itemId}` : ""}
+            <p className="text-center text-lg font-bold text-gray-200">
+              {itemDetails ? getItemName({ num: itemDetails.itemId }) : ""}
             </p>
           </div>
 
@@ -153,9 +154,9 @@ export default function UnlockPage() {
               )}
             </div>
 
-            {/* Item Name */}
-            <p className="text-lg text-gray-200">
-              {itemDetails ? `Unlocked: Item ${itemDetails.itemId}` : ""}
+            {/* TODO : change this to Dress*/}
+            <p className="text-center text-lg font-bold text-gray-200">
+              {itemDetails ? getDressName({ num: itemDetails.itemId }) : ""}
             </p>
           </div>
         </div>
