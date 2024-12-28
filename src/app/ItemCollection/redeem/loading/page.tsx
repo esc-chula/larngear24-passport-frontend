@@ -38,7 +38,7 @@ export default function LoadingPage() {
         {/* Loading Section */}
         <div className="flex flex-1 flex-col items-center justify-center space-y-6 px-4 py-8">
           <Image
-            src="/images/loading.png"
+            src="/images/loading.webp"
             alt="Loading Icon"
             width={500}
             height={500}

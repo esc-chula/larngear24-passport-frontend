@@ -44,10 +44,10 @@ export default async function ItemInfoPage({
             style={{
               width: "220px",
               height: "220px",
-              backgroundImage: "url('/images/item-bg-lg24.png')",
-              backgroundSize: "100% 100%", // Ensures the background scales correctly
+              backgroundImage: "url('/images/item-bg-lg24-2.png')",
+              backgroundSize: "100% 100%",
               backgroundPosition: "center",
-              borderRadius: "16px", // Adjust to match rounded corners
+              borderRadius: "16px",
             }}
           >
             <Image

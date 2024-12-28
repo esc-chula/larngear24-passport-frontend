@@ -96,8 +96,8 @@ export default function ItemCollection() {
               key={index}
               className={`${
                 index === itemGroups.length - 1
-                  ? "bg-[url('/images/itembg2.png')]"
-                  : "bg-[url('/images/itembg.png')]"
+                  ? "bg-[url('/images/itembg2.webp')]"
+                  : "bg-[url('/images/itembg.webp')]"
               } bg-center bg-no-repeat p-4 pt-6`}
               style={{ backgroundSize: `100% 100%` }}
             >
@@ -123,7 +123,9 @@ export default function ItemCollection() {
                       }}
                     >
                       <Image
-                        src={isUnlocked ? item.image : "/images/lockedItem.png"}
+                        src={
+                          isUnlocked ? item.image : "/images/lockedItem.webp"
+                        }
                         alt={item.name}
                         width={60}
                         height={60}

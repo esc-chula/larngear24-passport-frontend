@@ -4,17 +4,17 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 
 const paramsMapping: Record<string, { itemId: number; image: string }> = {
-  rMnWMTAfBTzfTK9: { itemId: 1, image: "/images/item1.png" },
-  ocFRssHrLR7LeDe: { itemId: 2, image: "/images/item2.png" },
-  "20bWAnzQvoVlxOF": { itemId: 3, image: "/images/item3.png" },
-  c2teVPwYLGzVcad: { itemId: 4, image: "/images/item4.png" },
-  LC0SgtQCC4MFhDI: { itemId: 5, image: "/images/item5.png" },
-  ZH5G5hLvAFW0IL6: { itemId: 6, image: "/images/item6.png" },
-  cU7VwglZvJwbHnB: { itemId: 7, image: "/images/item7.png" },
-  BU3BBh9TwAwkeNd: { itemId: 8, image: "/images/item8.png" },
-  "0VeiMjItHVKRCxx": { itemId: 9, image: "/images/item9.png" },
-  mB8iOEoEGfk6Ydm: { itemId: 10, image: "/images/item10.png" },
-  oi2XFECbb9Alogn: { itemId: 11, image: "/images/item11.png" },
+  rMnWMTAfBTzfTK9: { itemId: 1, image: "/images/item1.webp" },
+  ocFRssHrLR7LeDe: { itemId: 2, image: "/images/item2.webp" },
+  "20bWAnzQvoVlxOF": { itemId: 3, image: "/images/item3.webp" },
+  c2teVPwYLGzVcad: { itemId: 4, image: "/images/item4.webp" },
+  LC0SgtQCC4MFhDI: { itemId: 5, image: "/images/item5.webp" },
+  ZH5G5hLvAFW0IL6: { itemId: 6, image: "/images/item6.webp" },
+  cU7VwglZvJwbHnB: { itemId: 7, image: "/images/item7.webp" },
+  BU3BBh9TwAwkeNd: { itemId: 8, image: "/images/item8.webp" },
+  "0VeiMjItHVKRCxx": { itemId: 9, image: "/images/item9.webp" },
+  mB8iOEoEGfk6Ydm: { itemId: 10, image: "/images/item10.webp" },
+  oi2XFECbb9Alogn: { itemId: 11, image: "/images/item11.webp" },
 };
 
 export default function UnlockPage() {
@@ -22,7 +22,6 @@ export default function UnlockPage() {
   const router = useRouter();
   const param = searchParams.get("param");
 
-  // Get item details from the mapping
   const itemDetails = param ? paramsMapping[param] : null;
 
   return (
@@ -56,7 +55,7 @@ export default function UnlockPage() {
 
           {/* "New Items" Image */}
           <Image
-            src="/images/newitem.png"
+            src="/images/newitem.webp"
             alt="New Items"
             width={250}
             height={80}
@@ -65,7 +64,7 @@ export default function UnlockPage() {
 
           {/* Second Image */}
           <Image
-            src="/images/unlocked.png"
+            src="/images/unlocked.webp"
             alt="Unlocked Badge"
             width={200}
             height={60}
@@ -77,8 +76,8 @@ export default function UnlockPage() {
         <div
           className="grid grid-cols-2 gap-x-4 px-10 py-10"
           style={{
-            justifyItems: "center", // Centers the items horizontally in each column
-            marginTop: "20px", // Adjust margin if needed
+            justifyItems: "center",
+            marginTop: "20px",
           }}
         >
           {/* First Item Section */}
@@ -89,7 +88,7 @@ export default function UnlockPage() {
               style={{
                 width: "170px",
                 height: "170px",
-                backgroundImage: "url('/images/bg-item-unlock.png')",
+                backgroundImage: "url('/images/bg-item-unlock-overlay.webp')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -124,7 +123,7 @@ export default function UnlockPage() {
               style={{
                 width: "170px",
                 height: "170px",
-                backgroundImage: "url('/images/bg-item-unlock.png')",
+                backgroundImage: "url('/images/bg-item-unlock-overlay.webp')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -159,7 +158,7 @@ export default function UnlockPage() {
             onClick={() => router.push("/ItemCollection")}
           >
             <Image
-              src="/images/Tap to Continue.png" // Replace with the correct path
+              src="/images/Tap to Continue.webp"
               alt="Tap to Continue"
               width={200}
               height={50}
