@@ -32,8 +32,6 @@ export default function LoadingPage() {
             },
           },
         );
-        console.log(response);
-
         if (response.status.toString() != "200") {
           throw new Error("can't fetch");
         }
@@ -43,7 +41,7 @@ export default function LoadingPage() {
     } catch {
       router.push("/ItemCollection");
     }
-  }, [searchParams, router]);
+  }, [searchParams]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">

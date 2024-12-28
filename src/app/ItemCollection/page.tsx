@@ -118,10 +118,7 @@ export default function ItemCollection() {
                       key={item.id}
                       className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-white bg-opacity-30 backdrop-blur-sm"
                       onClick={() => {
-                        const path = isUnlocked
-                          ? `/ItemCollection/${item.id}` // Correct dynamic route path
-                          : `/ItemCollection/unlock?name=${encodeURIComponent(item.name)}&image=${encodeURIComponent(item.image)}`;
-                        router.push(path);
+                        router.push(`/ItemCollection/${item.id}`);
                       }}
                     >
                       <Image

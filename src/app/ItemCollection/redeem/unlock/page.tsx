@@ -11,6 +11,8 @@ export default function UnlockPage() {
 
   // Get item details from the mapping
   const itemDetails = param ? paramsMapping[param] : null;
+  console.log(param);
+  console.log(itemDetails);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
@@ -135,7 +137,7 @@ export default function UnlockPage() {
                   alt="loading icon"
                   width={50}
                   height={50}
-                  className="-z-50 animate-spin rounded-lg"
+                  className="animate-spin rounded-lg"
                 />
               )}
             </div>
