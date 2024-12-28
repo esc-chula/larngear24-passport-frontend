@@ -3,21 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { getItemName, getDressName } from "@/libs/getItemName";
-
-const paramsMapping: Record<string, { itemId: number; image: string }> = {
-  rMnWMTAfBTzfTK9: { itemId: 1, image: "/images/item1.png" },
-  ocFRssHrLR7LeDe: { itemId: 2, image: "/images/item2.png" },
-  "20bWAnzQvoVlxOF": { itemId: 3, image: "/images/item3.png" },
-  c2teVPwYLGzVcad: { itemId: 4, image: "/images/item4.png" },
-  LC0SgtQCC4MFhDI: { itemId: 5, image: "/images/item5.png" },
-  ZH5G5hLvAFW0IL6: { itemId: 6, image: "/images/item6.png" },
-  cU7VwglZvJwbHnB: { itemId: 7, image: "/images/item7.png" },
-  BU3BBh9TwAwkeNd: { itemId: 8, image: "/images/item8.png" },
-  "0VeiMjItHVKRCxx": { itemId: 9, image: "/images/item9.png" },
-  mB8iOEoEGfk6Ydm: { itemId: 10, image: "/images/item10.png" },
-  oi2XFECbb9Alogn: { itemId: 11, image: "/images/item11.png" },
-};
-
+import { paramsMapping } from "@/libs/getItemName";
 export default function UnlockPage() {
   const searchParams = useSearchParams();
   const router = useRouter();

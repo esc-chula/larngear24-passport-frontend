@@ -3,19 +3,44 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+import { paramsMapping } from "@/libs/getItemName";
 
 export default function LoadingPage() {
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
-    const param = searchParams.get("param");
+    try {
+      if (!session) return;
+      const param = searchParams.get("param") ?? "";
+      if (!param) throw new Error("param is null");
+      const item = paramsMapping[param]?.itemId;
 
-    if (param) {
-      setTimeout(() => {
+      const handdlePost = async () => {
+        const response = await axiosClient.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/item/redeem`,
+          {
+            items: [item],
+            dresses: [item?.toString()],
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${session?.user?.id}`,
+            },
+          },
+        );
+        console.log(response);
+
+        if (response.status.toString() != "200") {
+          throw new Error("can't fetch");
+        }
         router.push(`/ItemCollection/redeem/unlock?param=${param}`);
-      }, 5000);
-    } else {
+      };
+      void handdlePost();
+    } catch {
       router.push("/ItemCollection");
     }
   }, [searchParams, router]);
