@@ -1,10 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { getItemName, getDressName } from "@/libs/getItemName";
 import { paramsMapping } from "@/libs/getItemName";
-export default function UnlockPage() {
+
+function UnlockPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const param = searchParams.get("param");
@@ -109,7 +111,7 @@ export default function UnlockPage() {
               style={{
                 wordWrap: "break-word",
                 overflowWrap: "break-word",
-                whiteSpace: "normal", // Ensures multi-line wrapping
+                whiteSpace: "normal",
               }}
             >
               {itemDetails ? getItemName({ num: itemDetails.itemId }) : ""}
@@ -170,5 +172,13 @@ export default function UnlockPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function UnlockPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <UnlockPageContent />
+    </Suspense>
   );
 }

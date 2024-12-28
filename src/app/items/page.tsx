@@ -24,6 +24,8 @@ export default function ItemCollection() {
   useEffect(() => {
     const fetchUnlockedItems = async () => {
       try {
+        console.log("API URL:", `${process.env.NEXT_PUBLIC_API_URL}/user`);
+
         const response = await axiosClient.get(
           `${process.env.NEXT_PUBLIC_API_URL}/user`,
           {
