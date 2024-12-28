@@ -30,7 +30,7 @@ export default function Model({ selectedParts }: ModelProps) {
     eye: 8,
     eyebrow: 9,
     hair: 10,
-    dress: 11
+    dress: 11,
   };
 
   return (
@@ -46,13 +46,12 @@ export default function Model({ selectedParts }: ModelProps) {
             className="part-container"
             style={{ zIndex: zIndexMap[partKey] }}
           >
-            <Image 
-              className="part-img" 
-              src={imageSrc} 
-              alt={partKey} 
-              layout="fill"
-              objectFit="contain"
-              priority={partKey === "skin"}
+            <Image
+              src={imageSrc}
+              className="part-img"
+              alt={partKey}
+              width={500}
+              height={500}
             />
           </div>
         );
@@ -66,6 +65,11 @@ export default function Model({ selectedParts }: ModelProps) {
           justify-content: center;
           align-items: center;
           height: 100%;
+        }
+        .part-img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
       `}</style>
     </div>

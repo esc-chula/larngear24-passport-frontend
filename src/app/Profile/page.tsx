@@ -234,14 +234,19 @@ export default function Profile() {
                 onClick={() => handleClickArtifact(num)}
               >
                 {findSelectedArtifact(num) && (
-                  <Image src={`/images/item${findSelectedArtifact(num)}.png`} alt="artifact" width={50} height={50} />
+                  <Image
+                    src={`/images/item${findSelectedArtifact(num)}.png`}
+                    alt="artifact"
+                    width={50}
+                    height={50}
+                  />
                 )}
                 {!findSelectedArtifact(num) && (
                   <Image
                     src="/profile/question.webp"
                     alt="Question"
                     className="h-[60%] w-[60%]"
-                    width={60} 
+                    width={60}
                     height={60}
                   />
                 )}

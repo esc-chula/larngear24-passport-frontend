@@ -24,7 +24,7 @@ export default async function ItemInfoPage({
             src="/images/Header.svg"
             alt="Header"
             layout="fill"
-            objectFit="cover"
+            style={{ objectFit: "contain" }}
             className="rounded-t-lg"
           />
         </div>
