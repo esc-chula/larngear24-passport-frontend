@@ -1,4 +1,4 @@
-import { AvatarParts } from "./profileType";
+import type { AvatarParts } from "./profileType";
 
 export const defaultAvatar: AvatarParts = {
   skin: "/model/skin/skin1.webp",

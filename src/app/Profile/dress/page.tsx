@@ -13,6 +13,7 @@ import ItemsGrid from "@/components/profileComponents/DressItemGrid";
 import Tabs from "@/components/profileComponents/Tabs";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Dress() {
   const [items, setItems] = useState<Record<string, item>>(mockDress);
@@ -94,7 +95,7 @@ export default function Dress() {
       <Header />
       <div className="mx-7 flex items-start">
         <Link href="/Profile">
-          <img src="/arrow-left.webp" alt="Back" className="w-5" />
+          <Image src="/arrow-left.webp" alt="Back" width={20} height={20} />
         </Link>
       </div>
 

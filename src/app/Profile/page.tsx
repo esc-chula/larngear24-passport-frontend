@@ -15,6 +15,7 @@ import { MainProfile } from "@/components/profileComponents/mainProfile";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import { mockItems } from "@/components/profileComponents/mockData";
+import Image from "next/image";
 
 export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,7 +106,7 @@ export default function Profile() {
       });
     };
     void handleGet();
-  }, [session]);
+  }, [session, items]);
 
   const [selectedParts, setSelectedParts] =
     useState<AvatarParts>(defaultAvatar);
@@ -206,7 +207,7 @@ export default function Profile() {
 
       <div className="exclude-from-screenshot z-0 mx-7 flex items-start">
         <Link href="/">
-          <img src="/arrow-left.webp" alt="Back" className="w-5" />
+          <Image src="/arrow-left.webp" alt="Back" width={20} height={20} />
         </Link>
       </div>
       <div className="flex flex-1 flex-col justify-center space-y-2.5">
@@ -233,15 +234,15 @@ export default function Profile() {
                 onClick={() => handleClickArtifact(num)}
               >
                 {findSelectedArtifact(num) && (
-                  <img
-                    src={`/images/item${findSelectedArtifact(num)}.png`}
-                    className="h-[80%] w-[80%]"
-                  />
+                  <Image src={`/images/item${findSelectedArtifact(num)}.png`} alt="artifact" width={50} height={50} />
                 )}
                 {!findSelectedArtifact(num) && (
-                  <img
+                  <Image
                     src="/profile/question.webp"
+                    alt="Question"
                     className="h-[60%] w-[60%]"
+                    width={60} 
+                    height={60}
                   />
                 )}
               </div>

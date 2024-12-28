@@ -1,4 +1,5 @@
-import { Item } from "./profileType";
+import type { Item } from "./profileType";
+import Image from "next/image";
 
 export default function ItemsGrid({
   items,
@@ -38,16 +39,20 @@ export default function ItemsGrid({
           )}
 
           {item.isLocked ? (
-            <img
+            <Image
               src="/profile/locked.webp"
               alt="Locked"
               className="h-[30%] w-[30%] object-contain"
+              width={30}
+              height={30}
             />
           ) : (
-            <img
+            <Image
               src={`/images/item${item.id}.png`}
               alt={`Item ${item.id}`}
               className="object-contain"
+              width={100} 
+              height={100}
             />
           )}
         </div>

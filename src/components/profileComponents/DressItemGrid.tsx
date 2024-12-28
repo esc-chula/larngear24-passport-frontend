@@ -1,4 +1,5 @@
 import type { element, item } from "./defaultAvatar";
+import Image from "next/image";
 
 export default function ItemsGrid({
   items,
@@ -59,16 +60,14 @@ export default function ItemsGrid({
         >
           {/* Render image */}
           {item.isLocked ? (
-            <img
-              src="/profile/locked.webp"
-              alt="Locked"
-              className="h-[30%] w-[30%] object-contain"
-            />
+            <Image src="/profile/locked.webp" alt="locked" width={30} height={30} />
           ) : (
-            <img
+            <Image
               src={item.imageSrc.replace("/model", "/model/full-scale")}
               alt={`Item ${item.id}`}
               className="h-[80%] w-[80%] object-contain"
+              width={80} // Adjust the width and height based on your requirements
+              height={80}
             />
           )}
         </div>

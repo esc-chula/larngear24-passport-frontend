@@ -3,6 +3,7 @@ import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
+import Image from "next/image";
 
 export const ShowName = ({ username }: { username: string }) => {
   const [name, setName] = useState(username);
@@ -68,7 +69,13 @@ export const ShowName = ({ username }: { username: string }) => {
               setChange(true);
             }}
           >
-            <img src="/profile/pencil.webp" className="w-3/5" />
+            <Image 
+              src="/profile/pencil.webp" 
+              alt="Pencil" 
+              className="w-3/5"
+              width={60} // Replace with appropriate dimensions
+              height={60} // Replace with appropriate dimensions
+            />
           </div>
         </>
       )}

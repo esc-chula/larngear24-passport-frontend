@@ -1,4 +1,4 @@
-import { item } from "./defaultAvatar";
+import type { item } from "./defaultAvatar";
 
 const skin = Array.from({ length: 8 }, (_, i) => ({
   id: `skin${i + 1}`,

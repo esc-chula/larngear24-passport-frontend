@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type SelectedParts = Record<
   | "skin"
   | "hair"
@@ -44,7 +46,14 @@ export default function Model({ selectedParts }: ModelProps) {
             className="part-container"
             style={{ zIndex: zIndexMap[partKey] }}
           >
-            <img className="part-img" src={imageSrc} alt={partKey} />
+            <Image 
+              className="part-img" 
+              src={imageSrc} 
+              alt={partKey} 
+              layout="fill"
+              objectFit="contain"
+              priority={partKey === "skin"}
+            />
           </div>
         );
       })}
@@ -57,11 +66,6 @@ export default function Model({ selectedParts }: ModelProps) {
           justify-content: center;
           align-items: center;
           height: 100%;
-        }
-        .part-img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
         }
       `}</style>
     </div>

@@ -2,6 +2,7 @@ import getShortedBaanName from "@/libs/getShortedBaanName";
 import { ShowName } from "./showName";
 import Link from "next/link";
 import Model, { type SelectedParts } from "./model";
+import Image from "next/image";
 
 export const MainProfile = ({
   baanNumber,
@@ -22,16 +23,24 @@ export const MainProfile = ({
               บ้าน{getShortedBaanName(baanNumber)}
             </div>
             <div className="flex h-72 flex-col items-center justify-center">
-              <img
+              <Image
                 src={`/flags/${baanNumber}.webp`}
+                alt={`Flag for baan number ${baanNumber+1}`}
                 className="overflow-hidden"
-              ></img>
+                width={150} 
+                height={0} 
+              />
             </div>
           </div>
         </div>
       </div>
       <div className="flex basis-1/3 flex-col items-center justify-center space-y-4">
-        <img src="/profile/stamp.webp" alt="stamp" />
+        <Image
+          src="/profile/stamp.webp"
+          alt="Stamp"
+          width={150} 
+          height={150}
+        />
         <div className="relative z-50 flex h-6 w-20 items-center justify-center rounded-lg bg-[#ECF0F6] font-sans text-sm font-semibold">
           <Link href="/Profile/dress" className="pointer-events-auto">
             fashion

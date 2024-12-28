@@ -1,5 +1,6 @@
 import ItemsGrid from "./itemGrid";
-import { ModalProps } from "./profileType";
+import type { ModalProps } from "./profileType";
+import Image from "next/image";
 
 export default function Modal({
   isOpen,
@@ -17,7 +18,13 @@ export default function Modal({
             Choose your artifacts
           </p>
           <button onClick={onClose} className="absolute right-5">
-            <img src="./profile/cross.webp" alt="X" className="h-full w-full" />
+            <Image
+              src="./profile/cross.webp"
+              alt="X"
+              className="h-full w-full"
+              width={100} 
+              height={100}
+            />
           </button>
         </div>
 
