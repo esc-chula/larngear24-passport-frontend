@@ -3,6 +3,7 @@ import { rudeWords } from "../../constants/rudeWords";
 import { toast } from "@/hooks/use-toast";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
@@ -123,10 +124,7 @@ const AddYours = ({
           </button>
 
           <div className="relative left-[2.25rem] top-[4.75rem] mb-2 flex">
-            <img
-              src={imgUrl}
-              className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
-            ></img>
+            <Image src={imgUrl} className="h-[1.6rem] w-[1.6rem] rounded-full object-cover" alt="user profile"/>
             <div className="ml-2">
               {name} #{house}
             </div>

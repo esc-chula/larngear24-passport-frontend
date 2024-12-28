@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Banner from "./Banner";
 const Phase2Photo = () => {
   return (
@@ -52,10 +53,10 @@ const Phase2Photo = () => {
       </div>
       <div className="item-center m-4 flex justify-center">
         <div className="grid grid-cols-2 gap-4">
-          <img src="https://placehold.co/300x200"></img>
-          <img src="https://placehold.co/300x200"></img>
-          <img src="https://placehold.co/300x200"></img>
-          <img src="https://placehold.co/300x200"></img>
+          <Image src="https://placehold.co/300x200" alt="group image" />
+          <Image src="https://placehold.co/300x200" alt="group image" />
+          <Image src="https://placehold.co/300x200" alt="group image" />
+          <Image src="https://placehold.co/300x200" alt="group image" />
         </div>
       </div>
 

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Banner = ({
   imgUrl,
   googleDriveUrl,
@@ -8,7 +10,7 @@ const Banner = ({
   return (
     <>
       <a href={googleDriveUrl}>
-        <img src={imgUrl}></img>
+        <Image src={imgUrl ?? ""} alt="house banner"/>
       </a>
     </>
   );

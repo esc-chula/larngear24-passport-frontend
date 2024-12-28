@@ -1,15 +1,15 @@
 "use client";
-"use client";
 import AddYours from "@/components/memory/AddYours";
 import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CommentSection from "@/components/memory/CommentSection";
-import Phase2Photo from "@/components/memory/Phase2Photo";
+// import Phase2Photo from "@/components/memory/Phase2Photo";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import getShortedBaanName from "@/libs/getShortedBaanName";
+import Image from "next/image";
 
 interface UserData {
   user_id: string;
@@ -62,7 +62,7 @@ export default function Memory() {
           <div className="font-vimamsa text-4xl font-normal">Memory</div>
         </div>
         <div className="item-center mx-4 flex justify-center">
-          <img src="/memory/larngear_placeholder.webp" />
+          <Image src="/memory/larngear_placeholder.webp" alt="larngear_placholder"/>
         </div>
 
         <div className="item-center mb-3 mt-8 flex justify-center font-ibm text-xl font-bold">
