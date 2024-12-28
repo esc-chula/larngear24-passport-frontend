@@ -42,7 +42,6 @@ export default function LoadingPage() {
             alt="Loading Icon"
             width={500}
             height={500}
-            className="animate-spin"
           />
         </div>
       </div>

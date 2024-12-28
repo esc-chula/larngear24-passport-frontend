@@ -104,15 +104,19 @@ export default function UnlockPage() {
                   className="rounded-lg"
                 />
               ) : (
-                <p className="text-lg text-red-500">Invalid Item</p>
+                <Image
+                  src="/images/loadingIcon.png"
+                  alt="loading icon"
+                  width={50}
+                  height={50}
+                  className="animate-spin rounded-lg"
+                />
               )}
             </div>
 
             {/* Item Name */}
             <p className="text-lg text-gray-200">
-              {itemDetails
-                ? `Unlocked: Item ${itemDetails.itemId}`
-                : "Invalid Item"}
+              {itemDetails ? `Unlocked: Item ${itemDetails.itemId}` : ""}
             </p>
           </div>
 
@@ -139,21 +143,25 @@ export default function UnlockPage() {
                   className="rounded-lg"
                 />
               ) : (
-                <p className="text-lg text-red-500">Invalid Item</p>
+                <Image
+                  src="/images/loadingIcon.png"
+                  alt="loading icon"
+                  width={50}
+                  height={50}
+                  className="animate-spin rounded-lg"
+                />
               )}
             </div>
 
             {/* Item Name */}
             <p className="text-lg text-gray-200">
-              {itemDetails
-                ? `Unlocked: Item ${itemDetails.itemId}`
-                : "Invalid Item"}
+              {itemDetails ? `Unlocked: Item ${itemDetails.itemId}` : ""}
             </p>
           </div>
         </div>
 
         {/* Continue Button */}
-        <div className="mt-16 flex w-full items-center justify-center">
+        <div className="mt-4 flex w-full items-center justify-center">
           <div
             className="cursor-pointer"
             onClick={() => router.push("/ItemCollection")}
@@ -163,7 +171,7 @@ export default function UnlockPage() {
               alt="Tap to Continue"
               width={200}
               height={50}
-              className="object-contain"
+              className="animate-bounce object-contain"
             />
           </div>
         </div>
