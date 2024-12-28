@@ -104,7 +104,14 @@ export default function UnlockPage() {
             </div>
 
             {/* Item Name */}
-            <p className="-ml-10 text-center text-lg font-bold text-gray-200">
+            <p
+              className="text-center text-lg font-bold text-gray-200"
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal", // Ensures multi-line wrapping
+              }}
+            >
               {itemDetails ? getItemName({ num: itemDetails.itemId }) : ""}
             </p>
           </div>
