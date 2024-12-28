@@ -42,7 +42,7 @@ export default function ItemCollection() {
     const { itemId, dressId } = paramsMapping[param];
     console.log(`Mapped itemId: ${itemId}, dressId: ${dressId}`);
 
-    router.push(`/ItemCollection/redeem/loading?param=${param}`);
+    router.push(`/ItemCollection/loading?param=${param}`);
 
     setTimeout(async () => {
       try {

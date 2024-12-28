@@ -1,6 +1,7 @@
 import { items } from "../../../data/items";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function ItemInfoPage({
   params,
@@ -17,7 +18,7 @@ export default async function ItemInfoPage({
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
       {/* Main Container */}
-      <div className="flex h-screen w-[90%] max-w-md flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
+      <div className="relative flex h-screen w-[90%] max-w-md flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
         {/* Header Section */}
         <div className="relative h-[100px] w-full">
           <Image
@@ -28,6 +29,18 @@ export default async function ItemInfoPage({
             className="rounded-t-lg"
           />
         </div>
+        <Link
+          href="/ItemCollection"
+          className="relative left-4 top-4 flex items-center"
+        >
+          <Image
+            src="/images/fi-rr-arrow-left.svg"
+            alt="Back Arrow"
+            width={24}
+            height={24}
+            className="cursor-pointer"
+          />
+        </Link>
 
         {/* Collection Title */}
         <div className="relative mt-4 flex flex-col items-center space-y-2">
