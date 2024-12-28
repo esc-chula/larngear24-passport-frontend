@@ -41,7 +41,7 @@ export default function LoadingPage() {
     } catch {
       router.push("/ItemCollection");
     }
-  }, [searchParams]);
+  }, [session, searchParams]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
