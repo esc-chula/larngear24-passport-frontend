@@ -116,13 +116,13 @@ export default function UnlockPage() {
             </div>
 
             {/* Item Name */}
-            <p className="text-center text-lg font-bold text-gray-200">
+            <p className="-ml-10 text-center text-lg font-bold text-gray-200">
               {itemDetails ? getItemName({ num: itemDetails.itemId }) : ""}
             </p>
           </div>
 
           {/* Second Item Section */}
-          <div className="space-y-4" style={{ marginTop: "60px" }}>
+          <div className="ml-2 space-y-4" style={{ marginTop: "60px" }}>
             {/* Item Image with Background */}
             <div
               className="relative flex items-center justify-center"
@@ -149,13 +149,13 @@ export default function UnlockPage() {
                   alt="loading icon"
                   width={50}
                   height={50}
-                  className="animate-spin rounded-lg"
+                  className="-z-50 animate-spin rounded-lg"
                 />
               )}
             </div>
 
             {/* TODO : change this to Dress*/}
-            <p className="text-center text-lg font-bold text-gray-200">
+            <p className="text-gray-20 -ml-2 text-center text-lg font-bold text-white">
               {itemDetails ? getDressName({ num: itemDetails.itemId }) : ""}
             </p>
           </div>
