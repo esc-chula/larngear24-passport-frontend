@@ -42,7 +42,7 @@ export default function ItemCollection() {
     const { itemId, dressId } = paramsMapping[param];
     console.log(`Mapped itemId: ${itemId}, dressId: ${dressId}`);
 
-    router.push(`/ItemCollection/loading?param=${param}`);
+    router.push(`/items/loading?param=${param}`);
 
     setTimeout(async () => {
       try {
@@ -68,7 +68,7 @@ export default function ItemCollection() {
         setRedeemResult(response.data);
 
         router.push(
-          `/ItemCollection/redeem/unlock?name=Unlocked%20Item%20${itemId}&image=/images/item${itemId}.png`,
+          `/items/redeem/unlock?name=Unlocked%20Item%20${itemId}&image=/images/item${itemId}.webp`,
         );
       } catch (error) {
         console.error("Redemption failed:", error);

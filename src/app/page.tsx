@@ -48,7 +48,7 @@ export default function HomePage() {
             alt="stash trophy icon"
           />
           <li className="flex h-16 w-44 items-center self-end rounded-3xl bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-            <LinkButton href="/ItemCollection">Collection</LinkButton>
+            <LinkButton href="/items">Collection</LinkButton>
           </li>
         </div>
         <div className="relative flex w-full justify-end">

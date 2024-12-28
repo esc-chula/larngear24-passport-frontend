@@ -63,10 +63,7 @@ export default function ItemInfoPage() {
             className="rounded-t-lg"
           />
         </div>
-        <Link
-          href="/ItemCollection"
-          className="relative left-4 top-4 flex items-center"
-        >
+        <Link href="/items" className="relative left-4 top-4 flex items-center">
           <Image
             src="/images/fi-rr-arrow-left.svg"
             alt="Back Arrow"
@@ -96,7 +93,7 @@ export default function ItemInfoPage() {
                 style={{
                   width: "220px",
                   height: "220px",
-                  backgroundImage: "url('/images/item-bg-lg24.png')",
+                  backgroundImage: "url('/images/item-bg-lg24-2.webp')",
                   backgroundSize: "100% 100%", // Ensures the background scales correctly
                   backgroundPosition: "center",
                 }}
@@ -121,7 +118,7 @@ export default function ItemInfoPage() {
         ) : (
           <div className="my-5 flex flex-1 flex-col items-center justify-center space-y-6 rounded-3xl border-2 border-white bg-white bg-opacity-65 px-4 py-8 text-black backdrop-blur-sm">
             <Image
-              src={"/images/lockedItem.png"}
+              src={"/images/lockedItem.webp"}
               alt={"locked"}
               width={120}
               height={120}

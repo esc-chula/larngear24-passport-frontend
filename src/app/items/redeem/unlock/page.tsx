@@ -39,13 +39,13 @@ export default function UnlockPage() {
               width={24}
               height={24}
               className="cursor-pointer"
-              onClick={() => router.push("/ItemCollection")}
+              onClick={() => router.push("/items")}
             />
           </div>
 
           {/* "New Items" Image */}
           <Image
-            src="/images/newitem.png"
+            src="/images/newitem.webp"
             alt="New Items"
             width={250}
             height={80}
@@ -54,7 +54,7 @@ export default function UnlockPage() {
 
           {/* Second Image */}
           <Image
-            src="/images/unlocked.png"
+            src="/images/unlocked.webp"
             alt="Unlocked Badge"
             width={200}
             height={60}
@@ -66,8 +66,8 @@ export default function UnlockPage() {
         <div
           className="grid grid-cols-2 gap-x-4 px-10 py-10"
           style={{
-            justifyItems: "center", // Centers the items horizontally in each column
-            marginTop: "20px", // Adjust margin if needed
+            justifyItems: "center",
+            marginTop: "20px",
           }}
         >
           {/* First Item Section */}
@@ -78,7 +78,7 @@ export default function UnlockPage() {
               style={{
                 width: "170px",
                 height: "170px",
-                backgroundImage: "url('/images/bg-item-unlock.png')",
+                backgroundImage: "url('/images/bg-item-unlock-overlay.webp')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -86,7 +86,7 @@ export default function UnlockPage() {
             >
               {itemDetails ? (
                 <Image
-                  src={itemDetails.image}
+                  src={`/images/item${itemDetails.itemId}.webp`}
                   alt={`Item ${itemDetails.itemId}`}
                   width={70}
                   height={70}
@@ -94,7 +94,7 @@ export default function UnlockPage() {
                 />
               ) : (
                 <Image
-                  src="/images/loadingIcon.png"
+                  src="/images/loadingIcon.webp"
                   alt="loading icon"
                   width={50}
                   height={50}
@@ -117,7 +117,7 @@ export default function UnlockPage() {
               style={{
                 width: "170px",
                 height: "170px",
-                backgroundImage: "url('/images/bg-item-unlock.png')",
+                backgroundImage: "url('/images/bg-item-unlock-overlay.webp')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -125,7 +125,7 @@ export default function UnlockPage() {
             >
               {itemDetails ? (
                 <Image
-                  src={itemDetails.image}
+                  src={`/images/item${itemDetails.itemId}.webp`}
                   alt={`Item ${itemDetails.itemId}`}
                   width={70}
                   height={70}
@@ -133,7 +133,7 @@ export default function UnlockPage() {
                 />
               ) : (
                 <Image
-                  src="/images/loadingIcon.png"
+                  src="/images/loadingIcon.webp"
                   alt="loading icon"
                   width={50}
                   height={50}
@@ -151,12 +151,9 @@ export default function UnlockPage() {
 
         {/* Continue Button */}
         <div className="mt-4 flex w-full items-center justify-center">
-          <div
-            className="cursor-pointer"
-            onClick={() => router.push("/ItemCollection")}
-          >
+          <div className="cursor-pointer" onClick={() => router.push("/items")}>
             <Image
-              src="/images/Tap to Continue.png" // Replace with the correct path
+              src="/images/Tap to Continue.webp"
               alt="Tap to Continue"
               width={200}
               height={50}

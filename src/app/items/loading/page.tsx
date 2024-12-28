@@ -35,11 +35,11 @@ export default function LoadingPage() {
         if (response.status.toString() != "200") {
           throw new Error("can't fetch");
         }
-        router.push(`/ItemCollection/redeem/unlock?param=${param}`);
+        router.push(`/items/redeem/unlock?param=${param}`);
       };
       void handdlePost();
     } catch {
-      router.push("/ItemCollection");
+      router.push("/items");
     }
   }, [session, searchParams]);
 

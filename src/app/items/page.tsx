@@ -53,7 +53,6 @@ export default function ItemCollection() {
     }
   }, [session]);
 
-  // Group items into chunks of 3 for display
   const itemGroups = initialItems.reduce<Item[][]>((groups, item, index) => {
     if (index % 3 === 0) groups.push([]);
     groups[groups.length - 1]?.push(item);
@@ -88,7 +87,13 @@ export default function ItemCollection() {
               />
             </Link>
           </div>
-          <h2 className="text-2xl font-bold text-white">Collection</h2>
+          <Image
+            src="/images/collection.webp"
+            alt="Collection"
+            width={150}
+            height={50}
+            className="object-contain"
+          />{" "}
         </div>
 
         {/* Content Section */}
@@ -100,7 +105,7 @@ export default function ItemCollection() {
                 index === itemGroups.length - 1
                   ? "bg-[url('/images/itembg2.webp')]"
                   : "bg-[url('/images/itembg.webp')]"
-              } bg-center bg-no-repeat p-4 pt-6`}
+              } bg-center bg-no-repeat p-5 pt-6`}
               style={{ backgroundSize: `100% 100%` }}
             >
               <div
@@ -118,7 +123,7 @@ export default function ItemCollection() {
                       key={item.id}
                       className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-white bg-opacity-30 backdrop-blur-sm"
                       onClick={() => {
-                        router.push(`/ItemCollection/${item.id}`);
+                        router.push(`/items/${item.id}`);
                       }}
                     >
                       <Image
@@ -126,9 +131,9 @@ export default function ItemCollection() {
                           isUnlocked ? item.image : "/images/lockedItem.webp"
                         }
                         alt={item.name}
-                        width={80}
-                        height={80}
-                        className={`${!isUnlocked ? "ml-1 mt-1 opacity-90" : "h-[85%] w-[85%]"}`}
+                        width={60}
+                        height={60}
+                        className={`${!isUnlocked ? "opacity-50" : ""}`}
                       />
                     </div>
                   );
