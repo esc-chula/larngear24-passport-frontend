@@ -10,7 +10,6 @@ import { useParams } from "next/navigation";
 
 export default function ItemInfoPage() {
   const { idparam } = useParams();
-  console.log(idparam);
 
   const id: string = (Array.isArray(idparam) ? idparam[0] : idparam) ?? "";
   const { data: session } = useSession();
@@ -29,14 +28,10 @@ export default function ItemInfoPage() {
           },
         );
 
-        // Log the API response for debugging
-        console.log("API Response:", response.data);
-
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const unlockedItemIds: string[] =
           // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
           response.data.items?.map(String) || [];
-        console.log("Unlocked Item IDs:", unlockedItemIds);
 
         setUnlockedItems(unlockedItemIds);
       } catch (error) {

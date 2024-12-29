@@ -13,8 +13,6 @@ function UnlockPageContent() {
 
   // Get item details from the mapping
   const itemDetails = param ? paramsMapping[param] : null;
-  console.log(param);
-  console.log(itemDetails);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
