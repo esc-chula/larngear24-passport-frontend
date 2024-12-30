@@ -7,6 +7,12 @@ import { SessionProvider } from "next-auth/react";
 import QueryProvider from "@/components/queryProvider";
 import AuthProvider from "@/components/authProvider";
 import { Toaster } from "@/components/ui/toaster";
+import localFont from "next/font/local";
+
+const vimamsa = localFont({
+  src: "../../public/assets/fonts/SOV_Vimamsa.ttf",
+  variable: "--font-vimamsa",
+});
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -18,7 +24,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${vimamsa.variable}`}>
       <body>
         <QueryProvider>
           <SessionProvider>

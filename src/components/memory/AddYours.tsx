@@ -124,7 +124,11 @@ const AddYours = ({
           </button>
 
           <div className="relative left-[2.25rem] top-[4.75rem] mb-2 flex">
-            <Image src={imgUrl} className="h-[1.6rem] w-[1.6rem] rounded-full object-cover" alt="user profile"/>
+            <Image
+              src={imgUrl}
+              className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
+              alt="user profile"
+            />
             <div className="ml-2">
               {name} #{house}
             </div>

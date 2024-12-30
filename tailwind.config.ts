@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Anonymous Pro", ...fontFamily.sans],
-        vimamsa: "vimamsa",
+        vimamsa: "var(--font-vimamsa)",
         ibm: ["IBM Plex Sans Thai", ...fontFamily.sans],
       },
       borderRadius: {

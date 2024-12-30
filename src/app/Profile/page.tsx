@@ -1,250 +1,275 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/globalComponents/Button";
 import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
-import Model from "@/components/profileComponents/model";
-
-type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
-
-function Modal({ isOpen, onClose }: ModalProps) {
-  if (!isOpen) return null;
-
-  // test item
-  const items = [
-    { id: "1", name: "Item 1", isLocked: true },
-    { id: "2", name: "Item 2", isLocked: true },
-    { id: "3", name: "Item 3", isLocked: false },
-    { id: "4", name: "Item 4", isLocked: true },
-    { id: "5", name: "Item 5", isLocked: true },
-    { id: "6", name: "Item 6", isLocked: false },
-    { id: "7", name: "Item 7", isLocked: false },
-    { id: "8", name: "Item 8", isLocked: false },
-    { id: "9", name: "Item 9", isLocked: true },
-    { id: "10", name: "Item 10", isLocked: true },
-    { id: "11", name: "Item 11", isLocked: true },
-    { id: "12", name: "Item 12", isLocked: true },
-  ];
-
-  return (
-    <div className="fixed left-0 top-0 z-50 h-screen w-screen bg-white bg-opacity-60">
-      <div className="fixed bottom-0 left-0 right-0 mx-auto h-[50%] w-full max-w-sm overflow-hidden rounded-t-3xl bg-white bg-opacity-80 shadow-md">
-        <div className="relative flex h-16 items-center justify-center bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-          <p className="text-2xl font-semibold text-[#ECF0F6]">
-            Choose your artifacts
-          </p>
-          <button onClick={onClose} className="absolute right-5">
-            <img src="./profile/cross.webp" alt="X" className="h-full w-full" />
-          </button>
-        </div>
-
-        <div className="p-4 text-center">
-          <ItemsGrid items={items} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-type Item = {
-  id: string;
-  name: string;
-  isLocked: boolean;
-};
-
-function ItemsGrid({ items }: { items: Item[] }) {
-  return (
-    <div
-      className="grid h-72 w-full grid-cols-3 justify-center justify-items-center bg-[#ECF0F6]/80"
-      style={{
-        overflow: "auto",
-        scrollbarWidth: "none",
-        msOverflowStyle: "none",
-        WebkitOverflowScrolling: "touch",
-        overflowY: "scroll",
-      }}
-    >
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className={`mx-2 my-2.5 flex h-28 w-24 flex-col items-center justify-center bg-[#7D7D7D]`}
-          style={{ minHeight: "100px" }}
-        >
-          {item.isLocked && (
-            <img
-              src="/profile/locked.webp"
-              alt="Locked"
-              className="h-[30%] w-[30%] object-contain"
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
+import { toPng } from "html-to-image";
+import Modal from "@/components/profileComponents/modal";
+import type {
+  Artifacts,
+  AvatarParts,
+} from "@/components/profileComponents/profileType";
+import { defaultAvatar } from "@/components/profileComponents/defaultAvatar";
+import { MainProfile } from "@/components/profileComponents/mainProfile";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+import { mockItems } from "@/components/profileComponents/mockData";
+import Image from "next/image";
 
 export default function Profile() {
-  const [name, setName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedArtifact, setSelectedArtifact] = useState<number | null>(null);
+  const [selectedArtifacts, setSelectedArtifacts] = useState<Artifacts>([
+    null,
+    null,
+    null,
+  ]);
 
-  type AvatarParts = {
-    skin: string | null;
-    hair: string | null;
-    eyebrow: string | null;
-    eye: string | null;
-    nose: string | null;
-    mouth: string | null;
-    shirt: string | null;
-    clothes: string | null;
-    pant: string | null;
-    shoes: string | null;
+  const [user, SetUser] = useState<{ username: string; baan: number }>({
+    username: "น้องค่าย",
+    baan: 0,
+  });
+  const [items, setItems] =
+    useState<{ id: string; name: string; isLocked: boolean }[]>(mockItems);
+
+  const handleArtifactChange = (artifact: string) => {
+    if (
+      activeArtifact !== null &&
+      selectedArtifacts[activeArtifact] === artifact
+    ) {
+      const tmpSelectedArtifacts = selectedArtifacts;
+      if (activeArtifact !== null) tmpSelectedArtifacts[activeArtifact] = null;
+      setSelectedArtifacts(tmpSelectedArtifacts);
+      setIsModalOpen(false);
+
+      // update localstorage
+      localStorage.setItem(
+        "selectedArtifacts",
+        JSON.stringify(tmpSelectedArtifacts),
+      );
+      return;
+    }
+    for (const selected of selectedArtifacts) {
+      if (selected === artifact) return;
+    }
+    const tmpSelectedArtifacts = selectedArtifacts;
+    if (activeArtifact !== null)
+      tmpSelectedArtifacts[activeArtifact] = artifact;
+    setSelectedArtifacts(tmpSelectedArtifacts);
+    setIsModalOpen(false);
+    // update localstorage
+    localStorage.setItem(
+      "selectedArtifacts",
+      JSON.stringify(tmpSelectedArtifacts),
+    );
   };
 
-  const [selectedParts, setSelectedParts] = useState<AvatarParts>(() => {
-    const defaultAvatar: AvatarParts = {
-      skin: "/model/skin/skin1.webp",
-      hair: "/model/hair/hair1.webp",
-      eyebrow: "/model/eyebrow/eyebrow1.webp",
-      eye: "/model/eye/eye1.webp",
-      nose: "/model/nose/nose1.webp",
-      mouth: "/model/mouth/mouth1.webp",
-      shirt: "/model/shirt/shirt1.webp",
-      clothes: "/model/clothes/clothes1.webp",
-      pant: "/model/pant/pant1.webp",
-      shoes: "/model/shoes/shoes1.webp",
-    };
-
-    const isLocalStorageAvailable =
-      typeof window !== "undefined" && window.localStorage && window;
-
-    if (!isLocalStorageAvailable) return defaultAvatar;
-
-    const savedAvatarString = localStorage.getItem("selectedParts");
-
-    let savedAvatar: AvatarParts | null = null;
-
-    if (savedAvatarString) {
-      try {
-        savedAvatar = JSON.parse(savedAvatarString) as AvatarParts;
-      } catch (error) {
-        return defaultAvatar;
-      }
+  const isSelectedArtifact = (artifact: string) => {
+    for (let i = 0; i < selectedArtifacts.length; i++) {
+      if (selectedArtifacts[i] === artifact) return i;
     }
+    return -1;
+  };
 
-    return savedAvatar ?? defaultAvatar;
-  });
+  const findSelectedArtifact = (index: number) => {
+    for (const item of items) {
+      if (isSelectedArtifact(item.id) === index) return item.id;
+    }
+    return null;
+  };
+
+  // fetch get/user  here
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (!session) return;
+    const handleGet = async () => {
+      const response = await axiosClient.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.id}`,
+          },
+        },
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const itemData: string[] = response.data.items;
+      const updatedItems = items.map((item) =>
+        itemData.includes(item.id) ? { ...item, isLocked: false } : item,
+      );
+      setItems(updatedItems);
+
+      SetUser({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        username: response.data.username ?? "น้องค่าย",
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+        baan: parseInt(response.data.baan ?? "1"),
+      });
+    };
+    void handleGet();
+  }, [session, items]);
+
+  const [selectedParts, setSelectedParts] =
+    useState<AvatarParts>(defaultAvatar);
 
   useEffect(() => {
     const isLocalStorageAvailable =
       typeof window !== "undefined" && window.localStorage && window;
     if (!isLocalStorageAvailable) return;
-    const savedName = localStorage.getItem("name");
-    if (savedName) setName(savedName);
+
+    // get model
+    const selectedPart = localStorage.getItem("selectedParts");
+    if (selectedPart) {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const parsedParts: AvatarParts = JSON.parse(selectedPart);
+        setSelectedParts(parsedParts);
+      } catch (error) {
+        console.error(
+          "Failed to parse 'selectedParts' from localStorage:",
+          error,
+        );
+      }
+
+      // get artifacts
+      const tmpArtifacts = localStorage.getItem("selectedArtifacts");
+      if (tmpArtifacts) {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const parsedArtifacts: Artifacts = JSON.parse(tmpArtifacts);
+          setSelectedArtifacts(parsedArtifacts);
+        } catch (error) {
+          console.error(
+            "Failed to parse 'selectedArtifacts' from localStorage:",
+            error,
+          );
+        }
+      }
+    }
   }, []);
-
-  const handleSaveName = () => {
-    const isLocalStorageAvailable =
-      typeof window !== "undefined" && window.localStorage && window;
-    if (!isLocalStorageAvailable) return;
-    localStorage.setItem("name", name.trim());
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const openArtifactModal = (artifactNumber: number) => {
-    setSelectedArtifact(artifactNumber);
-    setIsModalOpen(true);
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedArtifact(null);
+  };
+
+  const [activeArtifact, setActiveArtifact] = useState<number | null>(null);
+
+  const handleClickArtifact = (num: number) => {
+    setIsModalOpen(true);
+    setActiveArtifact(num);
+  };
+
+  // capture
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const handleSaveAsImage = async () => {
+    if (contentRef.current) {
+      try {
+        const elementsToExcludeDisplay = contentRef.current.querySelectorAll(
+          ".exclude-from-screenshot",
+        );
+        elementsToExcludeDisplay.forEach((el) => {
+          (el as HTMLElement).style.display = "none";
+        });
+
+        const elementsToExcludeOpacity = contentRef.current.querySelectorAll(
+          ".exclude-from-screenshot2",
+        );
+        elementsToExcludeOpacity.forEach((el) => {
+          (el as HTMLElement).style.opacity = "0";
+        });
+
+        const dataUrl = await toPng(contentRef.current);
+
+        elementsToExcludeDisplay.forEach((el) => {
+          (el as HTMLElement).style.display = "";
+        });
+
+        elementsToExcludeOpacity.forEach((el) => {
+          (el as HTMLElement).style.opacity = "";
+        });
+        const link = document.createElement("a");
+        link.download = "screenshot.png";
+        link.href = dataUrl;
+        link.click();
+      } catch (error) {
+        console.error("Failed to capture screenshot", error);
+      }
+    }
   };
 
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] md:mx-auto md:max-w-[25rem]">
-      <Header />
-      <div className="z-0 mx-7 flex items-start">
+    <div
+      ref={contentRef}
+      className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]"
+    >
+      <div className="exclude-from-screenshot">
+        <Header />
+      </div>
+
+      <div className="exclude-from-screenshot z-0 mx-7 flex items-start">
         <Link href="/">
-          <img src="/arrow-left.webp" alt="Back" className="w-5" />
+          <Image src="/arrow-left.webp" alt="Back" width={20} height={20} />
         </Link>
       </div>
-      <div className="flex flex-col space-y-2.5">
-        <div className="flex flex-row">
-          <div className="flex basis-2/3 flex-col items-center justify-center space-y-6">
-            <div className="flex flex-col items-start justify-center">
-              <div className="flex w-[100%] grow flex-row items-center justify-end space-x-2">
-                <input
-                  id="nameInput"
-                  type="text"
-                  value={name}
-                  onChange={handleInputChange}
-                  placeholder="โปรดใส่ชื่อของคุณ"
-                  className="mt-1 h-[10%] w-[70%] rounded-md bg-[#ECF0F6] p-2 text-center text-sm font-semibold focus:outline-none"
-                />
-                <div
-                  className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-md bg-[#ECF0F6] text-sm"
-                  onClick={handleSaveName}
-                >
-                  <img src="/profile/pencil.webp" className="w-3/5" />
-                </div>
-              </div>
-              <div className="flex w-[100%] flex-col items-center justify-center space-y-4">
-                <div className="h-5 w-24 rounded-md bg-[#ECF0F6] text-center text-sm font-semibold">
-                  บ้าน XXX
-                </div>
-                <div className="flex h-64 w-[80%] flex-col items-center justify-center bg-[#ECF0F6]">
-                  <div>flag</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex basis-1/3 flex-col items-center justify-center space-y-4">
-            <div className="flex h-28 w-28 flex-col items-center justify-center rounded-full bg-[#ECF0F6]">
-              stamp
-            </div>
-            <div className="relative z-50 flex h-6 w-16 items-center justify-center rounded-md bg-[#ECF0F6] text-sm font-semibold">
-              <Link href="/Profile/dress" className="pointer-events-auto">
-                fashion
-              </Link>
-            </div>
-            <div className="flex h-52 w-48 items-center justify-center object-contain">
-              <Model selectedParts={selectedParts} />
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-1 flex-col justify-center space-y-2.5">
+        <MainProfile
+          baanNumber={user.baan}
+          username={user.username}
+          selectedParts={selectedParts}
+        />
 
         <div className="flex flex-col items-center justify-center">
-          <div className="mb-2 text-xl font-bold text-white">Artifacts</div>
+          <div className="mb-2 font-sans text-xl font-bold text-white">
+            Artifacts
+          </div>
           <div
             className="flex h-28 w-[90%] max-w-sm flex-row items-center justify-center space-x-11 bg-[url('/profile/artifact-bg.webp')] bg-contain bg-center py-3"
             style={{ backgroundSize: "100% 100%" }}
           >
-            {[1, 2, 3].map((num) => (
+            {[0, 1, 2].map((num) => (
               <div
                 key={num}
-                className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-black text-white"
-                onClick={() => openArtifactModal(num)}
+                className={`flex h-16 w-16 cursor-pointer items-center justify-center rounded-full text-white ${
+                  findSelectedArtifact(num) ? "bg-[#ECF0F6]/50" : "bg-black" // Replace colors as needed
+                }`}
+                onClick={() => handleClickArtifact(num)}
               >
-                {num}
+                {findSelectedArtifact(num) && (
+                  <Image
+                    src={`/images/item${findSelectedArtifact(num)}.png`}
+                    alt="artifact"
+                    width={50}
+                    height={50}
+                  />
+                )}
+                {!findSelectedArtifact(num) && (
+                  <Image
+                    src="/profile/question.webp"
+                    alt="Question"
+                    className="h-[60%] w-[60%]"
+                    width={60}
+                    height={60}
+                  />
+                )}
               </div>
             ))}
           </div>
         </div>
 
-        <div className="w-30 flex justify-center">
+        <div
+          className="exclude-from-screenshot w-30 flex justify-center"
+          onClick={handleSaveAsImage}
+        >
           <Button text="Save Image" imgSrc="./profile/download.webp" />
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        items={items}
+        handleArtifactChange={handleArtifactChange}
+        isSelectedArtifact={isSelectedArtifact}
+      />
     </div>
   );
 }

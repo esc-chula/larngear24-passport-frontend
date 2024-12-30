@@ -1,4 +1,6 @@
-type SelectedParts = Record<
+import Image from "next/image";
+
+export type SelectedParts = Record<
   | "skin"
   | "hair"
   | "eyebrow"
@@ -12,7 +14,7 @@ type SelectedParts = Record<
   string | null
 >;
 
-interface ModelProps {
+export interface ModelProps {
   selectedParts: SelectedParts;
 }
 
@@ -28,6 +30,7 @@ export default function Model({ selectedParts }: ModelProps) {
     eye: 8,
     eyebrow: 9,
     hair: 10,
+    dress: 11,
   };
 
   return (
@@ -43,7 +46,13 @@ export default function Model({ selectedParts }: ModelProps) {
             className="part-container"
             style={{ zIndex: zIndexMap[partKey] }}
           >
-            <img className="part-img" src={imageSrc} alt={partKey} />
+            <Image
+              src={imageSrc}
+              className="part-img"
+              alt={partKey}
+              width={500}
+              height={500}
+            />
           </div>
         );
       })}
