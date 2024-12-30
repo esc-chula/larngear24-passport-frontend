@@ -12,8 +12,6 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
 
@@ -56,17 +54,14 @@ export const authConfig = {
   ],
   callbacks: {
     signIn: async ({ profile }) => {
-      //console.log(profile); // for dev : remove this to see your google_sub
-
-      await axiosClient.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
-        {
-          id: profile?.sub ?? "",
-          email: profile?.email ?? "",
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          image: profile?.picture ?? "",
-        },
-      );
+      // console.log(profile); // for dev : remove this to see your google_sub
+      
+      await axiosClient.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,{
+        id : profile?.sub ?? "",
+        email : profile?.email ?? "",
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        image : profile?.picture?? ""
+      });
       return true;
     },
     jwt: async ({ token, profile }) => {

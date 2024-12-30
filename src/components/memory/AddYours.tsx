@@ -1,18 +1,40 @@
 import { useState, useEffect } from "react";
 import { rudeWords } from "../../constants/rudeWords";
 import { toast } from "@/hooks/use-toast";
+import { axiosClient } from "@/libs/axios";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+function timeout(delay: number) {
+  return new Promise((res) => setTimeout(res, delay));
+}
+interface User {
+  username: string;
+  baan: number;
+  imageUrl: string;
+}
+
+interface RawMessage {
+  message_id: string;
+  user_id: string;
+  message: string;
+  createdAt: string;
+  user: User;
+}
 
 const AddYours = ({
   open,
   close,
   name,
   house,
+  imgUrl,
 }: {
   open: boolean;
   close: () => void;
   name: string;
   house: string;
+  imgUrl: string;
 }) => {
+  const { data: session } = useSession();
   const [comment, setComment] = useState("");
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const unFiltered = e.target.value;
@@ -32,29 +54,38 @@ const AddYours = ({
       });
       return;
     }
+
     try {
-      const response = await fetch("/api/messages", {
-        headers: {
-          "Content-Type": "application/json",
+      if (!session) return;
+      if (!session.user) return;
+      const response = await axiosClient.post<RawMessage[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/message`,
+        {
+          message: comment, // This is the request body
         },
-        method: "POST",
-        body: JSON.stringify({
-          messages: comment,
-        }),
-      });
-      if (!response.ok) {
-        const errorData = (await response.json()) as { error: string };
-        throw new Error(errorData.error || "Failed to send message");
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.id}`, // Add Authorization header
+          },
+        },
+      );
+
+      if (!response.data) {
+        throw new Error("Failed to send message");
       }
       toast({
         title: "Success",
-        description: "Your message has been sent successfully.",
+        description: "Sent! please refresh to see your message",
         className: "bg-green-500 text-white",
       });
       setComment("");
       close();
+      await timeout(1000);
+      window.location.reload();
     } catch (error) {
       console.error("Error:", error);
+      console.log(`${process.env.NEXT_PUBLIC_API_URL}/message`);
+
       toast({
         title: "Error",
         description: "Failed to submit your message. Please try again.",
@@ -63,10 +94,6 @@ const AddYours = ({
     }
   }
 
-  function closeWindow() {
-    setComment("");
-    close();
-  }
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -77,6 +104,11 @@ const AddYours = ({
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  function closeWindow() {
+    setComment("");
+    close();
+  }
 
   if (!open) return null;
 
@@ -90,16 +122,13 @@ const AddYours = ({
           >
             &times;
           </button>
+
           <div className="relative left-[2.25rem] top-[4.75rem] mb-2 flex">
-            <img
-              src="https://placehold.co/25x25"
-              className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
-            ></img>
+            <Image src={imgUrl} className="h-[1.6rem] w-[1.6rem] rounded-full object-cover" alt="user profile"/>
             <div className="ml-2">
               {name} #{house}
             </div>
           </div>
-
           <div className="relative left-[2.25rem] top-[4.75rem] h-[10.75rem] w-[16.1rem] bg-[#ECF0F6] p-3 text-black opacity-80">
             <div className="text-base font-bold">Share something</div>
             <textarea
@@ -109,7 +138,6 @@ const AddYours = ({
               onChange={handleCommentChange}
             />
           </div>
-
           <div className="flex items-center justify-center">
             <button
               onClick={submit}

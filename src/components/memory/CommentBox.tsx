@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const CommentBox = ({
   name,
   house,
@@ -13,10 +15,9 @@ const CommentBox = ({
     <>
       <div className="m-1.5 mt-1 h-[7.6rem] min-w-[10.6rem] bg-[#36465F] p-2 text-[#ECF0F6]">
         <div className="flex gap-2">
-          <img
-            src={image}
+          <Image src={image ?? ""}
             className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
-          ></img>
+            alt="profile"/>
           <div className="resize-none text-sm font-bold">
             {name} <span className="text-xl">#</span>
             {house}
