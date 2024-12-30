@@ -71,7 +71,7 @@ export const authConfig = {
       }
       return token;
     },
-    session: ({ session, token  }) => ({
+    session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,

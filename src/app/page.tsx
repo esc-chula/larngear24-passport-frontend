@@ -48,7 +48,7 @@ export default function HomePage() {
             alt="stash trophy icon"
           />
           <li className="flex h-16 w-44 items-center self-end rounded-3xl bg-gradient-to-t from-[#D2CAFF] to-[#092B44]">
-            <LinkButton href="/ItemCollection">Collection</LinkButton>
+            <LinkButton href="/items">Collection</LinkButton>
           </li>
         </div>
         <div className="relative flex w-full justify-end">
@@ -84,7 +84,7 @@ const LinkButton = ({
 }): React.JSX.Element => {
   return (
     <Link
-      className="w-full text-center font-vimamsa text-4xl font-semibold text-[#ECF0F6]"
+      className="font-vimamsa w-full text-center text-4xl font-semibold text-[#ECF0F6]"
       href={href}
     >
       {children}
