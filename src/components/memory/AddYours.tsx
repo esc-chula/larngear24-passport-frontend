@@ -5,6 +5,7 @@ import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
@@ -64,6 +65,8 @@ const AddYours = ({
     try {
       if (!session) return;
       if (!session.user) return;
+      console.log("Sending message:", comment);
+      console.log("User ID:", session?.user.id);
       const response = await axiosClient.post<RawMessage[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/message`,
         {
@@ -75,6 +78,7 @@ const AddYours = ({
           },
         },
       );
+      console.log("API Response:", response.data);
 
       if (!response.data) {
         throw new Error("Failed to send message");
@@ -89,6 +93,11 @@ const AddYours = ({
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
+      if (error instanceof AxiosError) {
+        console.error(error.cause);
+        console.error(error.response?.headers);
+        console.error(error.response?.data);
+      }
 
       toast({
         title: "Error",
