@@ -65,6 +65,8 @@ const AddYours = ({
     try {
       if (!session) return;
       if (!session.user) return;
+      console.log("Sending message:", comment);
+      console.log("User ID:", session?.user.id);
       const response = await axiosClient.post<RawMessage[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/message`,
         {
@@ -76,6 +78,7 @@ const AddYours = ({
           },
         },
       );
+      console.log("API Response:", response.data);
 
       if (!response.data) {
         throw new Error("Failed to send message");
