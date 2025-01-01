@@ -19,7 +19,7 @@ function LoadingContent() {
     try {
       if (!session) return;
       const param = searchParams.get("param") ?? "";
-      if (!param || !(param in paramsMapping)) throw Error("param is null");
+      if (!param || !(param in paramsMapping)) throw new Error("param is null");
       const item = paramsMapping[param]?.itemId;
 
       const handdlePost = async () => {
@@ -36,7 +36,7 @@ function LoadingContent() {
           },
         );
         if (response.statusText !== "OK") {
-          throw Error("can't fetch");
+          throw new Error("can't fetch");
         } else {
           toast({
             title: "Success",

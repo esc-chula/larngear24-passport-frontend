@@ -81,7 +81,7 @@ export default function ItemCollection() {
             </Link>
           </div>
           <Image
-            src="/images/collection.webp"
+            src="/images/Collection.webp"
             alt="Collection"
             width={150}
             height={50}
@@ -124,7 +124,7 @@ export default function ItemCollection() {
                       >
                         <Image
                           src={
-                            isUnlocked ? item.image : "/images/lockedItem.webp"
+                            isUnlocked ? item.image : "/images/lockeditem.webp"
                           }
                           alt={item.name}
                           width={60}
