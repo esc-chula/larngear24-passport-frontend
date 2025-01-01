@@ -8,6 +8,7 @@ import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import { paramsMapping } from "@/libs/getItemName";
 import Header from "@/components/globalComponents/Header";
+import { toast } from "@/hooks/use-toast";
 
 function LoadingContent() {
   const { data: session } = useSession();
@@ -37,11 +38,21 @@ function LoadingContent() {
         if (response.statusText !== "OK") {
           throw Error("can't fetch");
         } else {
+          toast({
+            title: "Success",
+            description: "Unlock Item success",
+            className: "bg-green-500 text-white",
+          });
           router.push(`/items/redeem/unlock?param=${param}`);
         }
       };
       void handdlePost();
     } catch {
+      toast({
+        title: "Unlock Item failed",
+        description: "Please check you qr code or try again.",
+        className: "bg-red-500 text-white",
+      });
       router.push("/items");
     }
   }, [session, searchParams, router]); // Ensure router is included in the dependency array

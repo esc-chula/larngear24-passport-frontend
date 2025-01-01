@@ -14,6 +14,7 @@ import Tabs from "@/components/profileComponents/Tabs";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Dress() {
   const [items, setItems] = useState<Record<string, item>>(mockDress);
@@ -21,7 +22,7 @@ export default function Dress() {
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [selectedParts, setSelectedParts] =
     useState<AvatarParts>(defaultAvatar);
-
+  const router = useRouter();
   const handlePartSelection = (part: string, imgSrc: string | null) => {
     if (part === "dress" && selectedParts.dress === imgSrc) imgSrc = null;
     setSelectedParts((prevState) => {
@@ -83,6 +84,7 @@ export default function Dress() {
       typeof window !== "undefined" && window.localStorage && window;
     if (!isLocalStorageAvailable) return;
     localStorage.setItem("selectedParts", JSON.stringify(selectedParts));
+    router.push("/Profile");
   };
 
   const handleChangeTab = (tab: string) => {
@@ -118,7 +120,7 @@ export default function Dress() {
           />
         </div>
 
-        <div className="flex h-full flex-col items-center justify-center">
+        <div className="flex h-full flex-col items-center justify-center pb-4">
           <button
             onClick={handleConfirm}
             className="w-24 rounded-lg bg-[#ECF0F6]/80 font-bold text-black"

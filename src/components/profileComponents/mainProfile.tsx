@@ -35,9 +35,18 @@ export const MainProfile = ({
         </div>
       </div>
       <div className="flex basis-1/3 flex-col items-center justify-center space-y-4">
-        <Image src="/profile/stamp.webp" alt="Stamp" width={150} height={150} />
+        <Image
+          className="bg-transparent object-contain"
+          src="/profile/stamp.webp"
+          alt="Stamp"
+          width={150}
+          height={150}
+        />
         <div className="relative z-50 flex h-6 w-20 items-center justify-center rounded-lg bg-[#ECF0F6] font-sans text-sm font-semibold">
-          <Link href="/Profile/dress" className="pointer-events-auto">
+          <Link
+            href="/Profile/dress"
+            className="pointer-events-auto text-black"
+          >
             fashion
           </Link>
         </div>

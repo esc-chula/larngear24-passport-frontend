@@ -19,10 +19,10 @@ export default function Modal({
           </p>
           <button onClick={onClose} className="absolute right-5">
             <Image
-              src="./profile/cross.webp"
+              src="/profile/cross.webp"
               alt="X"
               className="h-full w-full"
-              width={100} 
+              width={100}
               height={100}
             />
           </button>

@@ -35,7 +35,7 @@ export default function ItemsGrid({
   })();
 
   const handleClickItem = (id: string, imgSrc: string, isLocked: boolean) => {
-    if(isLocked) return;
+    if (isLocked) return;
     setActiveItemId(id);
     handlePartSelection(activeTab, imgSrc);
   };
@@ -60,7 +60,12 @@ export default function ItemsGrid({
         >
           {/* Render image */}
           {item.isLocked ? (
-            <Image src="/profile/locked.webp" alt="locked" width={30} height={30} />
+            <Image
+              src="/profile/locked.webp"
+              alt="locked"
+              width={30}
+              height={30}
+            />
           ) : (
             <Image
               src={item.imageSrc.replace("/model", "/model/full-scale")}

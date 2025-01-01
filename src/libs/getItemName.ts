@@ -12,7 +12,7 @@ export function getItemName(params: { num: number }) {
     "ครัวซองวิเศษ",
     "กล่องวิเคราะห์แร่",
   ];
-  return ItemName[params.num -1];
+  return ItemName[params.num - 1];
 }
 
 export function getDressName(params: { num: number }) {
@@ -29,7 +29,7 @@ export function getDressName(params: { num: number }) {
     "หมวกครัวซองติดเสา",
     "หมวกใส่ไปขุดเหมือง",
   ];
-  return DressName[params.num -1];
+  return DressName[params.num - 1];
 }
 
 export function getItemDesp(params: { num: number }) {
@@ -41,24 +41,25 @@ export function getItemDesp(params: { num: number }) {
     "เครื่องมือตรวจจับความเข้มข้นของสารต่างๆ ในส่วนผสตัวอย่าง ใช้วิเคราะห์ปฏิกิริยาเคมีที่กำลังดำเนินอยู่",
     "หุ่นยนต์ที่สามารถเข้าใจและตอบสนองต่ออารมณ์ของมนุษย์ได้อย่างแม่นยำ สามารถวิเคราะห์เสียงและการเคลื่อนไหว",
     "อุปกรณ์ที่สามารถสร้างเครือข่าย Wi-Fi ในพื้นที่กว้างได้อย่างรวดเร็ว ช่วยให้ผู้ใช้สามารถเข้าถึงอินเทอร์เน็ตได้ทุกที่ทุกเวลา",
-    "ครื่องที่สามารถพิมพ์ชิ้นส่วนโลหะในรูปแบบที่ซับซ้อนได้อย่างรวดเร็ว โดยใช้เทคโนโลยีการหลอมรวมวัสดุโลหะ",
-    "ะคีย์บอร์ดตัวนี้สามารถอ่านความคิดได้ว่าผู้ใช้อยากจะพิมอะไรลงไป ไม่ว่าจะเป็นโค้ดแบบไหนก็ตาม",
+    "เครื่องที่สามารถพิมพ์ชิ้นส่วนโลหะในรูปแบบที่ซับซ้อนได้อย่างรวดเร็ว โดยใช้เทคโนโลยีการหลอมรวมวัสดุโลหะ",
+    "คีย์บอร์ดตัวนี้สามารถอ่านความคิดได้ว่าผู้ใช้อยากจะพิมอะไรลงไป ไม่ว่าจะเป็นโค้ดแบบไหนก็ตาม",
     "ครัวซองที่มีคุณสมบัติพิเศษ เมื่อใครได้ทานเข้าไปนั้นจะได้รับความรู้มากมายเกี่ยวกับคอมพิวเตอร์และเทคโนโลยีต่างๆในโลก",
     "ใช้ในการวิเคราะห์คุณภาพของแร่ เช่น การตรวจหาสารเคมีและส่วนประกอบที่สำคัญ เพื่อการพัฒนาทรัพยากรแร่",
   ];
-  return ItemName[params.num];
+  return ItemName[params.num - 1];
 }
 
-export const paramsMapping: Record<string, { itemId: number; image: string }> = {
-  rMnWMTAfBTzfTK9: { itemId: 1, image: "/images/item1.png" },
-  ocFRssHrLR7LeDe: { itemId: 2, image: "/images/item2.png" },
-  "20bWAnzQvoVlxOF": { itemId: 3, image: "/images/item3.png" },
-  c2teVPwYLGzVcad: { itemId: 4, image: "/images/item4.png" },
-  LC0SgtQCC4MFhDI: { itemId: 5, image: "/images/item5.png" },
-  ZH5G5hLvAFW0IL6: { itemId: 6, image: "/images/item6.png" },
-  cU7VwglZvJwbHnB: { itemId: 7, image: "/images/item7.png" },
-  BU3BBh9TwAwkeNd: { itemId: 8, image: "/images/item8.png" },
-  "0VeiMjItHVKRCxx": { itemId: 9, image: "/images/item9.png" },
-  mB8iOEoEGfk6Ydm: { itemId: 10, image: "/images/item10.png" },
-  oi2XFECbb9Alogn: { itemId: 11, image: "/images/item11.png" },
-};
+export const paramsMapping: Record<string, { itemId: number; image: string }> =
+  {
+    rMnWMTAfBTzfTK9: { itemId: 1, image: "/images/item1.png" },
+    ocFRssHrLR7LeDe: { itemId: 2, image: "/images/item2.png" },
+    "20bWAnzQvoVlxOF": { itemId: 3, image: "/images/item3.png" },
+    c2teVPwYLGzVcad: { itemId: 4, image: "/images/item4.png" },
+    LC0SgtQCC4MFhDI: { itemId: 5, image: "/images/item5.png" },
+    ZH5G5hLvAFW0IL6: { itemId: 6, image: "/images/item6.png" },
+    cU7VwglZvJwbHnB: { itemId: 7, image: "/images/item7.png" },
+    BU3BBh9TwAwkeNd: { itemId: 8, image: "/images/item8.png" },
+    "0VeiMjItHVKRCxx": { itemId: 9, image: "/images/item9.png" },
+    mB8iOEoEGfk6Ydm: { itemId: 10, image: "/images/item10.png" },
+    oi2XFECbb9Alogn: { itemId: 11, image: "/images/item11.png" },
+  };
