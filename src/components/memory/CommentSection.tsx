@@ -59,7 +59,7 @@ const CommentSection = () => {
   }, [session, status]);
   if (!messages.length)
     return (
-      <div className="item-center h-71.5 flex w-full overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1"></div>
+      <div className="flex h-[286px] w-full overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1"></div>
     );
   const pairedMessages = [];
   for (let i = 0; i < messages.length; i += 2) {
@@ -67,7 +67,7 @@ const CommentSection = () => {
   }
   return (
     <>
-      <div className="item-center h-71.5 flex w-full overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1">
+      <div className="flex h-[286px] w-full items-center overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1">
         {pairedMessages?.map((pair, ind) => (
           <div className="grid grid-rows-2" key={ind}>
             {pair.map((comment) => (
