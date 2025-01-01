@@ -16,6 +16,7 @@ interface RawMessage {
   message: string;
   createdAt: string;
   user: User;
+  is_owner: boolean;
 }
 interface Message {
   message_id: string;
@@ -23,6 +24,7 @@ interface Message {
   baan: string | null;
   message: string;
   imageUrl: string;
+  is_owner: boolean;
 }
 
 const CommentSection = () => {
@@ -43,12 +45,14 @@ const CommentSection = () => {
         );
 
         const rawData = response.data;
+        // console.log("API Response:", rawData);
         const data: Message[] = rawData.map((item: RawMessage) => ({
           message_id: item.message_id,
           username: item.user.username,
           baan: getShortedBaanName(item.user.baan),
           message: item.message,
           imageUrl: item.user.imageUrl,
+          is_owner: item.is_owner,
         }));
         setMessages(data);
       } catch (error) {
@@ -77,6 +81,8 @@ const CommentSection = () => {
                 house={comment.baan ?? ""}
                 comment={comment.message}
                 image={comment.imageUrl}
+                is_owner={comment.is_owner}
+                message_id={comment.message_id}
               />
             ))}
           </div>
