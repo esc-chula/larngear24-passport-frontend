@@ -35,7 +35,7 @@ function LoadingContent() {
             },
           },
         );
-        if (response.statusText !== "OK") {
+        if (response.status.toString() !== "200") {
           throw new Error("can't fetch");
         } else {
           toast({
