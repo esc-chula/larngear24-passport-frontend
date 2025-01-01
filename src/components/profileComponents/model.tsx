@@ -46,13 +46,15 @@ export default function Model({ selectedParts }: ModelProps) {
             className="part-container"
             style={{ zIndex: zIndexMap[partKey] }}
           >
-            <Image
-              src={imageSrc}
-              className="part-img"
-              alt={partKey}
-              width={500}
-              height={500}
-            />
+            <picture>
+              <img
+                src={imageSrc}
+                className="part-img"
+                alt={partKey}
+                width={500}
+                height={500}
+              />
+            </picture>
           </div>
         );
       })}

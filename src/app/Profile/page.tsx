@@ -159,42 +159,42 @@ export default function Profile() {
   };
 
   // capture
-  const contentRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const handleSaveAsImage = async () => {
-    if (contentRef.current) {
-      try {
-        const elementsToExcludeDisplay = contentRef.current.querySelectorAll(
-          ".exclude-from-screenshot",
-        );
-        elementsToExcludeDisplay.forEach((el) => {
-          (el as HTMLElement).style.display = "none";
-        });
+    if (!contentRef.current) return;
+    try {
+      const elementsToExcludeDisplay = contentRef.current.querySelectorAll(
+        ".exclude-from-screenshot",
+      );
+      elementsToExcludeDisplay.forEach((el) => {
+        (el as HTMLElement).style.display = "none";
+      });
 
-        const elementsToExcludeOpacity = contentRef.current.querySelectorAll(
-          ".exclude-from-screenshot2",
-        );
-        elementsToExcludeOpacity.forEach((el) => {
-          (el as HTMLElement).style.opacity = "0";
-        });
+      const elementsToExcludeOpacity = contentRef.current.querySelectorAll(
+        ".exclude-from-screenshot2",
+      );
+      elementsToExcludeOpacity.forEach((el) => {
+        (el as HTMLElement).style.opacity = "0";
+      });
 
-        await html2canvas(contentRef.current).then((canvas) => {
-          const image = canvas.toDataURL("png");
-          const a = document.createElement("a");
-          a.setAttribute("download", "passport_eiei.png");
-          a.setAttribute("href", image);
-          a.click();
-        });
+      await html2canvas(contentRef.current).then((canvas) => {
+        const image = canvas.toDataURL("image/png", 1.5);
 
-        elementsToExcludeDisplay.forEach((el) => {
-          (el as HTMLElement).style.display = "";
-        });
+        const a = document.createElement("a");
+        a.href = image;
+        a.download = "passport-larngear-camp.png";
+        a.click();
+      });
 
-        elementsToExcludeOpacity.forEach((el) => {
-          (el as HTMLElement).style.opacity = "";
-        });
-      } catch (error) {
-        console.error("Failed to capture screenshot", error);
-      }
+      elementsToExcludeDisplay.forEach((el) => {
+        (el as HTMLElement).style.display = "";
+      });
+
+      elementsToExcludeOpacity.forEach((el) => {
+        (el as HTMLElement).style.opacity = "";
+      });
+    } catch (error) {
+      console.error("Failed to capture screenshot", error);
     }
   };
 
@@ -207,9 +207,15 @@ export default function Profile() {
         <Header />
       </div>
 
-      <div className="exclude-from-screenshot z-0 mx-7 flex items-start">
+      <div className="z-0 mx-7 flex h-5 items-start">
         <Link href="/">
-          <Image src="/arrow-left.webp" alt="Back" width={20} height={20} />
+          <Image
+            className="exclude-from-screenshot"
+            src="/arrow-left.webp"
+            alt="Back"
+            width={20}
+            height={20}
+          />
         </Link>
       </div>
       <div className="flex flex-1 flex-col justify-start space-y-2.5">
@@ -236,33 +242,37 @@ export default function Profile() {
                 onClick={() => handleClickArtifact(num)}
               >
                 {findSelectedArtifact(num) && (
-                  <Image
-                    src={`/images/item${findSelectedArtifact(num)}.webp`}
-                    alt="artifact"
-                    width={50}
-                    height={50}
-                  />
+                  <picture>
+                    <img
+                      src={`/images/item${findSelectedArtifact(num)}.webp`}
+                      alt="artifact"
+                      width={50}
+                      height={50}
+                    />
+                  </picture>
                 )}
                 {!findSelectedArtifact(num) && (
-                  <Image
-                    src="/profile/question.webp"
-                    alt="Question"
-                    className="h-[60%] w-[60%]"
-                    width={60}
-                    height={60}
-                  />
+                  <picture className="flex w-full items-center justify-center">
+                    <img
+                      src="/profile/question.webp"
+                      alt="Question"
+                      className="h-[60%] w-[60%]"
+                      width={60}
+                      height={60}
+                    />
+                  </picture>
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* <div
+        <div
           className="exclude-from-screenshot w-30 flex justify-center"
           onClick={handleSaveAsImage}
         >
           <Button text="Save Image" imgSrc="/profile/download.webp" />
-        </div> */}
+        </div>
       </div>
 
       <Modal

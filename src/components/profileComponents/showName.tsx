@@ -40,7 +40,7 @@ export const ShowName = ({ username }: { username: string }) => {
   }, [username]);
 
   return (
-    <div className="mb-3 flex w-[100%] grow flex-row items-center justify-center space-x-2">
+    <div className="flex w-[100%] grow flex-row items-center justify-center space-x-2">
       {change ? (
         <>
           <input
