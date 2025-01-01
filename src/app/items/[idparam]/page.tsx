@@ -65,7 +65,7 @@ export default function ItemInfoPage() {
             </Link>
           </div>
           <Image
-            src="/images/collection.webp"
+            src="/images/Collection.webp"
             alt="Collection"
             width={150}
             height={50}
@@ -104,7 +104,7 @@ export default function ItemInfoPage() {
         ) : (
           <div className="mx-4 my-5 flex flex-1 flex-col items-center justify-center space-y-6 rounded-3xl border-2 border-white bg-white bg-opacity-65 py-8 text-black backdrop-blur-sm">
             <Image
-              src={"/images/lockedItem.webp"}
+              src={"/images/lockeditem.webp"}
               alt={"locked"}
               width={120}
               height={120}
