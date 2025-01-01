@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import getShortedBaanName from "@/libs/getShortedBaanName";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
+import { Skeleton } from "../ui/skeleton";
 
 interface User {
   username: string;
@@ -61,10 +62,24 @@ const CommentSection = () => {
     }
     void fetchMessages();
   }, [session, status]);
-  if (!messages.length)
+  if (!messages.length) {
     return (
-      <div className="flex h-[286px] w-full overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1"></div>
+      <div className="flex h-[286px] w-full overflow-y-hidden overflow-x-scroll border-y-4 border-[#36465F] bg-[#ECF0F6] pl-1.5 pt-1">
+        {[
+          [1, 2],
+          [1, 2],
+          [1, 2],
+          [1, 2],
+        ].map((pair, ind) => (
+          <div className="grid grid-rows-2" key={ind}>
+            {pair.map((item, index) => (
+              <CommentBoxSkeleton key={index} />
+            ))}
+          </div>
+        ))}
+      </div>
     );
+  }
   const pairedMessages = [];
   for (let i = 0; i < messages.length; i += 2) {
     pairedMessages.push(messages.slice(i, i + 2));
@@ -93,3 +108,20 @@ const CommentSection = () => {
 };
 
 export default CommentSection;
+
+const CommentBoxSkeleton = (): React.JSX.Element => {
+  return (
+    <Skeleton className="m-1.5 mt-1 h-[7.6rem] min-w-[10.6rem] rounded-md p-2 text-[#ECF0F6]">
+      <div className="flex gap-2">
+        <Skeleton className="size-[25px] rounded-full" />
+        <div className="resize-none text-sm font-bold">
+          <Skeleton className="h-3 w-[110px]" />{" "}
+          <Skeleton className="mt-1 h-3 w-[60px]" />
+        </div>
+      </div>
+      <Skeleton className="mt-4 h-2 w-[130px] resize-none" />
+      <Skeleton className="mt-2 h-2 w-[70px] resize-none" />
+      <Skeleton className="mt-2 h-2 w-[100px] resize-none" />
+    </Skeleton>
+  );
+};
