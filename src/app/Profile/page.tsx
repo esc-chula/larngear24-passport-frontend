@@ -212,7 +212,7 @@ export default function Profile() {
           <Image src="/arrow-left.webp" alt="Back" width={20} height={20} />
         </Link>
       </div>
-      <div className="flex flex-1 flex-col justify-center space-y-2.5">
+      <div className="flex flex-1 flex-col justify-start space-y-2.5">
         <MainProfile
           baanNumber={user.baan}
           username={user.username}
@@ -257,12 +257,12 @@ export default function Profile() {
           </div>
         </div>
 
-        <div
+        {/* <div
           className="exclude-from-screenshot w-30 flex justify-center"
           onClick={handleSaveAsImage}
         >
           <Button text="Save Image" imgSrc="/profile/download.webp" />
-        </div>
+        </div> */}
       </div>
 
       <Modal
