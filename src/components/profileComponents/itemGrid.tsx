@@ -48,10 +48,10 @@ export default function ItemsGrid({
             />
           ) : (
             <Image
-              src={`/images/item${item.id}.png`}
+              src={`/images/item${item.id}.webp`}
               alt={`Item ${item.id}`}
               className="object-contain"
-              width={100} 
+              width={100}
               height={100}
             />
           )}
