@@ -7,6 +7,7 @@ import Image from "next/image";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import { paramsMapping } from "@/libs/getItemName";
+import Header from "@/components/globalComponents/Header";
 
 function LoadingContent() {
   const { data: session } = useSession();
@@ -17,7 +18,7 @@ function LoadingContent() {
     try {
       if (!session) return;
       const param = searchParams.get("param") ?? "";
-      if (!param) throw new Error("param is null");
+      if (!param || !(param in paramsMapping)) throw Error("param is null");
       const item = paramsMapping[param]?.itemId;
 
       const handdlePost = async () => {
@@ -33,10 +34,11 @@ function LoadingContent() {
             },
           },
         );
-        if (response.status.toString() !== "200") {
-          throw new Error("can't fetch");
+        if (response.statusText !== "OK") {
+          throw Error("can't fetch");
+        } else {
+          router.push(`/items/redeem/unlock?param=${param}`);
         }
-        router.push(`/items/redeem/unlock?param=${param}`);
       };
       void handdlePost();
     } catch {
@@ -59,19 +61,11 @@ function LoadingContent() {
 export default function LoadingPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
+      <div className="flex min-h-screen items-center justify-center bg-[url('/main/Main1.webp')] bg-cover bg-center">
         {/* Main Container */}
-        <div className="flex h-screen w-[90%] max-w-md flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
+        <div className="flex h-screen flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
           {/* Header Section */}
-          <div className="relative h-[100px] w-full">
-            <Image
-              src="/images/Header.svg"
-              alt="Header"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-t-lg"
-            />
-          </div>
+          <Header />
 
           {/* Loading Section */}
           <LoadingContent />

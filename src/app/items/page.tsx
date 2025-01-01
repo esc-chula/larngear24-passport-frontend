@@ -7,6 +7,7 @@ import { items as initialItems } from "src/data/items";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Header from "@/components/globalComponents/Header";
 
 interface Item {
   id: number;
@@ -62,20 +63,12 @@ export default function ItemCollection() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
       {/* Main Container */}
-      <div className="flex h-screen w-[90%] max-w-md flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
+      <div className="flex min-h-screen w-full flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
         {/* Header Section */}
-        <div className="relative h-[100px] w-full">
-          <Image
-            src="/images/Header.svg"
-            alt="Header"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-t-lg"
-          />
-        </div>
+        <Header />
 
         {/* Collection Title */}
-        <div className="relative mt-4 flex items-center justify-center space-x-2">
+        <div className="relative my-6 flex items-center justify-center space-x-2">
           <div className="absolute left-4 top-0 flex h-full items-center">
             <Link href="/" passHref>
               <Image
@@ -93,7 +86,7 @@ export default function ItemCollection() {
             width={150}
             height={50}
             className="object-contain"
-          />{" "}
+          />
         </div>
 
         {/* Content Section */}
@@ -111,7 +104,7 @@ export default function ItemCollection() {
               <div
                 className={`flex items-center justify-center ${
                   index === itemGroups.length - 1
-                    ? "flex gap-x-4"
+                    ? "flex gap-x-8"
                     : "grid grid-cols-3"
                 }`}
               >
@@ -120,21 +113,25 @@ export default function ItemCollection() {
 
                   return (
                     <div
+                      className="flex items-center justify-center"
                       key={item.id}
-                      className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-white bg-opacity-30 backdrop-blur-sm"
-                      onClick={() => {
-                        router.push(`/items/${item.id}`);
-                      }}
                     >
-                      <Image
-                        src={
-                          isUnlocked ? item.image : "/images/lockedItem.webp"
-                        }
-                        alt={item.name}
-                        width={60}
-                        height={60}
-                        className={`${!isUnlocked ? "opacity-50" : ""}`}
-                      />
+                      <button
+                        className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-white bg-opacity-30 backdrop-blur-sm"
+                        onClick={() => {
+                          router.push(`/items/${item.id}`);
+                        }}
+                      >
+                        <Image
+                          src={
+                            isUnlocked ? item.image : "/images/lockedItem.webp"
+                          }
+                          alt={item.name}
+                          width={60}
+                          height={60}
+                          className={`${!isUnlocked ? "" : ""}`}
+                        />
+                      </button>
                     </div>
                   );
                 })}
