@@ -36,12 +36,15 @@ const AddYours = ({
 }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
+
+  function filterRudeWords(sentence: string, rudeWords: string[]): string {
+    const pattern = new RegExp(`${rudeWords.join("|")}`, "giu");
+    return sentence.replace(pattern, (match) => "*".repeat(match.length));
+  }
+
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const unFiltered = e.target.value;
-    const filteredComment = rudeWords.reduce((accumulatedWords, word) => {
-      const badWord = new RegExp(`\\b${word}\\b`, "gi");
-      return accumulatedWords.replace(badWord, "***");
-    }, unFiltered);
+    const filteredComment = filterRudeWords(unFiltered, rudeWords);
 
     setComment(filteredComment);
   };

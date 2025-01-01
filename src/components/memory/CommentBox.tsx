@@ -48,7 +48,6 @@ const CommentBox = ({
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
-      console.log(`${process.env.NEXT_PUBLIC_API_URL}/message`);
 
       toast({
         title: "Error",
@@ -60,7 +59,7 @@ const CommentBox = ({
 
   return (
     <>
-      <div className="m-1.5 mt-1 h-[7.6rem] min-w-[10.6rem] bg-[#36465F] p-2 text-[#ECF0F6]">
+      <div className="m-1.5 mt-1 h-[7.6rem] min-w-[10.6rem] rounded-md bg-[#36465F] p-2 text-[#ECF0F6]">
         <div className="flex gap-2">
           <Image
             src={image}
