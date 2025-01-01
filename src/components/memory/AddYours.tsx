@@ -5,6 +5,7 @@ import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
@@ -89,6 +90,11 @@ const AddYours = ({
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
+      if (error instanceof AxiosError) {
+        console.error(error.cause);
+        console.error(error.response?.headers);
+        console.error(error.response?.data);
+      }
 
       toast({
         title: "Error",
