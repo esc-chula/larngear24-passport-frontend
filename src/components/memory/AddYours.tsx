@@ -135,23 +135,26 @@ const AddYours = ({
               {name} #{house}
             </div>
           </div>
-          <div className="relative left-[2.25rem] top-[4.75rem] h-[10.75rem] w-[16.1rem] bg-[#ECF0F6] p-3 text-black opacity-80">
-            <div className="text-base font-bold">Share something</div>
-            <textarea
-              rows={5}
-              className="w-[14rem] resize-none bg-transparent focus:outline-none"
-              value={comment}
-              onChange={handleCommentChange}
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <button
-              onClick={submit}
-              className="relative top-24 rounded-lg bg-[#ECF0F6] px-4 py-2 text-2xl font-bold text-[#262D37]"
-            >
-              Confirm
-            </button>
-          </div>
+          <form onSubmit={submit}>
+            <div className="relative left-[2.25rem] top-[4.75rem] h-[10.75rem] w-[16.1rem] bg-[#ECF0F6] p-3 text-black opacity-80">
+              <div className="text-base font-bold">Share something</div>
+              <textarea
+                placeholder="Write your message here"
+                rows={5}
+                className="w-[14rem] resize-none bg-transparent focus:outline-none"
+                value={comment}
+                onChange={handleCommentChange}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <button
+                type="submit"
+                className="relative top-24 rounded-lg bg-[#ECF0F6] px-4 py-2 text-2xl font-bold text-[#262D37]"
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>
