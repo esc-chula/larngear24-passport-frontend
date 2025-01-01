@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-export default function AuthProvider({ children }: React.PropsWithChildren) {
+function TempAuthProvider({ children }: React.PropsWithChildren) {
   const { data: session } = useSession();
   const router = useRouter();
   const pathname = usePathname();
@@ -18,4 +18,12 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
   }, [session, router, pathname]);
 
   return children;
+}
+
+export default function AuthProvider(): React.JSX.Element {
+  return (
+    <Suspense fallback={<p>loading...</p>}>
+      <TempAuthProvider />
+    </Suspense>
+  );
 }
