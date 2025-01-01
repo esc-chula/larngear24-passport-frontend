@@ -7,9 +7,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 
-function timeout(delay: number) {
-  return new Promise((res) => setTimeout(res, delay));
-}
 interface User {
   username: string;
   baan: number;
@@ -30,16 +27,17 @@ const AddYours = ({
   name,
   house,
   imgUrl,
+  setRender,
 }: {
   open: boolean;
   close: () => void;
   name: string;
   house: string;
   imgUrl: string;
+  setRender: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
-  const router = useRouter();
 
   function filterRudeWords(sentence: string, rudeWords: string[]): string {
     const pattern = new RegExp(`${rudeWords.join("|")}`, "giu");
@@ -52,7 +50,8 @@ const AddYours = ({
 
     setComment(filteredComment);
   };
-  async function submit() {
+  const submit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (comment == "") {
       toast({
         title: "Message Required",
@@ -65,8 +64,8 @@ const AddYours = ({
     try {
       if (!session) return;
       if (!session.user) return;
-      console.log("Sending message:", comment);
-      console.log("User ID:", session?.user.id);
+      // console.log("Sending message:", comment);
+      // console.log("User ID:", session?.user.id);
       const response = await axiosClient.post<RawMessage[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/message`,
         {
@@ -78,7 +77,7 @@ const AddYours = ({
           },
         },
       );
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
 
       if (!response.data) {
         throw new Error("Failed to send message");
@@ -90,7 +89,7 @@ const AddYours = ({
       });
       setComment("");
       close();
-      router.refresh();
+      setRender((prev) => prev + 1);
     } catch (error) {
       console.error("Error:", error);
       if (error instanceof AxiosError) {
@@ -105,7 +104,7 @@ const AddYours = ({
         className: "bg-red-500 text-white",
       });
     }
-  }
+  };
 
   useEffect(() => {
     if (open) {
@@ -148,7 +147,7 @@ const AddYours = ({
               {name} #{house}
             </div>
           </div>
-          <form onSubmit={submit}>
+          <form onSubmit={(e: React.SyntheticEvent) => submit(e)}>
             <div className="relative left-[2.25rem] top-[4.75rem] h-[10.75rem] w-[16.1rem] bg-[#ECF0F6] p-3 text-black opacity-80">
               <div className="text-base font-bold">Share something</div>
               <textarea

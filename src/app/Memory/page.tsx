@@ -27,6 +27,7 @@ export default function Memory() {
   const [showAddYours, setShowAddYours] = useState(false);
   const [userInfo, setUserInfo] = useState<UserData>();
   const { data: session, status } = useSession();
+  const [render, setRender] = useState<number>(0);
   // const router = useRouter();
   // if (!session?.user.id) {
   //   void router.push("/Login");
@@ -76,7 +77,7 @@ export default function Memory() {
         <div className="item-center mb-3 mt-8 flex justify-center font-ibm text-xl font-bold">
           อยากฝากอะไรถึง LG24 ?
         </div>
-        <CommentSection />
+        <CommentSection key={render} />
 
         <div className="grid justify-items-end">
           <button
@@ -95,6 +96,7 @@ export default function Memory() {
           name={userInfo?.username ?? ""}
           house={getShortedBaanName(parseInt(userInfo?.baan ?? "0"))}
           imgUrl={userInfo?.image ?? ""}
+          setRender={setRender}
         />
 
         {/* Photo after finish camp */}
