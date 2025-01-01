@@ -96,7 +96,7 @@ export default function Memory() {
         />
 
         {/* Photo after finish camp */}
-        <Phase2Photo />
+        {/* <Phase2Photo /> */}
       </div>
     </>
   );
