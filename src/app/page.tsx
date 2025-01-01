@@ -6,12 +6,20 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col items-center gap-4 bg-[url('/main/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
+    <div className="relative flex h-full min-h-screen w-full flex-col items-center gap-4 bg-[url('/main/Main1.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       <Header />
       <h1 className="font-vimamsa text-3xl text-[#ECF0F6]">
         ยินดีต้อนรับสู่ ค่ายลานเกียร์ 24
       </h1>
-      <div className="h-40 w-80 bg-gray-600"></div>
+      <div className="h-40 w-80">
+        <Image
+          src="/memory/larngear_placeholder.webp"
+          alt="larngear_placholder"
+          className="object-cover"
+          width={320}
+          height={160}
+        />
+      </div>
       <ul className="mt-4 flex h-full w-80 flex-col items-center gap-8">
         <div className="relative flex w-full justify-end">
           <Image

@@ -10,6 +10,7 @@ import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import getShortedBaanName from "@/libs/getShortedBaanName";
 import Image from "next/image";
+import Phase2Photo from "@/components/memory/Phase2Photo";
 
 interface UserData {
   user_id: string;
@@ -65,6 +66,8 @@ export default function Memory() {
           <Image
             src="/memory/larngear_placeholder.webp"
             alt="larngear_placholder"
+            width={390}
+            height={180}
           />
         </div>
 

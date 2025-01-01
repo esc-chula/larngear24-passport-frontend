@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { getItemName, getDressName } from "@/libs/getItemName";
 import { paramsMapping } from "@/libs/getItemName";
+import Header from "@/components/globalComponents/Header";
 
 function UnlockPageContent() {
   const searchParams = useSearchParams();
@@ -17,32 +18,15 @@ function UnlockPageContent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[url('/images/background.svg')] bg-cover bg-center">
       {/* Main Container */}
-      <div className="flex h-screen w-[90%] max-w-md flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]">
+      <div
+        className="flex min-h-screen flex-col overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-b from-[#092B44] via-[#625B87] to-[#D2CAFF]"
+        onClick={() => router.push("/items")}
+      >
         {/* Header Section */}
-        <div className="relative h-[100px] w-full">
-          <Image
-            src="/images/Header.svg"
-            alt="Header"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-t-lg"
-          />
-        </div>
+        <Header />
 
         {/* Title Section */}
         <div className="relative mt-4 flex flex-col items-center space-y-0.5">
-          {/* Back Arrow */}
-          <div className="absolute left-4 top-0 flex h-full items-center">
-            <Image
-              src="/images/fi-rr-arrow-left.svg"
-              alt="Back Arrow"
-              width={24}
-              height={24}
-              className="cursor-pointer"
-              onClick={() => router.push("/items")}
-            />
-          </div>
-
           {/* "New Items" Image */}
           <Image
             src="/images/newitem.webp"
@@ -67,7 +51,6 @@ function UnlockPageContent() {
           className="grid grid-cols-2 gap-x-4 px-10 py-10"
           style={{
             justifyItems: "center",
-            marginTop: "20px",
           }}
         >
           {/* First Item Section */}
@@ -105,7 +88,7 @@ function UnlockPageContent() {
 
             {/* Item Name */}
             <p
-              className="text-center text-lg font-bold text-gray-200"
+              className="px-2 text-center font-vimamsa text-4xl text-white"
               style={{
                 wordWrap: "break-word",
                 overflowWrap: "break-word",
@@ -131,13 +114,14 @@ function UnlockPageContent() {
               }}
             >
               {itemDetails ? (
-                <Image
-                  src={`/images/item${itemDetails.itemId}.webp`}
-                  alt={`Item ${itemDetails.itemId}`}
-                  width={70}
-                  height={70}
-                  className="rounded-lg"
-                />
+                <div className="relative mt-12 h-[170px] w-[170px]">
+                  <Image
+                    src={`/model/dress/dress${itemDetails.itemId}.webp`}
+                    alt={`Hat ${itemDetails.itemId}`}
+                    fill={true}
+                    className="rounded-lg object-cover object-top"
+                  />
+                </div>
               ) : (
                 <Image
                   src="/images/loadingIcon.webp"
@@ -150,15 +134,22 @@ function UnlockPageContent() {
             </div>
 
             {/* TODO : change this to Dress*/}
-            <p className="text-gray-20 -ml-2 text-center text-lg font-bold text-white">
+            <p
+              className="-ml-2 px-2 text-center font-vimamsa text-4xl text-white"
+              style={{
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
+                whiteSpace: "normal",
+              }}
+            >
               {itemDetails ? getDressName({ num: itemDetails.itemId }) : ""}
             </p>
           </div>
         </div>
 
         {/* Continue Button */}
-        <div className="mt-4 flex w-full items-center justify-center">
-          <div className="cursor-pointer" onClick={() => router.push("/items")}>
+        <div className="flex h-14 w-full items-center justify-center py-4">
+          <div className="cursor-pointer">
             <Image
               src="/images/Tap to Continue.webp"
               alt="Tap to Continue"

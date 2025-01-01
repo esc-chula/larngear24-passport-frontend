@@ -53,10 +53,30 @@ const Phase2Photo = () => {
       </div>
       <div className="item-center m-4 flex justify-center">
         <div className="grid grid-cols-2 gap-4">
-          <Image src="https://placehold.co/300x200" alt="group image" />
-          <Image src="https://placehold.co/300x200" alt="group image" />
-          <Image src="https://placehold.co/300x200" alt="group image" />
-          <Image src="https://placehold.co/300x200" alt="group image" />
+          <Image
+            src="https://placehold.co/300x200"
+            width={170}
+            height={60}
+            alt="group image"
+          />
+          <Image
+            src="https://placehold.co/300x200"
+            width={170}
+            height={60}
+            alt="group image"
+          />
+          <Image
+            src="https://placehold.co/300x200"
+            width={170}
+            height={60}
+            alt="group image"
+          />
+          <Image
+            src="https://placehold.co/300x200"
+            width={170}
+            height={60}
+            alt="group image"
+          />
         </div>
       </div>
 
