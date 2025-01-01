@@ -70,34 +70,39 @@ const CommentBox = ({
   return (
     <>
       <Dialog>
-        <DialogTrigger>
-          <div className="m-1.5 mt-1 h-[7.6rem] min-w-[10.6rem] rounded-md bg-[#36465F] p-2 text-[#ECF0F6]">
-            <div className="flex gap-2">
-              <Image
-                src={image}
-                className="h-[1.6rem] w-[1.6rem] rounded-full"
-                width={25}
-                height={25}
-                alt="profile"
-              />
-              <div className="resize-none text-sm font-bold">
-                {name} <span className="text-xl">#</span>
-                {house}
+        <div className="relative z-0 m-1.5 mt-1 h-[7.6rem] w-full">
+          {is_owner && (
+            <button
+              className="absolute right-2 top-2 z-10 h-4 w-4"
+              onClick={submit}
+            >
+              <X className="size-4" />
+            </button>
+          )}
+          <DialogTrigger>
+            <div className="h-[7.6rem] min-w-[10.6rem] rounded-md bg-[#36465F] p-2 text-[#ECF0F6]">
+              <div className="flex gap-2">
+                <Image
+                  src={image}
+                  className="h-[1.6rem] w-[1.6rem] rounded-full"
+                  width={25}
+                  height={25}
+                  alt="profile"
+                />
+                <div className="resize-none text-sm font-bold">
+                  {name} <span className="text-xl">#</span>
+                  {house}
+                </div>
               </div>
-              {is_owner && (
-                <button className="h-4 w-4" onClick={submit}>
-                  <X className="size-4" />
-                </button>
-              )}
+              <textarea
+                readOnly
+                rows={4}
+                className="ml-2 mt-1 resize-none bg-transparent text-xs font-normal focus:outline-none"
+                value={comment}
+              />
             </div>
-            <textarea
-              readOnly
-              rows={4}
-              className="ml-2 mt-1 resize-none bg-transparent text-xs font-normal focus:outline-none"
-              value={comment}
-            />
-          </div>
-        </DialogTrigger>
+          </DialogTrigger>
+        </div>
         <DialogContent className="max-h-[600px] w-[80%] rounded-md bg-[#36465F] p-4 text-[#ECF0F6]">
           <DialogHeader>
             <div className="flex items-center gap-2">
