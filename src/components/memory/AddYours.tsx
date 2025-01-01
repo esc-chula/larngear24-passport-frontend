@@ -4,6 +4,8 @@ import { toast } from "@/hooks/use-toast";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 function timeout(delay: number) {
   return new Promise((res) => setTimeout(res, delay));
 }
@@ -36,6 +38,7 @@ const AddYours = ({
 }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
+  const router = useRouter();
 
   function filterRudeWords(sentence: string, rudeWords: string[]): string {
     const pattern = new RegExp(`${rudeWords.join("|")}`, "giu");
@@ -83,8 +86,7 @@ const AddYours = ({
       });
       setComment("");
       close();
-      await timeout(1000);
-      window.location.reload();
+      router.refresh();
     } catch (error) {
       console.error("Error:", error);
 
