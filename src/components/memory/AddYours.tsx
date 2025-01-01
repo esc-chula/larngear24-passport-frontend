@@ -128,6 +128,8 @@ const AddYours = ({
               src={imgUrl}
               className="h-[1.6rem] w-[1.6rem] rounded-full object-cover"
               alt="user profile"
+              width={25}
+              height={25}
             />
             <div className="ml-2">
               {name} #{house}

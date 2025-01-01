@@ -4,13 +4,19 @@ const Banner = ({
   imgUrl,
   googleDriveUrl,
 }: {
-  imgUrl?: string;
+  imgUrl: string;
   googleDriveUrl?: string;
 }) => {
   return (
     <>
       <a href={googleDriveUrl}>
-        <Image src={imgUrl ?? ""} alt="house banner"/>
+        <Image
+          className="object-cover"
+          src={imgUrl}
+          width={80}
+          height={130}
+          alt="house banner"
+        />
       </a>
     </>
   );
