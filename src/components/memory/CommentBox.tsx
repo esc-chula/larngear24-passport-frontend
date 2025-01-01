@@ -65,12 +65,12 @@ const CommentBox = ({
       });
     }
   }
-  console.log(comment);
+  //console.log(comment);
 
   return (
     <>
       <Dialog>
-        <div className="relative z-0 m-1.5 mt-1 h-[7.6rem] w-full">
+        <div className="relative z-0 m-1.5 mt-1 h-[7.6rem] w-[10.6rem]">
           {is_owner && (
             <button
               className="absolute right-2 top-2 z-10 h-4 w-4"
@@ -80,7 +80,7 @@ const CommentBox = ({
             </button>
           )}
           <DialogTrigger>
-            <div className="h-[7.6rem] min-w-[10.6rem] rounded-md bg-[#36465F] p-2 text-[#ECF0F6]">
+            <div className="h-[7.6rem] w-[10.6rem] rounded-md bg-[#36465F] px-2 py-2 pr-5 text-[#ECF0F6]">
               <div className="flex gap-2">
                 <Image
                   src={image}
@@ -89,10 +89,10 @@ const CommentBox = ({
                   height={25}
                   alt="profile"
                 />
-                <div className="resize-none text-sm font-bold">
-                  {name} <span className="text-xl">#</span>
+                <p className="resize-none overflow-hidden text-left text-sm font-bold">
+                  {name} <br /> <span className="text-xl">#</span>
                   {house}
-                </div>
+                </p>
               </div>
               <textarea
                 readOnly
