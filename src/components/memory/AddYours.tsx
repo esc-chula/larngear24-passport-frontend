@@ -154,6 +154,7 @@ const AddYours = ({
               <textarea
                 placeholder="Write your message here"
                 rows={5}
+                maxLength={500}
                 className="w-[14rem] resize-none bg-transparent focus:outline-none"
                 value={comment}
                 onChange={handleCommentChange}

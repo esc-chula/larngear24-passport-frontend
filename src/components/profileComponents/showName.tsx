@@ -47,12 +47,13 @@ export const ShowName = ({ username }: { username: string }) => {
             id="nameInput"
             type="text"
             value={name}
+            maxLength={20}
             onChange={handleInputChange}
             placeholder="โปรดใส่ชื่อของคุณ"
             className="mt-1 w-[60%] rounded-md bg-[#ECF0F6] p-1 text-center font-ibm text-sm font-semibold focus:outline-none"
           />
           <button
-            className="exclude-from-screenshot2 flex h-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-teal-300 px-2 text-sm font-bold"
+            className="exclude-from-screenshot flex h-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-teal-300 px-2 text-sm font-bold"
             onClick={handleSaveName}
           >
             save
@@ -60,7 +61,7 @@ export const ShowName = ({ username }: { username: string }) => {
         </>
       ) : (
         <>
-          <p className="mt-1 w-[70%] self-center rounded-md bg-[#ECF0F6] p-1 text-center font-ibm text-sm font-semibold focus:outline-none">
+          <p className="mt-1 w-[70%] break-words rounded-md bg-[#ECF0F6] p-1 text-center font-ibm text-sm font-semibold focus:outline-none">
             {name}
           </p>
           <div
