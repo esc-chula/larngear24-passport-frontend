@@ -17,7 +17,6 @@ const vimamsa = localFont({
 export const metadata: Metadata = {
   title: "Passport Larngear",
   description: "Passport for Larngear camp",
-  authors: { name: "" },
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
