@@ -20,10 +20,12 @@ function TempAuthProvider({ children }: React.PropsWithChildren) {
   return children;
 }
 
-export default function AuthProvider(): React.JSX.Element {
+export default function AuthProvider({
+  children,
+}: React.PropsWithChildren): React.JSX.Element {
   return (
     <Suspense fallback={<p>loading...</p>}>
-      <TempAuthProvider />
+      <TempAuthProvider>{children}</TempAuthProvider>
     </Suspense>
   );
 }
