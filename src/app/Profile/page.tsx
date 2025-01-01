@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/globalComponents/Button";
 import Header from "@/components/globalComponents/Header";
 import Link from "next/link";
-import { toPng } from "html-to-image";
 import Modal from "@/components/profileComponents/modal";
 import type {
   Artifacts,
@@ -16,6 +15,7 @@ import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import { mockItems } from "@/components/profileComponents/mockData";
 import Image from "next/image";
+import html2canvas from "html2canvas";
 
 export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -106,7 +106,7 @@ export default function Profile() {
       });
     };
     void handleGet();
-  }, [session, items]);
+  }, [session]);
 
   const [selectedParts, setSelectedParts] =
     useState<AvatarParts>(defaultAvatar);
@@ -177,7 +177,13 @@ export default function Profile() {
           (el as HTMLElement).style.opacity = "0";
         });
 
-        const dataUrl = await toPng(contentRef.current);
+        await html2canvas(contentRef.current).then((canvas) => {
+          const image = canvas.toDataURL("png");
+          const a = document.createElement("a");
+          a.setAttribute("download", "passport_eiei.png");
+          a.setAttribute("href", image);
+          a.click();
+        });
 
         elementsToExcludeDisplay.forEach((el) => {
           (el as HTMLElement).style.display = "";
@@ -186,10 +192,6 @@ export default function Profile() {
         elementsToExcludeOpacity.forEach((el) => {
           (el as HTMLElement).style.opacity = "";
         });
-        const link = document.createElement("a");
-        link.download = "screenshot.png";
-        link.href = dataUrl;
-        link.click();
       } catch (error) {
         console.error("Failed to capture screenshot", error);
       }
@@ -201,7 +203,7 @@ export default function Profile() {
       ref={contentRef}
       className="relative flex h-full min-h-screen w-full flex-col gap-4 space-y-0 bg-[url('/profile/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]"
     >
-      <div className="exclude-from-screenshot">
+      <div className="">
         <Header />
       </div>
 
@@ -235,7 +237,7 @@ export default function Profile() {
               >
                 {findSelectedArtifact(num) && (
                   <Image
-                    src={`/images/item${findSelectedArtifact(num)}.png`}
+                    src={`/images/item${findSelectedArtifact(num)}.webp`}
                     alt="artifact"
                     width={50}
                     height={50}
@@ -259,7 +261,7 @@ export default function Profile() {
           className="exclude-from-screenshot w-30 flex justify-center"
           onClick={handleSaveAsImage}
         >
-          <Button text="Save Image" imgSrc="./profile/download.webp" />
+          <Button text="Save Image" imgSrc="/profile/download.webp" />
         </div>
       </div>
 

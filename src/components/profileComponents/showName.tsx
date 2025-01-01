@@ -40,7 +40,7 @@ export const ShowName = ({ username }: { username: string }) => {
   }, [username]);
 
   return (
-    <div className="mb-3 flex w-[100%] grow flex-row items-center justify-end space-x-2">
+    <div className="mb-3 flex w-[100%] grow flex-row items-center justify-center space-x-2">
       {change ? (
         <>
           <input
@@ -60,18 +60,18 @@ export const ShowName = ({ username }: { username: string }) => {
         </>
       ) : (
         <>
-          <p className="mt-1 w-[70%] rounded-md bg-[#ECF0F6] p-1 text-center font-ibm text-sm font-semibold focus:outline-none">
+          <p className="mt-1 w-[70%] self-center rounded-md bg-[#ECF0F6] p-1 text-center font-ibm text-sm font-semibold focus:outline-none">
             {name}
           </p>
           <div
-            className="exclude-from-screenshot2 flex h-6 w-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-[#ECF0F6] text-sm"
+            className="exclude-from-screenshot flex h-6 w-6 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-[#ECF0F6] text-sm"
             onClick={() => {
               setChange(true);
             }}
           >
-            <Image 
-              src="/profile/pencil.webp" 
-              alt="Pencil" 
+            <Image
+              src="/profile/pencil.webp"
+              alt="Pencil"
               className="w-3/5"
               width={60} // Replace with appropriate dimensions
               height={60} // Replace with appropriate dimensions
