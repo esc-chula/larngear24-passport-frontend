@@ -17,7 +17,7 @@ function Login(): React.JSX.Element {
   }, [status]);
 
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col items-center justify-center gap-4 bg-[url('/login/bg.webp')] md:mx-auto md:max-w-[25rem]">
+    <div className="relative flex h-full min-h-screen w-full flex-col items-center justify-center gap-4 bg-[url('/login/bg.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       <div className="w-72 rounded-xl bg-white px-4 py-4 text-center font-ibm text-xl text-black">
         ใช้ <span className="text-red-500">Google Account</span>{" "}
         เดียวกับที่ใช้สมัครในเว็บ Larngear24
