@@ -31,7 +31,7 @@ export const MainProfileForVisitor = ({
               <SelectBaan baan={baan} setBaan={setBaan} />
             </div>
             <div className="relative flex h-72 w-[150px] flex-col items-center justify-center">
-              {baan !== 9 ? (
+              {baan !== 10 ? (
                 <picture>
                   <img
                     src={`/flags/${baan}.webp`}
@@ -163,6 +163,12 @@ const SelectBaan = ({
           className="font-ibm"
         >
           ติดฝน
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onSelect={() => handleBaanChange(9)}
+          className="font-ibm"
+        >
+          ติดสตาฟ
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

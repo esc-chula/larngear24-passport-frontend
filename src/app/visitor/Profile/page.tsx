@@ -26,7 +26,7 @@ export default function Profile() {
 
   const [user, SetUser] = useState<{ username: string; baan: number }>({
     username: "เขียนชื่อตรงนี้",
-    baan: 9,
+    baan: 10,
   });
   const [items, setItems] =
     useState<{ id: string; name: string; isLocked: boolean }[]>(mockItems);
@@ -143,7 +143,7 @@ export default function Profile() {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         username: "เขียนชื่อตรงนี้",
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        baan: parseInt("9"),
+        baan: parseInt("10"),
       });
     };
     void handleGet();
@@ -190,7 +190,7 @@ export default function Profile() {
     if (username) {
       SetUser({
         username: username,
-        baan: 9,
+        baan: 10,
       });
     }
   }, []);
