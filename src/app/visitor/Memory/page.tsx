@@ -4,14 +4,13 @@ import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import CommentSection from "@/components/memory/CommentSection";
 // import Phase2Photo from "@/components/memory/Phase2Photo";
 import { axiosClient } from "@/libs/axios";
-import { useSession } from "next-auth/react";
 import getShortedBaanName from "@/libs/getShortedBaanName";
 import Image from "next/image";
 import Phase2Photo from "@/components/memory/Phase2Photo";
-import Header from "@/components/globalComponents/Header";
+import HeaderForVistor from "@/components/globalComponents/HeaderForVisitor";
+import CommentSectionForVisitor from "@/components/memory/CommentSectionForvisitor";
 
 interface UserData {
   user_id: string;
@@ -26,7 +25,6 @@ interface UserData {
 export default function Memory() {
   const [showAddYours, setShowAddYours] = useState(false);
   const [userInfo, setUserInfo] = useState<UserData>();
-  const { data: session, status } = useSession();
   const [render, setRender] = useState<number>(0);
   // const router = useRouter();
   // if (!session?.user.id) {
@@ -34,15 +32,12 @@ export default function Memory() {
   // }
   useEffect(() => {
     async function fetchUserProfile() {
-      if (!session) return;
-      if (!session.user) return;
-
       try {
         const response = await axiosClient.get<UserData>(
           `${process.env.NEXT_PUBLIC_API_URL}/user`,
           {
             headers: {
-              Authorization: `Bearer ${session?.user.id}`,
+              Authorization: `Bearer Visitor`,
             },
           },
         );
@@ -52,14 +47,14 @@ export default function Memory() {
       }
     }
     void fetchUserProfile();
-  }, [session, status]);
+  }, [userInfo]);
   return (
     <>
       <div className="min-h-screen bg-gradient-to-b from-[#33a1be] via-[#436797] to-[#9b446f] pb-4 text-[#ECF0F6]">
-        <Header />
+        <HeaderForVistor />
         <div className="item-center flex justify-center p-10">
           <div className="absolute left-8 size-7">
-            <Link href="/">
+            <Link href="/visitor" passHref>
               <LeftArrow></LeftArrow>
             </Link>
           </div>
@@ -77,27 +72,13 @@ export default function Memory() {
         <div className="item-center mb-3 mt-8 flex justify-center font-ibm text-xl font-bold">
           อยากฝากอะไรถึง LG24 ?
         </div>
-        <CommentSection key={render} />
+        <CommentSectionForVisitor key={render} />
 
-        <div className="grid justify-items-end">
-          <button
-            className="w-29.6 h-6.8 m-2 flex space-x-4 rounded-lg bg-gradient-to-b from-[#092B44] from-0% to-[#D2CAFF] to-90% p-1 text-white"
-            onClick={() => setShowAddYours(true)}
-          >
-            <Pencil></Pencil> &nbsp;Add yours
-          </button>
+        <div className="grid justify-items-center">
+          <p className="mt-4 font-ibm font-semibold">
+            ขณะนี้ระบบยังไม่เปิดให้ visitor เขียน
+          </p>
         </div>
-
-        <AddYours
-          open={showAddYours}
-          close={() => {
-            setShowAddYours(false);
-          }}
-          name={userInfo?.username ?? ""}
-          house={getShortedBaanName(parseInt(userInfo?.baan ?? "0"))}
-          imgUrl={userInfo?.image ?? ""}
-          setRender={setRender}
-        />
 
         {/* Photo after finish camp */}
         {/* <Phase2Photo /> */}

@@ -8,6 +8,7 @@ export default function getShortedBaanName(num: number) {
     "ติดแกลม",
     "ติดใจ",
     "ติดฝน",
+    " เลือก",
   ];
   return ShortedBannName[num - 1] ?? "";
 }

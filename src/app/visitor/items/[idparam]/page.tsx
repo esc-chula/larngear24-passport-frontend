@@ -1,38 +1,34 @@
 "use client";
-import { items } from "../../../data/items";
+import { items } from "../../../../data/items";
 import Image from "next/image";
 import Link from "next/link";
 import { getItemDesp, getItemName } from "@/libs/getItemName";
-import { axiosClient } from "@/libs/axios";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Header from "@/components/globalComponents/Header";
+import HeaderForVistor from "@/components/globalComponents/HeaderForVisitor";
 
 export default function ItemInfoPage() {
   const { idparam } = useParams();
-
   const id: string = (Array.isArray(idparam) ? idparam[0] : idparam) ?? "";
-  const { data: session } = useSession();
   const [unlockedItems, setUnlockedItems] = useState<string[]>([]);
   const item = items.find((item) => item.id.toString() === id);
 
   useEffect(() => {
     const fetchUnlockedItems = async () => {
       try {
-        const response = await axiosClient.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/user`,
-          {
-            headers: {
-              Authorization: `Bearer ${session?.user?.id}`,
-            },
-          },
-        );
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const unlockedItemIds: string[] =
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-          response.data.items?.map(String) || [];
+        const unlockedItemIds: string[] = [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+        ];
 
         setUnlockedItems(unlockedItemIds);
       } catch (error) {
@@ -40,21 +36,19 @@ export default function ItemInfoPage() {
       }
     };
 
-    if (session?.user?.id) {
-      void fetchUnlockedItems();
-    }
-  }, [session]);
+    void fetchUnlockedItems();
+  }, []);
 
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col items-center gap-4 bg-[url('/main/Main1.webp')] bg-cover md:mx-auto md:max-w-[25rem]">
       {/* Main Container */}
       <div className="relative flex min-h-screen w-full flex-col overflow-hidden rounded-lg">
         {/* Header Section */}
-        <Header />
+        <HeaderForVistor />
         {/* Collection Title */}
         <div className="relative my-6 flex items-center justify-center space-x-2">
           <div className="absolute left-4 top-0 flex h-full items-center">
-            <Link href="/items" passHref>
+            <Link href="/visitor/items" passHref>
               <Image
                 src="/images/fi-rr-arrow-left.svg"
                 alt="Back Arrow"
