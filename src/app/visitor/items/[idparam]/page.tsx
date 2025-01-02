@@ -91,7 +91,7 @@ export default function ItemInfoPage() {
               {getItemName({ num: parseInt(id ?? "0") })}
             </h1>
             {/* Item Description */}
-            <p className="px-4 text-center text-xl">
+            <p className="px-4 text-center font-ibm text-xl">
               {getItemDesp({ num: parseInt(id ?? "0") })}
             </p>
           </div>
