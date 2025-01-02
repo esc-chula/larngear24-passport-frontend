@@ -9,6 +9,8 @@ import AuthProvider from "@/components/authProvider";
 import { Toaster } from "@/components/ui/toaster";
 import localFont from "next/font/local";
 
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 const vimamsa = localFont({
   src: "../../public/assets/fonts/SOV_Vimamsa.ttf",
   variable: "--font-vimamsa",
@@ -26,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${vimamsa.variable}`}>
       <body>
+        <GoogleAnalytics gaId="G-HKPWEVXL1L" />
         <QueryProvider>
           <SessionProvider>
             <AuthProvider>
