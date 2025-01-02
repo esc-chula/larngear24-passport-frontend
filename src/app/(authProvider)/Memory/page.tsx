@@ -32,6 +32,7 @@ export default function Memory() {
   // if (!session?.user.id) {
   //   void router.push("/Login");
   // }
+  console.log("userid", `Bearer ${session?.user.id}`);
   useEffect(() => {
     async function fetchUserProfile() {
       if (!session) return;

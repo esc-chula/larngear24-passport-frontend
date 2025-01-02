@@ -1,5 +1,5 @@
 "use client";
-import { items } from "../../../data/items";
+import { items } from "../../../../data/items";
 import Image from "next/image";
 import Link from "next/link";
 import { getItemDesp, getItemName } from "@/libs/getItemName";

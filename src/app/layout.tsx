@@ -30,13 +30,9 @@ export default function RootLayout({
       <body>
         <GoogleAnalytics gaId="G-HKPWEVXL1L" />
         <QueryProvider>
-          <SessionProvider>
-            <AuthProvider>
-              <div className="relative h-full min-h-screen w-full md:mx-auto md:max-w-[25rem]">
-                {children}
-              </div>
-            </AuthProvider>
-          </SessionProvider>
+          <div className="relative h-full min-h-screen w-full md:mx-auto md:max-w-[25rem]">
+            {children}
+          </div>
         </QueryProvider>
         <Toaster />
       </body>
