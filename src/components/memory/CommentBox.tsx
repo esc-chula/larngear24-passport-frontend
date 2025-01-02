@@ -89,15 +89,15 @@ const CommentBox = ({
                   height={25}
                   alt="profile"
                 />
-                <p className="resize-none overflow-hidden text-left text-sm font-bold">
-                  {name} <br /> <span className="text-xl">#</span>
+                <p className="resize-none overflow-hidden text-left font-ibm text-xs font-bold">
+                  {name} <br /> <span className="text-sm">#</span>
                   {house}
                 </p>
               </div>
               <textarea
                 readOnly
                 rows={4}
-                className="ml-2 mt-1 resize-none bg-transparent text-xs font-normal focus:outline-none"
+                className="ml-2 mt-1 resize-none bg-transparent font-ibm text-xs font-normal focus:outline-none"
                 value={comment}
               />
             </div>
@@ -105,7 +105,7 @@ const CommentBox = ({
         </div>
         <DialogContent className="max-h-[600px] w-[80%] rounded-md bg-[#36465F] p-4 text-[#ECF0F6]">
           <DialogHeader>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-start gap-2">
               <Image
                 src={image}
                 className="h-[1.6rem] w-[1.6rem] rounded-full"
@@ -113,21 +113,21 @@ const CommentBox = ({
                 height={30}
                 alt="profile"
               />
-              <div className="text-normal ml-2 resize-none font-bold">
+              <div className="text-normal ml-2 resize-none font-ibm font-bold">
                 {name} <span className="text-xl">#</span>
                 {house}
               </div>
             </div>
           </DialogHeader>
           <DialogTitle hidden>
-            ข้อความจาก {name} <span className="text-xl">#</span>
+            ข้อความจาก {name} <span className="text-base">#</span>
             {house}
           </DialogTitle>
           <DialogDescription className="w-full">
             <textarea
               readOnly
               rows={5}
-              className="mt-1 w-full bg-transparent font-normal text-white focus:outline-none"
+              className="mt-1 w-full bg-transparent font-ibm font-normal text-white focus:outline-none"
               value={comment}
             />
           </DialogDescription>

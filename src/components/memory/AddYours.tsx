@@ -143,7 +143,7 @@ const AddYours = ({
               width={25}
               height={25}
             />
-            <div className="ml-2">
+            <div className="ml-2 font-ibm font-bold">
               {name} #{house}
             </div>
           </div>
