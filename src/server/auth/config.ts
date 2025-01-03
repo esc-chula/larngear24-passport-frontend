@@ -54,7 +54,7 @@ export const authConfig = {
   ],
   callbacks: {
     signIn: async ({ profile }) => {
-      // console.log(profile); // for dev : remove this to see your google_sub
+      console.log(profile); // for dev : remove this to see your google_sub
 
       await axiosClient.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
