@@ -25,6 +25,7 @@ export default function Dress() {
   const router = useRouter();
   const handlePartSelection = (part: string, imgSrc: string | null) => {
     if (part === "dress" && selectedParts.dress === imgSrc) imgSrc = null;
+    if (part === "clothes" && selectedParts.clothes === imgSrc) imgSrc = null;
     setSelectedParts((prevState) => {
       const updatedParts = { ...prevState, [part]: imgSrc };
       return updatedParts;
