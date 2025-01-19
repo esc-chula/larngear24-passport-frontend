@@ -4,7 +4,6 @@ import { LeftArrow } from "@/components/memory/icon/LeftArrow";
 import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-// import Phase2Photo from "@/components/memory/Phase2Photo";
 import { axiosClient } from "@/libs/axios";
 import getShortedBaanName from "@/libs/getShortedBaanName";
 import Image from "next/image";
@@ -62,7 +61,7 @@ export default function Memory() {
         </div>
         <div className="item-center mx-4 flex justify-center">
           <Image
-            src="/memory/larngear_placeholder.webp"
+            src="/memory/group_image.webp"
             alt="larngear_placholder"
             width={390}
             height={180}
@@ -81,12 +80,12 @@ export default function Memory() {
         </div>
 
         {/* Photo after finish camp */}
-        {/* <Phase2Photo /> */}
-        <p className="mt-8 w-full text-center font-ibm font-bold text-gray-300">
+        <Phase2Photo />
+        {/* <p className="mt-8 w-full text-center font-ibm font-bold text-gray-300">
           Coming Soon...
           <br />
           รอติดตามในวันสุดท้ายของค่ายนะ!
-        </p>
+        </p> */}
       </div>
     </>
   );

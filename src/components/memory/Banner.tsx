@@ -11,7 +11,7 @@ const Banner = ({
     <>
       <a href={googleDriveUrl}>
         <Image
-          className="object-cover"
+          className="object-cover hover:scale-110 transition duration-300"
           src={imgUrl}
           width={80}
           height={130}
