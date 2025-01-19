@@ -5,7 +5,6 @@ import { Pencil } from "@/components/memory/icon/Pencil";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CommentSection from "@/components/memory/CommentSection";
-// import Phase2Photo from "@/components/memory/Phase2Photo";
 import { axiosClient } from "@/libs/axios";
 import { useSession } from "next-auth/react";
 import getShortedBaanName from "@/libs/getShortedBaanName";
@@ -101,12 +100,12 @@ export default function Memory() {
         />
 
         {/* Photo after finish camp */}
-        {/* <Phase2Photo /> */}
-        <p className="mt-8 w-full text-center font-ibm font-bold text-gray-300">
+        <Phase2Photo />
+        {/* <p className="mt-8 w-full text-center font-ibm font-bold text-gray-300">
           Coming Soon...
           <br />
           รอติดตามในวันสุดท้ายของค่ายนะ!
-        </p>
+        </p> */}
       </div>
     </>
   );
