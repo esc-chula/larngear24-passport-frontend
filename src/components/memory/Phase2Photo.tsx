@@ -61,54 +61,51 @@ const Phase2Photo = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <a href="https://drive.google.com/drive/folders/1CG-4ePHvj4mnL1P07i_RhQHzSpv3w-Lc?usp=drive_link">
-            <Image
-            className="hover:scale-110 transition duration-300"
-            src="/memory/day1.webp"
-            width={170}
-            height={60}
-            alt="group image"
-          />
-
+              <Image
+                className="transition duration-300 hover:scale-110"
+                src="/memory/day1.webp"
+                width={170}
+                height={60}
+                alt="group image"
+              />
             </a>
-          <div className="text-center">Day 1</div>
+            <div className="text-center">Day 1</div>
           </div>
           <div>
             <a href="https://drive.google.com/drive/folders/1gh5dAIsAacmGpi-5RTg6_wg6zJltqY8U?usp=drive_link">
-            <Image
-            className="hover:scale-110 transition duration-300"
-            src="/memory/day2.webp"
-            width={170}
-            height={60}
-            alt="group image"
-          />
-
+              <Image
+                className="transition duration-300 hover:scale-110"
+                src="/memory/day2.webp"
+                width={170}
+                height={60}
+                alt="group image"
+              />
             </a>
-          <div className="text-center">Day 2</div>
+            <div className="text-center">Day 2</div>
           </div>
           <div>
             <a href="https://drive.google.com/drive/folders/1K588EIR11Y_mEapvszrCKsGSr7vwAglx?usp=drive_link">
-            <Image
-            className="hover:scale-110 transition duration-300"
-            src="/memory/day3.webp"
-            width={170}
-            height={60}
-            alt="group image"
-          />
+              <Image
+                className="transition duration-300 hover:scale-110"
+                src="/memory/day3.webp"
+                width={170}
+                height={60}
+                alt="group image"
+              />
             </a>
-          <div className="text-center">Day 3</div>
+            <div className="text-center">Day 3</div>
           </div>
           <div>
             <a href="https://drive.google.com/drive/folders/1pxFLLQgOw8OaeZ7CWFqhFAViW7qe98Ui?usp=drive_link">
-            <Image
-            className="hover:scale-110 transition duration-300"
-            src="/memory/day4.webp"
-            width={170}
-            height={60}
-            alt="group image"
-          />
-
+              <Image
+                className="transition duration-300 hover:scale-110"
+                src="/memory/day4.webp"
+                width={170}
+                height={60}
+                alt="group image"
+              />
             </a>
-          <div className="text-center">Day 4</div>
+            <div className="text-center">Day 4</div>
           </div>
         </div>
       </div>
