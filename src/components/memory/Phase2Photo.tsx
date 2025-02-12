@@ -28,7 +28,7 @@ const Phase2Photo = () => {
           />
           <Banner
             imgUrl={`/flags/4.webp`}
-            googleDriveUrl="https://drive.google.com/file/d/1-GwCB3Zn97CBDm_WwnApyp9voYU6l15o"
+            googleDriveUrl="https://drive.google.com/drive/folders/1-GwCB3Zn97CBDm_WwnApyp9voYU6l15o"
           />
         </div>
         <div className="flex justify-center space-x-4">
@@ -38,7 +38,7 @@ const Phase2Photo = () => {
           />
           <Banner
             imgUrl={`/flags/6.webp`}
-            googleDriveUrl="https://drive.google.com/drive/folders/1tCPPKsvnSeEqdYnNYwhiBKz3HpcWYunV"
+            googleDriveUrl="https://drive.google.com/drive/folders/1DnItXXpENqw4zn55tX8Xao1f6sz04lR7"
           />
           <Banner
             imgUrl={`/flags/7.webp`}
@@ -46,7 +46,7 @@ const Phase2Photo = () => {
           />
           <Banner
             imgUrl={`/flags/8.webp`}
-            googleDriveUrl="https://drive.google.com/drive/folders/1FXHRrsyWiiWxwouyw_hYK8Y3WonebN7g?usp=sharing"
+            googleDriveUrl="https://drive.google.com/drive/folders/1-nLWgiN4r_tu_635rA49TtL62tpSH_mc"
           />
         </div>
       </div>
